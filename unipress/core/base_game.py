@@ -11,6 +11,7 @@ import arcade
 
 class GameMeta(type(arcade.Window), ABCMeta):  # type: ignore[misc]
     """Metaclass that combines arcade.Window and ABC metaclasses."""
+
     pass
 
 
