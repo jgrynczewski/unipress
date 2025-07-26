@@ -93,6 +93,7 @@ uv run ruff check && uv run ruff format && uv run mypy unipress && uv run pytest
 2. **Push immediately** - Push all commits to GitHub repository after committing
 3. **Separate commits** - Never bundle unrelated changes (especially different fixes) into one commit
 4. **User confirmation** - Only proceed to next major task after user confirmation
+5. **Single author** - Commits should only show user as author, no co-author lines
 
 **Example**: If fixing 2 unrelated bugs, create 2 separate commits and push both immediately.
 
