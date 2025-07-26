@@ -24,18 +24,20 @@
 5. **Commit Standards**: ✅ Conventional commits with git-cz emojis
 
 ## Commit Standards (git-cz)
-**Format**: `type(scope): emoji subject`
+**Format**: `type(scope): emoji subject` (space after emoji)
 
 **Types & Emojis**:
-- `chore: 🤖` - Build/tool changes
-- `feat: 🎸` - New features  
-- `fix: 🐛` - Bug fixes
-- `docs: ✏️` - Documentation
-- `style: 💄` - Code formatting
-- `refactor: 💡` - Code restructuring
-- `test: 💍` - Adding tests
-- `perf: ⚡️` - Performance improvements
-- `ci: 🎡` - CI changes
+- `chore: 🤖 Build/tool changes`
+- `feat: 🎸 New features`  
+- `fix: 🐛 Bug fixes`
+- `docs: ✏️ Documentation`
+- `style: 💄 Code formatting`
+- `refactor: 💡 Code restructuring`
+- `test: 💍 Adding tests`
+- `perf: ⚡️ Performance improvements`
+- `ci: 🎡 CI changes`
+
+**Example**: `feat: 🎸 add new jumping mechanics`
 
 Reference: https://www.npmjs.com/package/git-cz#custom-config
 
@@ -65,8 +67,14 @@ Reference: https://www.npmjs.com/package/git-cz#custom-config
 - `uv run pytest` - Run tests
 - `uv run python -m unipress.games.GAMENAME` - Run specific game
 
+## Development Workflow
+**Important**: After completing any medium/large change and receiving user approval:
+1. Create atomic commits with proper git-cz format
+2. Push changes to GitHub repository
+3. Only proceed to next task after user confirmation
+
 ## Next Steps
-1. Choose dependency management tool
-2. Choose game library/framework
-3. Create basic project structure
-4. Setup development environment
+- Add more one-button games with sprites and sounds
+- Implement comprehensive testing
+- Add CI/CD pipeline
+- Create game launcher/menu system
