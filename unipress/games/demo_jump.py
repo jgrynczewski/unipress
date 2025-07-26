@@ -28,8 +28,8 @@ class Obstacle:
 
     def draw(self) -> None:
         """Draw obstacle as red rectangle."""
-        arcade.draw_rectangle_filled(  # type: ignore[attr-defined]
-            self.x, self.y + self.height // 2, self.width, self.height, arcade.color.RED
+        arcade.draw_lbwh_rectangle_filled(
+            self.x, self.y, self.width, self.height, arcade.color.RED
         )
 
     def collides_with(
@@ -174,9 +174,9 @@ class DemoJumpGame(BaseGame):  # type: ignore[misc]
             color = (
                 arcade.color.BLUE if self.player_on_ground else arcade.color.LIGHT_BLUE
             )
-            arcade.draw_rectangle_filled(  # type: ignore[attr-defined]
-                self.player_x + self.player_size // 2,
-                self.player_y + self.player_size // 2,
+            arcade.draw_lbwh_rectangle_filled(
+                self.player_x,
+                self.player_y,
                 self.player_size,
                 self.player_size,
                 color,
@@ -190,7 +190,7 @@ class DemoJumpGame(BaseGame):  # type: ignore[misc]
             reaction_indicator_width = (
                 self.reaction_time / 2.0
             ) * 200  # Max width 200px
-            arcade.draw_rectangle_filled(  # type: ignore[attr-defined]
+            arcade.draw_lbwh_rectangle_filled(
                 100, 50, reaction_indicator_width, 10, arcade.color.GREEN
             )
             arcade.draw_text(
