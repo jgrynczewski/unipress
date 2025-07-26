@@ -20,8 +20,9 @@ def test_base_game_difficulty_validation():
         # but we can test the validation logic would trigger
         # by checking the __init__ signature
         import inspect
+
         sig = inspect.signature(BaseGame.__init__)
-        assert 'difficulty' in sig.parameters
+        assert "difficulty" in sig.parameters
     except Exception:
         # If we can't test the signature, just pass
         pass
