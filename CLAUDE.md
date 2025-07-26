@@ -22,6 +22,8 @@
 3. **Development Tools**: ✅ ruff + pytest (fast linting/formatting + flexible testing)
 4. **Game Design Standards**: ✅ Unified difficulty (1-10) + left mouse click input
 5. **Commit Standards**: ✅ Conventional commits with git-cz emojis
+6. **Type Checking**: ✅ mypy (industry standard, mature)
+7. **CI/CD Pipeline**: ✅ GitHub Actions (automatic CI, manual deployment)
 
 ## Commit Standards (git-cz)
 **Format**: `type(scope): emoji subject` (space after emoji)
@@ -64,8 +66,21 @@ Reference: https://www.npmjs.com/package/git-cz#custom-config
 - `uv sync` - Install/sync dependencies
 - `uv run ruff check` - Run linting
 - `uv run ruff format` - Format code
+- `uv run mypy unipress` - Run type checking
 - `uv run pytest` - Run tests
+- `uv run python main.py [difficulty]` - Run demo game
 - `uv run python -m unipress.games.GAMENAME` - Run specific game
+
+## Quality Assurance Pipeline
+**Pre-commit checks** (run all before committing):
+```bash
+uv run ruff check && uv run ruff format && uv run mypy unipress && uv run pytest
+```
+
+**CI/CD Pipeline**:
+- **Automatic**: Tests, linting, formatting, type checking on every push/PR
+- **Manual Deployment**: Trigger via GitHub Actions "Run workflow" button
+- **Requirements**: All tests must pass before deployment is allowed
 
 ## Development Workflow
 **Important**: After completing any medium/large change and receiving user approval:

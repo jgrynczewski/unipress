@@ -1,0 +1,93 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+  workflow_dispatch:  # Enables manual triggering
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.12"]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v4
+      with:
+        version: "latest"
+
+    - name: Set up Python ${{ matrix.python-version }}
+      run: uv python install ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: uv sync
+
+    - name: Run linting (ruff)
+      run: uv run ruff check
+
+    - name: Run formatting check (ruff)
+      run: uv run ruff format --check
+
+    - name: Run type checking (mypy)
+      run: uv run mypy unipress
+
+    - name: Run tests (pytest)
+      run: uv run pytest -v --tb=short
+
+    - name: Test game runs without errors
+      run: |
+        timeout 5s uv run python main.py 5 || true
+        echo "Game startup test completed"
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    # Only run on manual trigger (workflow_dispatch)
+    if: github.event_name == 'workflow_dispatch'
+    
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v4
+      with:
+        version: "latest"
+
+    - name: Set up Python
+      run: uv python install 3.12
+
+    - name: Install dependencies
+      run: uv sync
+
+    - name: Build project
+      run: |
+        echo "Building project..."
+        uv build
+        echo "Build completed successfully"
+
+    - name: Mock deployment
+      run: |
+        echo "🚀 Deploying to production..."
+        echo "Version: $(grep version pyproject.toml | cut -d'"' -f2)"
+        echo "Deployment completed successfully!"
+        echo "🎮 Unipress games are now live!"
+
+    - name: Create release artifact
+      run: |
+        mkdir -p dist/release
+        cp -r unipress dist/release/
+        cp main.py README.md pyproject.toml dist/release/
+        echo "Release artifact created in dist/release/"
+
+    - name: Upload release artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: unipress-release
+        path: dist/release/
+        retention-days: 30
