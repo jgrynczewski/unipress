@@ -1,0 +1,162 @@
+"""
+Base game class that all Unipress games must inherit from.
+Provides standardized difficulty system and input handling.
+"""
+
+from abc import ABC, abstractmethod
+from typing import Any
+
+import arcade
+
+
+class BaseGame(arcade.Window, ABC):
+    """
+    Base class for all one-button games in Unipress.
+
+    Provides:
+    - Standardized difficulty system (1-10 scale)
+    - Configurable input handling (default: left mouse click)
+    - Consistent game structure
+    """
+
+    def __init__(
+        self,
+        width: int = 800,
+        height: int = 600,
+        title: str = "Unipress Game",
+        difficulty: int = 5,
+        input_key: int = arcade.MOUSE_BUTTON_LEFT,
+    ):
+        """
+        Initialize base game.
+
+        Args:
+            width: Window width in pixels
+            height: Window height in pixels
+            title: Game window title
+            difficulty: Difficulty level 1-10 (1=easy, 10=hard)
+            input_key: Input key/button (default: left mouse click)
+        """
+        super().__init__(width, height, title)
+
+        # Validate difficulty range
+        if not 1 <= difficulty <= 10:
+            raise ValueError("Difficulty must be between 1 and 10")
+
+        self.difficulty = difficulty
+        self.input_key = input_key
+
+        # Calculate reaction time window based on difficulty
+        # Difficulty 1: 2.0 seconds, Difficulty 10: 0.2 seconds
+        self.reaction_time = 2.2 - (difficulty * 0.2)
+
+        # Game state
+        self.game_started = False
+        self.game_over = False
+        self.score = 0
+
+        arcade.set_background_color(arcade.color.BLACK)
+
+    def get_difficulty_settings(self) -> dict[str, Any]:
+        """
+        Get difficulty-specific settings for the game.
+        Override this method to customize difficulty scaling.
+
+        Returns:
+            Dictionary with difficulty-specific game settings
+        """
+        return {
+            "reaction_time": self.reaction_time,
+            "difficulty": self.difficulty,
+        }
+
+    def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
+        """Handle mouse press events."""
+        if button == self.input_key:
+            self.on_action_press()
+
+    def on_key_press(self, key: int, modifiers: int):
+        """Handle keyboard events (if needed for alternative input)."""
+        # Override in subclass if keyboard input is needed
+        pass
+
+    @abstractmethod
+    def on_action_press(self):
+        """
+        Handle the main action (button press/click).
+        This is where the core game logic responds to input.
+        Must be implemented by each game.
+        """
+        pass
+
+    @abstractmethod
+    def reset_game(self):
+        """
+        Reset game to initial state.
+        Must be implemented by each game.
+        """
+        pass
+
+    def start_game(self):
+        """Start the game."""
+        self.game_started = True
+        self.game_over = False
+        self.reset_game()
+
+    def end_game(self):
+        """End the game."""
+        self.game_over = True
+
+    def draw_ui(self):
+        """Draw common UI elements (score, difficulty info, etc.)."""
+        # Score
+        arcade.draw_text(
+            f"Score: {self.score}", 10, self.height - 30, arcade.color.WHITE, 20
+        )
+
+        # Difficulty indicator
+        arcade.draw_text(
+            f"Difficulty: {self.difficulty}/10",
+            10,
+            self.height - 60,
+            arcade.color.WHITE,
+            16,
+        )
+
+        # Game over screen
+        if self.game_over:
+            arcade.draw_text(
+                "GAME OVER",
+                self.width // 2,
+                self.height // 2,
+                arcade.color.RED,
+                50,
+                anchor_x="center",
+            )
+            arcade.draw_text(
+                f"Final Score: {self.score}",
+                self.width // 2,
+                self.height // 2 - 60,
+                arcade.color.WHITE,
+                30,
+                anchor_x="center",
+            )
+            arcade.draw_text(
+                "Click to restart",
+                self.width // 2,
+                self.height // 2 - 100,
+                arcade.color.WHITE,
+                20,
+                anchor_x="center",
+            )
+
+        # Start screen
+        elif not self.game_started:
+            arcade.draw_text(
+                "Click to start",
+                self.width // 2,
+                self.height // 2,
+                arcade.color.WHITE,
+                30,
+                anchor_x="center",
+            )
