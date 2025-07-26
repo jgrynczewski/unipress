@@ -96,8 +96,8 @@ class DemoJumpGame(BaseGame):  # type: ignore[misc]
         
         base_settings.update(
             {
-                "obstacle_speed": 150
-                + (self.difficulty * 20),  # Faster obstacles = harder
+                "obstacle_speed": 100
+                + (self.difficulty * 15),  # Faster obstacles = harder
                 "jump_height": base_jump_height + difficulty_bonus,  # Guaranteed clearance
             }
         )
