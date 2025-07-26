@@ -3,13 +3,18 @@ Base game class that all Unipress games must inherit from.
 Provides standardized difficulty system and input handling.
 """
 
-from abc import ABC, abstractmethod
+from abc import ABC, ABCMeta, abstractmethod
 from typing import Any
 
 import arcade
 
 
-class BaseGame(arcade.Window, ABC):  # type: ignore[misc]
+class GameMeta(type(arcade.Window), ABCMeta):
+    """Metaclass that combines arcade.Window and ABC metaclasses."""
+    pass
+
+
+class BaseGame(arcade.Window, ABC, metaclass=GameMeta):
     """
     Base class for all one-button games in Unipress.
 
