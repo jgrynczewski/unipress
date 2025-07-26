@@ -9,7 +9,7 @@ from typing import Any
 import arcade
 
 
-class BaseGame(arcade.Window, ABC):
+class BaseGame(arcade.Window, ABC):  # type: ignore[misc]
     """
     Base class for all one-button games in Unipress.
 
@@ -70,18 +70,18 @@ class BaseGame(arcade.Window, ABC):
             "difficulty": self.difficulty,
         }
 
-    def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
+    def on_mouse_press(self, x: float, y: float, button: int, modifiers: int) -> None:
         """Handle mouse press events."""
         if button == self.input_key:
             self.on_action_press()
 
-    def on_key_press(self, key: int, modifiers: int):
+    def on_key_press(self, key: int, modifiers: int) -> None:
         """Handle keyboard events (if needed for alternative input)."""
         # Override in subclass if keyboard input is needed
         pass
 
     @abstractmethod
-    def on_action_press(self):
+    def on_action_press(self) -> None:
         """
         Handle the main action (button press/click).
         This is where the core game logic responds to input.
@@ -90,24 +90,24 @@ class BaseGame(arcade.Window, ABC):
         pass
 
     @abstractmethod
-    def reset_game(self):
+    def reset_game(self) -> None:
         """
         Reset game to initial state.
         Must be implemented by each game.
         """
         pass
 
-    def start_game(self):
+    def start_game(self) -> None:
         """Start the game."""
         self.game_started = True
         self.game_over = False
         self.reset_game()
 
-    def end_game(self):
+    def end_game(self) -> None:
         """End the game."""
         self.game_over = True
 
-    def draw_ui(self):
+    def draw_ui(self) -> None:
         """Draw common UI elements (score, difficulty info, etc.)."""
         # Score
         arcade.draw_text(

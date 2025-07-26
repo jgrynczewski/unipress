@@ -22,13 +22,13 @@ class Obstacle:
         self.height = height
         self.speed = 200  # pixels per second
 
-    def update(self, delta_time: float):
+    def update(self, delta_time: float) -> None:
         """Move obstacle left."""
         self.x -= self.speed * delta_time
 
-    def draw(self):
+    def draw(self) -> None:
         """Draw obstacle as red rectangle."""
-        arcade.draw_rectangle_filled(
+        arcade.draw_rectangle_filled(  # type: ignore[attr-defined]
             self.x, self.y + self.height // 2, self.width, self.height, arcade.color.RED
         )
 
@@ -44,7 +44,7 @@ class Obstacle:
         )
 
 
-class DemoJumpGame(BaseGame):
+class DemoJumpGame(BaseGame):  # type: ignore[misc]
     """
     Simple jumping game demo.
 
@@ -63,10 +63,10 @@ class DemoJumpGame(BaseGame):
         )
 
         # Player settings
-        self.player_x = 100
-        self.player_y = 100
-        self.player_size = 40
-        self.player_jump_speed = 0
+        self.player_x = 100.0
+        self.player_y = 100.0
+        self.player_size = 40.0
+        self.player_jump_speed = 0.0
         self.player_on_ground = True
 
         # Game settings based on difficulty
@@ -75,13 +75,13 @@ class DemoJumpGame(BaseGame):
         # Obstacle spawn timing based on reaction time
         # More difficult = less time between obstacles
         self.obstacle_spawn_time = settings["reaction_time"] * 1.5
-        self.last_obstacle_time = 0
+        self.last_obstacle_time = 0.0
 
         # Game objects
-        self.obstacles = []
-        self.time_elapsed = 0
+        self.obstacles: list[Obstacle] = []
+        self.time_elapsed = 0.0
 
-    def get_difficulty_settings(self):
+    def get_difficulty_settings(self) -> dict[str, float | int]:
         """Override to add game-specific difficulty settings."""
         base_settings = super().get_difficulty_settings()
 
@@ -98,17 +98,17 @@ class DemoJumpGame(BaseGame):
 
         return base_settings
 
-    def reset_game(self):
+    def reset_game(self) -> None:
         """Reset game state."""
-        self.player_y = 100
-        self.player_jump_speed = 0
+        self.player_y = 100.0
+        self.player_jump_speed = 0.0
         self.player_on_ground = True
         self.obstacles.clear()
-        self.time_elapsed = 0
+        self.time_elapsed = 0.0
         self.score = 0
-        self.last_obstacle_time = 0
+        self.last_obstacle_time = 0.0
 
-    def on_action_press(self):
+    def on_action_press(self) -> None:
         """Handle main action (jump or start/restart game)."""
         if not self.game_started:
             self.start_game()
@@ -117,10 +117,10 @@ class DemoJumpGame(BaseGame):
         elif self.player_on_ground:
             # Jump!
             settings = self.get_difficulty_settings()
-            self.player_jump_speed = settings["jump_height"]
+            self.player_jump_speed = float(settings["jump_height"])
             self.player_on_ground = False
 
-    def on_update(self, delta_time: float):
+    def on_update(self, delta_time: float) -> None:
         """Update game logic."""
         if not self.game_started or self.game_over:
             return
@@ -162,7 +162,7 @@ class DemoJumpGame(BaseGame):
         # Increase score over time
         self.score += int(delta_time * 5)
 
-    def on_draw(self):
+    def on_draw(self) -> None:
         """Draw the game."""
         self.clear()
 
@@ -174,7 +174,7 @@ class DemoJumpGame(BaseGame):
             color = (
                 arcade.color.BLUE if self.player_on_ground else arcade.color.LIGHT_BLUE
             )
-            arcade.draw_rectangle_filled(
+            arcade.draw_rectangle_filled(  # type: ignore[attr-defined]
                 self.player_x + self.player_size // 2,
                 self.player_y + self.player_size // 2,
                 self.player_size,
@@ -190,7 +190,7 @@ class DemoJumpGame(BaseGame):
             reaction_indicator_width = (
                 self.reaction_time / 2.0
             ) * 200  # Max width 200px
-            arcade.draw_rectangle_filled(
+            arcade.draw_rectangle_filled(  # type: ignore[attr-defined]
                 100, 50, reaction_indicator_width, 10, arcade.color.GREEN
             )
             arcade.draw_text(
@@ -205,7 +205,7 @@ class DemoJumpGame(BaseGame):
         self.draw_ui()
 
 
-def main():
+def main() -> None:
     """Run the demo game."""
     # You can change difficulty here (1-10)
     DemoJumpGame(difficulty=5).run()
