@@ -74,7 +74,9 @@ class DemoJumpGame(BaseGame):  # type: ignore[misc]
 
         # Obstacle spawn timing based on reaction time
         # More difficult = less time between obstacles
-        self.obstacle_spawn_time = settings["reaction_time"] * 1.5
+        # Base interval should be longer to allow recovery time
+        base_interval = settings["reaction_time"] * 2.5  # Increased from 1.5
+        self.obstacle_spawn_time = base_interval * random.uniform(0.8, 1.5)  # Add initial randomness
         self.last_obstacle_time = 0.0
 
         # Game objects
@@ -86,13 +88,17 @@ class DemoJumpGame(BaseGame):  # type: ignore[misc]
         base_settings = super().get_difficulty_settings()
 
         # Add game-specific settings
+        # Jump height must be enough to clear 50px obstacles + safety margin
+        # Base jump height ensures obstacle clearance, difficulty adds extra height
+        obstacle_height = 50
+        base_jump_height = obstacle_height + 100  # 100px safety margin above obstacle
+        difficulty_bonus = (11 - self.difficulty) * 20  # More height on easier difficulties
+        
         base_settings.update(
             {
                 "obstacle_speed": 150
                 + (self.difficulty * 20),  # Faster obstacles = harder
-                "jump_height": max(
-                    200, 350 - (self.difficulty * 15)
-                ),  # Lower jumps = harder
+                "jump_height": base_jump_height + difficulty_bonus,  # Guaranteed clearance
             }
         )
 
@@ -117,7 +123,11 @@ class DemoJumpGame(BaseGame):  # type: ignore[misc]
         elif self.player_on_ground:
             # Jump!
             settings = self.get_difficulty_settings()
-            self.player_jump_speed = float(settings["jump_height"])
+            desired_jump_height = float(settings["jump_height"])
+            gravity = 800
+            # Calculate initial velocity needed to reach desired height
+            # Using physics: max_height = (initial_velocity^2) / (2 * gravity)
+            self.player_jump_speed = (2 * gravity * desired_jump_height) ** 0.5
             self.player_on_ground = False
 
     def on_update(self, delta_time: float) -> None:
@@ -143,8 +153,9 @@ class DemoJumpGame(BaseGame):  # type: ignore[misc]
             self.obstacles.append(Obstacle(self.width + 50, 100))
             self.last_obstacle_time = self.time_elapsed
 
-            # Adjust spawn timing slightly for variety
-            self.obstacle_spawn_time = self.reaction_time * random.uniform(1.2, 1.8)
+            # Adjust spawn timing with more variety and longer intervals
+            base_interval = self.reaction_time * 2.5
+            self.obstacle_spawn_time = base_interval * random.uniform(0.7, 2.0)  # Much more variation
 
         # Update obstacles
         for obstacle in self.obstacles[:]:
@@ -186,15 +197,30 @@ class DemoJumpGame(BaseGame):  # type: ignore[misc]
             for obstacle in self.obstacles:
                 obstacle.draw()
 
-            # Draw reaction time indicator for demo purposes
-            reaction_indicator_width = (
-                self.reaction_time / 2.0
-            ) * 200  # Max width 200px
+            # Draw jump window indicator
+            # Calculate the distance where jump is still possible
+            # This is based on obstacle speed and jump duration
+            settings = self.get_difficulty_settings()
+            obstacle_speed = settings["obstacle_speed"]
+            
+            # Jump takes time to reach peak and come back down
+            # Total jump time = 2 * sqrt(2 * jump_height / gravity)
+            jump_height = settings["jump_height"]
+            gravity = 800
+            jump_duration = 2 * (jump_height / gravity) ** 0.5
+            
+            # Distance an obstacle travels during jump
+            jump_window_distance = obstacle_speed * jump_duration
+            
+            # Draw the jump window as a green zone on screen
+            jump_zone_start = self.player_x + self.player_size
+            jump_zone_width = min(jump_window_distance, 200)  # Cap at 200px for display
+            
             arcade.draw_lbwh_rectangle_filled(
-                100, 50, reaction_indicator_width, 10, arcade.color.GREEN
+                jump_zone_start, 45, jump_zone_width, 10, arcade.color.GREEN
             )
             arcade.draw_text(
-                f"Reaction window: {self.reaction_time:.1f}s",
+                f"Jump window: {jump_window_distance:.0f}px ({jump_duration:.2f}s)",
                 10,
                 20,
                 arcade.color.WHITE,
