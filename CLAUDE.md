@@ -41,6 +41,11 @@
 
 **Example**: `feat: 🎸 add new jumping mechanics`
 
+**IMPORTANT COMMIT POLICY**: 
+- **Separate commits for unrelated changes** - especially for different bug fixes
+- Each commit should address ONE logical change or fix
+- Never bundle unrelated fixes into a single commit
+
 Reference: https://www.npmjs.com/package/git-cz#custom-config
 
 ## Game Design Standards
@@ -83,10 +88,13 @@ uv run ruff check && uv run ruff format && uv run mypy unipress && uv run pytest
 - **Requirements**: All tests must pass before deployment is allowed
 
 ## Development Workflow
-**Important**: After completing any medium/large change and receiving user approval:
-1. Create atomic commits with proper git-cz format
-2. Push changes to GitHub repository
-3. Only proceed to next task after user confirmation
+**MANDATORY WORKFLOW**: 
+1. **Immediate commit** - Create atomic commits with proper git-cz format after EACH completed change (feat, fix, docs, chore, etc.)
+2. **Push immediately** - Push all commits to GitHub repository after committing
+3. **Separate commits** - Never bundle unrelated changes (especially different fixes) into one commit
+4. **User confirmation** - Only proceed to next major task after user confirmation
+
+**Example**: If fixing 2 unrelated bugs, create 2 separate commits and push both immediately.
 
 ## Next Steps
 - Add more one-button games with sprites and sounds
