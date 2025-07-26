@@ -9,13 +9,12 @@ from typing import Any
 import arcade
 
 
-class GameMeta(type(arcade.Window), ABCMeta):
+class GameMeta(type(arcade.Window), ABCMeta):  # type: ignore[misc]
     """Metaclass that combines arcade.Window and ABC metaclasses."""
-
     pass
 
 
-class BaseGame(arcade.Window, ABC, metaclass=GameMeta):
+class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
     """
     Base class for all one-button games in Unipress.
 
