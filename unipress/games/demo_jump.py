@@ -76,7 +76,9 @@ class DemoJumpGame(BaseGame):  # type: ignore[misc]
         # More difficult = less time between obstacles
         # Base interval should be longer to allow recovery time
         base_interval = settings["reaction_time"] * 2.5  # Increased from 1.5
-        self.obstacle_spawn_time = base_interval * random.uniform(0.8, 1.5)  # Add initial randomness
+        self.obstacle_spawn_time = base_interval * random.uniform(
+            0.8, 1.5
+        )  # Add initial randomness
         self.last_obstacle_time = 0.0
 
         # Game objects
@@ -92,13 +94,16 @@ class DemoJumpGame(BaseGame):  # type: ignore[misc]
         # Base jump height ensures obstacle clearance, difficulty adds extra height
         obstacle_height = 50
         base_jump_height = obstacle_height + 100  # 100px safety margin above obstacle
-        difficulty_bonus = (11 - self.difficulty) * 20  # More height on easier difficulties
-        
+        difficulty_bonus = (
+            11 - self.difficulty
+        ) * 20  # More height on easier difficulties
+
         base_settings.update(
             {
                 "obstacle_speed": 100
                 + (self.difficulty * 15),  # Faster obstacles = harder
-                "jump_height": base_jump_height + difficulty_bonus,  # Guaranteed clearance
+                "jump_height": base_jump_height
+                + difficulty_bonus,  # Guaranteed clearance
             }
         )
 
@@ -155,7 +160,9 @@ class DemoJumpGame(BaseGame):  # type: ignore[misc]
 
             # Adjust spawn timing with more variety and longer intervals
             base_interval = self.reaction_time * 2.5
-            self.obstacle_spawn_time = base_interval * random.uniform(0.7, 2.0)  # Much more variation
+            self.obstacle_spawn_time = base_interval * random.uniform(
+                0.7, 2.0
+            )  # Much more variation
 
         # Update obstacles
         for obstacle in self.obstacles[:]:
@@ -202,20 +209,20 @@ class DemoJumpGame(BaseGame):  # type: ignore[misc]
             # This is based on obstacle speed and jump duration
             settings = self.get_difficulty_settings()
             obstacle_speed = settings["obstacle_speed"]
-            
+
             # Jump takes time to reach peak and come back down
             # Total jump time = 2 * sqrt(2 * jump_height / gravity)
             jump_height = settings["jump_height"]
             gravity = 800
             jump_duration = 2 * (jump_height / gravity) ** 0.5
-            
+
             # Distance an obstacle travels during jump
             jump_window_distance = obstacle_speed * jump_duration
-            
+
             # Draw the jump window as a green zone on screen
             jump_zone_start = self.player_x + self.player_size
             jump_zone_width = min(jump_window_distance, 200)  # Cap at 200px for display
-            
+
             arcade.draw_lbwh_rectangle_filled(
                 jump_zone_start, 45, jump_zone_width, 10, arcade.color.GREEN
             )
