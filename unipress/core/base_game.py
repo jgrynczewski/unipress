@@ -274,6 +274,41 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
         log_game_event("game_exited", final_score=self.score)
         self.close()
 
+    def draw_heart(self, x: float, y: float, filled: bool = True) -> None:
+        """Draw a smooth heart shape at the given position."""
+        # Create heart shape using polygon points for smoother curves
+        heart_points = [
+            (x, y - 12),  # bottom point
+            (x - 8, y - 4),   # left bottom curve
+            (x - 12, y + 2),  # left side
+            (x - 8, y + 8),   # left top curve
+            (x - 4, y + 6),   # left top center
+            (x, y + 2),       # center dip
+            (x + 4, y + 6),   # right top center  
+            (x + 8, y + 8),   # right top curve
+            (x + 12, y + 2),  # right side
+            (x + 8, y - 4),   # right bottom curve
+        ]
+        
+        if filled:
+            # Draw filled heart with smooth polygon
+            arcade.draw_polygon_filled(heart_points, arcade.color.RED)
+        
+        # Draw outline for definition
+        arcade.draw_polygon_outline(heart_points, arcade.color.DARK_RED, 2)
+
+    def draw_hearts(self) -> None:
+        """Draw hearts to represent remaining lives."""
+        heart_spacing = 35
+        start_x = self.width - 80
+        start_y = self.height - 25
+        
+        for i in range(self.max_lives):
+            x = start_x - (i * heart_spacing)
+            # Hearts disappear from right to left (reverse order)
+            filled = (self.max_lives - 1 - i) < self.lives
+            self.draw_heart(x, start_y, filled)
+
     def draw_ui(self) -> None:
         """Draw common UI elements (score, difficulty info, etc.)."""
         # Score with high score
@@ -289,14 +324,8 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
             20,
         )
 
-        # Lives display - right top corner
-        arcade.draw_text(
-            self.get_message("ui.lives", current=self.lives, max=self.max_lives),
-            self.width - 150,
-            self.height - 30,
-            arcade.color.WHITE,
-            20,
-        )
+        # Lives display - hearts in right top corner
+        self.draw_hearts()
 
         # Difficulty indicator - right bottom corner
         arcade.draw_text(
