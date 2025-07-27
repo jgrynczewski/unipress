@@ -1,0 +1,35 @@
+{
+  "name": "forest_background",
+  "layers": [
+    {
+      "file": "layers/sky_layer.png",
+      "scroll_speed": 0.1,
+      "repeat": "horizontal",
+      "z_order": 0
+    },
+    {
+      "file": "layers/mountains_far.png",
+      "scroll_speed": 0.2,
+      "repeat": "horizontal", 
+      "z_order": 1
+    },
+    {
+      "file": "layers/trees_far.png",
+      "scroll_speed": 0.4,
+      "repeat": "horizontal",
+      "z_order": 2
+    },
+    {
+      "file": "layers/trees_near.png",
+      "scroll_speed": 0.8,
+      "repeat": "horizontal",
+      "z_order": 3
+    },
+    {
+      "file": "layers/ground_layer.png",
+      "scroll_speed": 1.0,
+      "repeat": "horizontal",
+      "z_order": 4
+    }
+  ]
+}

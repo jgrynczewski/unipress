@@ -1,0 +1,35 @@
+{
+  "name": "fire_burning",
+  "frames": [
+    {
+      "file": "active/fire_burning_001.png",
+      "duration": 0.15,
+      "hitbox": {"x": 8, "y": 0, "width": 48, "height": 64}
+    },
+    {
+      "file": "active/fire_burning_002.png",
+      "duration": 0.15,
+      "hitbox": {"x": 8, "y": 0, "width": 48, "height": 64}
+    },
+    {
+      "file": "active/fire_burning_003.png",
+      "duration": 0.15,
+      "hitbox": {"x": 8, "y": 0, "width": 48, "height": 64}
+    },
+    {
+      "file": "active/fire_burning_004.png",
+      "duration": 0.15,
+      "hitbox": {"x": 8, "y": 0, "width": 48, "height": 64}
+    },
+    {
+      "file": "active/fire_burning_005.png",
+      "duration": 0.15,
+      "hitbox": {"x": 8, "y": 0, "width": 48, "height": 64}
+    }
+  ],
+  "loop": true,
+  "next_animation": null,
+  "sound_triggers": {
+    "frame_0": "obstacles/fire_crackle_01.ogg"
+  }
+}

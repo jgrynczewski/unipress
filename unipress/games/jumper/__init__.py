@@ -1,0 +1,1 @@
+"""Jumper Game - Sprite-based jumping game with animations and sounds."""

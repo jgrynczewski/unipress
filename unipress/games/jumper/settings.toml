@@ -1,0 +1,29 @@
+# Jumper Game Settings
+
+[game]
+difficulty = 5
+lives = 3
+
+[jumper]
+# Player settings
+player_speed = 200
+jump_height_base = 250
+gravity = 800
+
+# Obstacle settings  
+obstacle_speed_base = 150
+obstacle_spawn_interval = 3.0
+obstacle_width = 64
+obstacle_height = 64
+
+# Background settings
+background_scroll_speed = 100
+parallax_enabled = true
+
+# Animation settings
+player_animation_speed = 1.0
+fire_animation_speed = 1.0
+
+# Sound settings
+sound_volume = 0.7
+music_volume = 0.5
