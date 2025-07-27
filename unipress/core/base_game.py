@@ -165,7 +165,8 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
             try:
                 # Handle end game screen interactions
                 if self.show_end_screen and self.end_game_screen:
-                    action = self.end_game_screen.cycle_selection()
+                    action = self.end_game_screen.get_selected_action()
+                    log_player_action("end_screen_action", operation=action.value)
                     if action == EndGameAction.PLAY_AGAIN:
                         self._restart_game()
                     elif action == EndGameAction.EXIT:

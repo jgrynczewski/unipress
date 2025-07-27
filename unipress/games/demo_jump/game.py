@@ -159,6 +159,10 @@ class DemoJumpGame(BaseGame):  # type: ignore[misc]
         """Update game logic."""
         # Always update life lost effects for blinking
         self.update_life_lost_effects(delta_time)
+        
+        # Update end game screen for automatic cycling
+        if self.show_end_screen and self.end_game_screen:
+            self.end_game_screen.update(delta_time)
 
         # Pause game logic during life lost pause
         if self.is_game_paused():

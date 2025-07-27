@@ -34,20 +34,25 @@ class EndGameScreen:
     - Shared across all games with override capability
     """
 
-    def __init__(self, messages: MessageLoader, final_score: int = 0):
+    def __init__(self, messages: MessageLoader, final_score: int = 0, cycle_time: float = 2.0):
         """
         Initialize end game screen.
         
         Args:
             messages: Message loader for localized text
             final_score: Player's final score to display
+            cycle_time: Time in seconds between automatic button cycling
         """
         self.messages = messages
         self.final_score = final_score
+        self.cycle_time = cycle_time
         
         # Button state
         self.selected_button = EndGameAction.PLAY_AGAIN  # Default selection
         self.button_actions = [EndGameAction.PLAY_AGAIN, EndGameAction.EXIT]
+        
+        # Timing for automatic cycling
+        self.time_since_last_cycle = 0.0
         
         # Colors
         self.normal_color = arcade.color.LIGHT_GRAY
@@ -56,19 +61,25 @@ class EndGameScreen:
         
         log_game_event("end_game_screen_shown", final_score=final_score)
 
-    def cycle_selection(self) -> EndGameAction:
+    def update(self, delta_time: float) -> None:
         """
-        Cycle to next button and return the currently selected action.
+        Update the end game screen (handles automatic cycling).
         
-        Returns:
-            Currently selected action after cycling
+        Args:
+            delta_time: Time elapsed since last update in seconds
         """
-        current_index = self.button_actions.index(self.selected_button)
-        next_index = (current_index + 1) % len(self.button_actions)
-        self.selected_button = self.button_actions[next_index]
+        self.time_since_last_cycle += delta_time
         
-        log_player_action("button_cycle", selected=self.selected_button.value)
-        return self.selected_button
+        if self.time_since_last_cycle >= self.cycle_time:
+            # Cycle to next button
+            current_index = self.button_actions.index(self.selected_button)
+            next_index = (current_index + 1) % len(self.button_actions)
+            self.selected_button = self.button_actions[next_index]
+            
+            # Reset timer
+            self.time_since_last_cycle = 0.0
+            
+            log_player_action("button_auto_cycle", selected=self.selected_button.value)
 
     def get_selected_action(self) -> EndGameAction:
         """Get currently selected action without cycling."""
@@ -186,7 +197,10 @@ if __name__ == "__main__":
             self.messages = load_messages("pl_PL", "demo_jump")
             self.end_game_screen = EndGameScreen(self.messages, final_score=12345)
             arcade.set_background_color(arcade.color.DARK_BLUE)
-            print("Click to cycle buttons, ESC to exit")
+            print("Buttons auto-cycle every 2s, click to execute selected action, ESC to exit")
+
+        def on_update(self, delta_time):
+            self.end_game_screen.update(delta_time)
 
         def on_draw(self):
             self.clear()
@@ -196,8 +210,10 @@ if __name__ == "__main__":
 
         def on_mouse_press(self, x, y, button, modifiers):
             if button == arcade.MOUSE_BUTTON_LEFT:
-                action = self.end_game_screen.cycle_selection()
-                print(f"Selected: {action.value}")
+                action = self.end_game_screen.get_selected_action()
+                print(f"Executed action: {action.value}")
+                if action == EndGameAction.EXIT:
+                    self.close()
 
         def on_key_press(self, key, modifiers):
             if key == arcade.key.ESCAPE:
