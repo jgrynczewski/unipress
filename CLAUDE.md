@@ -30,6 +30,11 @@
 5. **Commit Standards**: ✅ Conventional commits with git-cz emojis
 6. **Type Checking**: ✅ mypy (industry standard, mature)
 7. **CI/CD Pipeline**: ✅ GitHub Actions (automatic CI, manual deployment)
+8. **Fullscreen Display**: ✅ Games start fullscreen by default with ESC toggle
+9. **Lives System**: ✅ 3-lives with pause-after-death and score persistence
+10. **Settings System**: ✅ TOML-based hierarchical configuration
+11. **Internationalization**: ✅ JSON-based with Polish default, English fallback
+12. **Logging System**: ✅ Loguru-based with structured JSON logging
 
 ## Commit Standards (git-cz)
 **Format**: `type(scope): emoji subject` (space after emoji)
@@ -94,6 +99,25 @@ Reference: https://www.npmjs.com/package/git-cz#custom-config
 - **Access**: `get_setting(settings, "game.difficulty", default=5)` dot notation
 - **Implementation**: `unipress/core/settings.py` with tomli dependency
 
+### Internationalization System (i18n)
+- **Format**: JSON message files with dot notation access (e.g., "ui.score")
+- **Default Language**: Polish (pl_PL) with English (en_US) fallback
+- **Message Files**: `unipress/locales/{language}/common.json` and `games/{game}.json`
+- **Integration**: Built into BaseGame via `get_message(key, **kwargs)` method
+- **Settings**: Configurable via `ui.language` in TOML settings
+- **Parameters**: Support for variable substitution (e.g., score={score})
+
+### Logging System (Professional-grade)
+- **Library**: Loguru for structured logging with simple API
+- **Configuration**: TOML-based settings with hierarchical overrides
+- **Formats**: JSON for production/files, human-readable for development console
+- **Levels**: DEBUG/INFO/WARNING/ERROR/CRITICAL with configurable filtering
+- **Rotation**: Size-based (10MB) with 30-day retention and gzip compression
+- **Exception Rule**: **ALL exceptions MUST be logged with full traceback**
+- **Game Events**: Structured logging for player actions, game events, performance metrics
+- **Files**: Logs stored in `logs/unipress-{date}.log` with automatic cleanup
+- **Integration**: Built into BaseGame and all components
+
 ### Structure Requirements
 - Inherit from BaseGame class with `game_name` parameter
 - Support difficulty scaling in reaction time windows  
@@ -101,6 +125,8 @@ Reference: https://www.npmjs.com/package/git-cz#custom-config
 - Fullscreen display by default with ESC toggle
 - 3-lives system with pause-after-death and score persistence
 - TOML settings integration for all configurable parameters
+- Internationalization support for all user-facing text
+- Professional logging throughout with structured events
 
 ## Development Commands
 - `uv sync` - Install/sync dependencies

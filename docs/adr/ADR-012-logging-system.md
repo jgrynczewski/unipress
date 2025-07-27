@@ -1,7 +1,7 @@
 # ADR-012: Logging System
 
 ## Status
-Proposed
+Accepted - Implemented
 
 ## Context
 The current codebase uses basic `print()` statements for output and debugging. For a professional game development project, we need a proper logging system that:
@@ -60,10 +60,18 @@ format = "json"  # "json" or "human"
 ```
 
 ### Integration Points
-1. **BaseGame class**: Add logger instance and common logging methods
-2. **Settings system**: Extend to load and apply logging configuration
-3. **Main entry point**: Initialize logging before game startup
-4. **Error handling**: Replace print statements with appropriate log calls
+1. **BaseGame class**: ✅ Add logger instance and common logging methods
+2. **Settings system**: ✅ Extend to load and apply logging configuration
+3. **Main entry point**: ✅ Initialize logging before game startup
+4. **Error handling**: ✅ Replace print statements with appropriate log calls
+
+### Implemented Components
+- **Logger Module**: `unipress/core/logger.py` with initialization and utility functions
+- **Settings Integration**: Logging configuration in `unipress/settings.toml`
+- **BaseGame Integration**: Logger instance and game event logging throughout
+- **Exception Handling**: All exceptions logged with full traceback using `log_error()`
+- **Game Events**: Structured logging for player actions, collisions, game state changes
+- **Convenience Functions**: `log_game_event()`, `log_player_action()`, `log_performance()`, `log_error()`
 
 ### Performance Considerations
 - Lazy evaluation of log messages using f-strings or .format()

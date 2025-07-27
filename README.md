@@ -73,7 +73,10 @@ This project uses modern Python tooling and follows professional standards:
 - **arcade** for clean 2D game development  
 - **ruff** for linting and formatting
 - **pytest** for testing
+- **mypy** for type checking
 - **TOML** for human-readable configuration
+- **JSON** for internationalization messages
+- **Loguru** for structured logging
 - **Conventional commits** with git-cz emojis
 
 ### Development Setup
@@ -103,6 +106,8 @@ All games must follow these design principles:
 - **Fullscreen Display**: Games start in fullscreen mode by default
 - **Lives System**: 3 lives with pause-after-death and score persistence
 - **Settings Integration**: TOML-based configuration with per-game overrides
+- **Internationalization**: JSON-based messages with Polish default, English fallback
+- **Professional Logging**: Structured logging with Loguru, ALL exceptions logged with traceback
 - **Base Class**: Inherit from `BaseGame` for standardized structure
 - **Professional Code**: Follow ruff linting, type hints, documentation
 
@@ -112,10 +117,18 @@ All games must follow these design principles:
 unipress/
 ├── unipress/                 # Main package
 │   ├── core/                # Core game framework
-│   │   └── base_game.py     # Base game class with difficulty system
+│   │   ├── base_game.py     # Base game class with all systems
+│   │   ├── settings.py      # TOML-based hierarchical settings
+│   │   ├── messages.py      # JSON-based internationalization
+│   │   └── logger.py        # Loguru-based structured logging
 │   ├── games/               # Individual game implementations
 │   │   └── demo_jump.py     # Demo jumping game
+│   ├── locales/             # Internationalization messages
+│   │   ├── pl_PL/           # Polish (default)
+│   │   └── en_US/           # English (fallback)
+│   ├── settings.toml        # Global configuration
 │   └── assets/              # Game assets (future: images, sounds)
+├── logs/                    # Log files (auto-created)
 ├── tests/                   # Test suite
 ├── docs/                    # Documentation
 │   └── adr/                 # Architecture Decision Records
@@ -127,15 +140,22 @@ unipress/
 ## 🏗️ Architecture
 
 ### Core Components
-- **BaseGame**: Abstract base class providing difficulty system and input handling
+- **BaseGame**: Abstract base class providing all standardized systems
+- **Settings System**: TOML-based hierarchical configuration (global → game → constructor)
+- **Internationalization**: JSON message files with Polish default, English fallback
+- **Logging System**: Structured Loguru logging with automatic rotation and exception tracking
 - **Difficulty System**: Standardized 1-10 scale affecting gameplay timing
+- **Lives System**: 3-lives with pause-after-death and score persistence
 - **Input Abstraction**: Configurable input handling (default: left mouse click)
 
 ### Game Framework Features
 - Consistent difficulty scaling across all games
 - Standardized game lifecycle (start, update, draw, reset)
-- Common UI elements (score, difficulty indicator, game over screen)
-- Professional code structure with type hints and documentation
+- Common UI elements (score, lives, difficulty indicator, game over screen)
+- Automatic fullscreen mode with ESC toggle
+- Professional logging for all game events, player actions, and errors
+- Complete internationalization support for all user-facing text
+- Professional code structure with type hints and comprehensive documentation
 
 ## 🤝 Contributing
 
