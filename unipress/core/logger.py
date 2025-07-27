@@ -8,7 +8,7 @@ from pathlib import Path
 
 from loguru import logger
 
-from .settings import get_setting, load_settings
+from unipress.core.settings import get_setting, load_settings
 
 
 def init_logger(game_name: str = None, **overrides) -> None:
@@ -24,7 +24,7 @@ def init_logger(game_name: str = None, **overrides) -> None:
         settings = load_settings(game_name, **overrides)
     else:
         # Load global settings for system-wide logging
-        from . import settings as settings_module
+        from unipress.core import settings as settings_module
 
         settings = settings_module.get_default_settings()
 

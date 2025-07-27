@@ -118,6 +118,11 @@ Reference: https://www.npmjs.com/package/git-cz#custom-config
 - **Files**: Logs stored in `logs/unipress-{date}.log` with automatic cleanup
 - **Integration**: Built into BaseGame and all components
 
+### Code Standards
+- **Import Style**: Always use absolute imports (e.g., `from unipress.core.base_game import BaseGame`)
+- **Never use relative imports** (no `from .module` or `from ..module`)
+- **Rationale**: Absolute imports are clearer, more maintainable, and avoid path confusion
+
 ### Structure Requirements
 - Inherit from BaseGame class with `game_name` parameter
 - Support difficulty scaling in reaction time windows  

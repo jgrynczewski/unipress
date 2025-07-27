@@ -8,9 +8,9 @@ from typing import Any
 
 import arcade
 
-from .logger import get_logger, log_error, log_game_event, log_player_action
-from .messages import load_messages
-from .settings import get_setting, load_settings
+from unipress.core.logger import get_logger, log_error, log_game_event, log_player_action
+from unipress.core.messages import load_messages
+from unipress.core.settings import get_setting, load_settings
 
 
 class GameMeta(type(arcade.Window), ABCMeta):  # type: ignore[misc]
