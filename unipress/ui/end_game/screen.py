@@ -105,39 +105,43 @@ class EndGameScreen:
         # Draw game over title
         arcade.draw_text(
             self.messages.get_message("ui.game_over"),
-            center_x, center_y + 120,
-            arcade.color.RED, 48,
-            anchor_x="center"
+            center_x, center_y + 140,
+            arcade.color.RED, 56,  # Larger title
+            anchor_x="center",
+            font_name="Arial"
         )
         
         # Draw final score
         arcade.draw_text(
             self.messages.get_message("ui.final_score", score=self.final_score),
-            center_x, center_y + 60,
-            arcade.color.WHITE, 32,
-            anchor_x="center"
+            center_x, center_y + 80,
+            arcade.color.WHITE, 36,  # Larger score
+            anchor_x="center",
+            font_name="Arial"
         )
         
-        # Draw instruction
+        # Draw instruction (more spacing from buttons)
         arcade.draw_text(
             self.messages.get_message("ui.click_to_select"),
-            center_x, center_y + 10,
-            arcade.color.WHITE, 18,
-            anchor_x="center"
+            center_x, center_y + 20,  # More space above buttons
+            arcade.color.LIGHT_GRAY, 20,  # Larger, softer color
+            anchor_x="center",
+            font_name="Arial"
         )
         
-        # Draw buttons
+        # Draw buttons (larger, more spaced out)
+        button_y = center_y - 80  # Move buttons further down
         self._draw_button(
             self.messages.get_message("ui.play_again"),
-            center_x - 120, center_y - 40,
-            200, 50,
+            center_x - 150, button_y,
+            280, 70,  # Larger buttons
             self.selected_button == EndGameAction.PLAY_AGAIN
         )
         
         self._draw_button(
             self.messages.get_message("ui.exit_game"),
-            center_x + 120, center_y - 40,
-            200, 50,
+            center_x + 150, button_y,
+            280, 70,  # Larger buttons
             self.selected_button == EndGameAction.EXIT
         )
         
@@ -145,7 +149,7 @@ class EndGameScreen:
     def _draw_button(self, text: str, center_x: float, center_y: float, 
                      width: float, height: float, is_selected: bool) -> None:
         """
-        Draw a button with optional selection highlighting.
+        Draw a rounded button with optional selection highlighting.
         
         Args:
             text: Button text
@@ -155,30 +159,47 @@ class EndGameScreen:
             height: Button height
             is_selected: Whether button is currently selected
         """
-        # Button background
-        color = self.selected_color if is_selected else self.normal_color
+        # Button colors
+        if is_selected:
+            bg_color = (255, 215, 0)  # Gold for selected
+            border_color = (255, 255, 255)  # White border
+            text_color = (0, 0, 0)  # Black text
+        else:
+            bg_color = (70, 70, 70)  # Dark gray for unselected
+            border_color = (150, 150, 150)  # Light gray border
+            text_color = (255, 255, 255)  # White text
+        
+        # Draw rounded rectangle (simulate with multiple rectangles and circles)
+        corner_radius = 15
+        left = center_x - width // 2
+        bottom = center_y - height // 2
+        right = center_x + width // 2
+        top = center_y + height // 2
+        
+        # Main rectangle body
         arcade.draw_lbwh_rectangle_filled(
-            center_x - width // 2, 
-            center_y - height // 2,
-            width, height, 
-            color
+            left + corner_radius, bottom,
+            width - 2 * corner_radius, height,
+            bg_color
+        )
+        arcade.draw_lbwh_rectangle_filled(
+            left, bottom + corner_radius,
+            width, height - 2 * corner_radius,
+            bg_color
         )
         
-        # Button border
-        border_color = arcade.color.WHITE if is_selected else arcade.color.GRAY
-        arcade.draw_lbwh_rectangle_outline(
-            center_x - width // 2,
-            center_y - height // 2, 
-            width, height,
-            border_color, 3
-        )
+        # Corner circles
+        arcade.draw_circle_filled(left + corner_radius, bottom + corner_radius, corner_radius, bg_color)
+        arcade.draw_circle_filled(right - corner_radius, bottom + corner_radius, corner_radius, bg_color)
+        arcade.draw_circle_filled(left + corner_radius, top - corner_radius, corner_radius, bg_color)
+        arcade.draw_circle_filled(right - corner_radius, top - corner_radius, corner_radius, bg_color)
         
-        # Button text
-        text_color = arcade.color.BLACK if is_selected else arcade.color.WHITE
+        # Button text (larger font)
         arcade.draw_text(
             text, center_x, center_y,
-            text_color, 20,
-            anchor_x="center", anchor_y="center"
+            text_color, 24,  # Larger font
+            anchor_x="center", anchor_y="center",
+            font_name="Arial"  # Better font
         )
 
 
