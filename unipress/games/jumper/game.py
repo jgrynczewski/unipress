@@ -97,8 +97,17 @@ class AnimatedSprite:
         """Draw the sprite at current animation frame."""
         if self.current_animation:
             texture = self.current_animation.get_current_texture()
-            # Draw texture using arcade's draw_texture method
-            arcade.draw_texture(texture, self.x, self.y)
+            # Create temporary sprite and draw using SpriteList
+            sprite = arcade.Sprite()
+            sprite.texture = texture
+            sprite.center_x = self.x
+            sprite.center_y = self.y
+            # Scale up the sprite (2x larger)
+            sprite.scale = 2.0
+            
+            sprite_list = arcade.SpriteList()
+            sprite_list.append(sprite)
+            sprite_list.draw()
         else:
             # Fallback: draw colored rectangle when no animation loaded
             arcade.draw_lbwh_rectangle_filled(self.x - 32, self.y - 32, 64, 64, arcade.color.BLUE)
@@ -130,7 +139,17 @@ class Obstacle:
         """Draw the obstacle."""
         if self.sprite.current_animation:
             # Draw actual fire sprite animation
-            self.sprite.draw()
+            texture = self.sprite.current_animation.get_current_texture()
+            sprite = arcade.Sprite()
+            sprite.texture = texture
+            sprite.center_x = self.sprite.x
+            sprite.center_y = self.sprite.y
+            # Scale fire sprites to match player size
+            sprite.scale = 2.0
+            
+            sprite_list = arcade.SpriteList()
+            sprite_list.append(sprite)
+            sprite_list.draw()
         else:
             # Fallback: draw red rectangle for fire obstacle
             arcade.draw_lbwh_rectangle_filled(self.sprite.x - 32, self.sprite.y - 32, 64, 64, arcade.color.RED)
@@ -169,11 +188,20 @@ class JumperGame(BaseGame):
             difficulty=difficulty
         )
 
-        # Game settings
+        # Game settings - using same calculation as demo_jump for consistent difficulty
         self.player_speed = get_setting(self.settings, "jumper.player_speed", 200)
-        self.jump_height = get_setting(self.settings, "jumper.jump_height_base", 250) * (1 + self.difficulty * 0.1)
+        
+        # Calculate jump height like demo_jump - guarantee obstacle clearance
+        obstacle_height = 64  # Fire obstacle height 
+        base_jump_height = obstacle_height + 100  # 100px safety margin above obstacle
+        difficulty_bonus = (11 - self.difficulty) * 20  # More height on easier difficulties
+        desired_jump_height = base_jump_height + difficulty_bonus
+        
         self.gravity = get_setting(self.settings, "jumper.gravity", 800)
-        self.obstacle_speed = get_setting(self.settings, "jumper.obstacle_speed_base", 150) * (1 + self.difficulty * 0.15)
+        
+        # Convert jump height to initial velocity using physics formula (like demo_jump)
+        self.jump_velocity = (2 * self.gravity * desired_jump_height) ** 0.5
+        self.obstacle_speed = get_setting(self.settings, "jumper.obstacle_speed_base", 100) + (self.difficulty * 15)
         self.obstacle_spawn_interval = max(1.0, get_setting(self.settings, "jumper.obstacle_spawn_interval", 3.0) - self.difficulty * 0.2)
         self.background_speed = get_setting(self.settings, "jumper.background_scroll_speed", 100)
 
@@ -234,7 +262,7 @@ class JumperGame(BaseGame):
         # Jump if on ground
         if not self.is_jumping:
             self.is_jumping = True
-            self.player_y_velocity = self.jump_height
+            self.player_y_velocity = self.jump_velocity
             self.player.set_animation("player/jumping")
             
             # Play jump sound
