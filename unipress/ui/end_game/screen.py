@@ -181,3 +181,39 @@ class EndGameScreen:
             text_color, 20,
             anchor_x="center", anchor_y="center"
         )
+
+
+# Test runner for standalone execution
+if __name__ == "__main__":
+    import arcade
+    from unipress.core.logger import init_logger
+    from unipress.core.messages import load_messages
+
+    class EndGameScreenTest(arcade.Window):
+        """Test window for end game screen component."""
+
+        def __init__(self):
+            super().__init__(800, 600, "End Game Screen Test")
+            init_logger()
+            self.messages = load_messages("pl_PL", "demo_jump")
+            self.end_game_screen = EndGameScreen(self.messages, final_score=12345)
+            arcade.set_background_color(arcade.color.DARK_BLUE)
+            print("Click to cycle buttons, ESC to exit")
+
+        def on_draw(self):
+            self.clear()
+            arcade.draw_text("TEST BACKGROUND", self.width//2, self.height//2+200, 
+                           arcade.color.GRAY, 24, anchor_x="center")
+            self.end_game_screen.draw(self.width, self.height)
+
+        def on_mouse_press(self, x, y, button, modifiers):
+            if button == arcade.MOUSE_BUTTON_LEFT:
+                action = self.end_game_screen.cycle_selection()
+                print(f"Selected: {action.value}")
+
+        def on_key_press(self, key, modifiers):
+            if key == arcade.key.ESCAPE:
+                self.close()
+
+    print("End Game Screen Test - Click to cycle, ESC to exit")
+    EndGameScreenTest().run()
