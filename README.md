@@ -13,6 +13,23 @@ Simple jumping game where you avoid red obstacles by clicking to jump.
 - **Lives**: 3 lives system - lose a life on collision, keep score
 - **Features**: Physics-based jumping, collision detection, scoring, high score tracking
 
+### Jumper Game
+Enhanced sprite-based jumping game with animated characters and fire obstacles.
+- **Controls**: Left mouse click to jump over fire obstacles
+- **Difficulty**: 1-10 scale (affects obstacle speed and jump height)
+- **Lives**: 3 lives system with score persistence
+- **Features**: 
+  - Animated running player character (8-frame sprite animation)
+  - Animated fire obstacles (5-frame burning animation)
+  - Smooth jumping animation (6-frame sequence)
+  - Jump window indicator showing optimal timing
+  - 2x sprite scaling for better visibility
+  - Physics-based jump mechanics matching demo_jump
+  - Sound effects support (jump, collision, success)
+  - Parallax scrolling background support
+- **Assets**: Professional sprite-based graphics with animation metadata
+- **Run**: `uv run python -c "from unipress.games.jumper.game import JumperGame; JumperGame().run()"`
+
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -130,15 +147,26 @@ unipress/
 │   │   └── end_game/        # End game screen component
 │   │       └── screen.py    # Standardized end game UI
 │   ├── games/               # Individual game implementations
-│   │   └── demo_jump/       # Demo jumping game folder
+│   │   ├── demo_jump/       # Demo jumping game folder
+│   │   │   ├── __init__.py  # Package initialization
+│   │   │   ├── game.py      # Game implementation
+│   │   │   └── settings.toml # Game-specific settings
+│   │   └── jumper/          # Sprite-based jumping game
 │   │       ├── __init__.py  # Package initialization
-│   │       ├── game.py      # Game implementation
+│   │       ├── game.py      # Enhanced game with animations
 │   │       └── settings.toml # Game-specific settings
 │   ├── locales/             # Internationalization messages
 │   │   ├── pl_PL/           # Polish (default)
 │   │   └── en_US/           # English (fallback)
 │   ├── settings.toml        # Global configuration
-│   └── assets/              # Game assets (future: images, sounds)
+│   └── assets/              # Game assets
+│       ├── images/          # Sprite graphics and animations
+│       │   └── games/       # Per-game asset organization
+│       │       └── jumper/  # Jumper game sprites
+│       │           ├── player/      # Player animations
+│       │           └── obstacles/   # Fire obstacle animations
+│       └── sounds/          # Audio files (future)
+│           └── games/       # Per-game sound organization
 ├── logs/                    # Log files (auto-created)
 ├── high_scores.json         # High score storage (auto-created)
 ├── tests/                   # Test suite

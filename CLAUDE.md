@@ -18,13 +18,16 @@ ALL game mechanics and UI must work with timing-based or automatic cycling inter
 ## Current Status
 - ✅ Project setup complete with professional structure
 - ✅ Demo game implemented with all systems integrated
+- ✅ Jumper game implemented with sprite animations and enhanced features
+- ✅ Asset management system with animation metadata support
 - ✅ GitHub repository created and CI/CD pipeline active
 - ✅ All code quality checks passing (ruff, mypy, pytest)
 - ✅ Fullscreen mode with ESC toggle implemented
 - ✅ 3-lives system with pause-after-death mechanics
 - ✅ TOML settings system with hierarchical configuration
-- ✅ Player blinking effect on life loss
-- ✅ Jumper game created as demo copy (needs updates)
+- ✅ Player blinking effect on life loss  
+- ✅ Jump window indicator showing optimal timing
+- ✅ High score system with persistent JSON storage
 
 ## Communication Protocol
 - **User writes in Polish or English** 
@@ -163,6 +166,7 @@ Reference: https://www.npmjs.com/package/git-cz#custom-config
 - `uv run pytest` - Run tests
 - `uv run python main.py [difficulty]` - Run demo game
 - `uv run python -m unipress.games.GAMENAME.game` - Run specific game
+- `PYTHONPATH=/path/to/project uv run python unipress/games/jumper/game.py` - Run jumper game directly
 
 ## Quality Assurance Pipeline
 **Pre-commit checks** (run all before committing):
@@ -186,8 +190,41 @@ uv run ruff check && uv run ruff format && uv run mypy unipress && uv run pytest
 
 **Example**: If fixing 2 unrelated bugs, create 2 separate commits and push both immediately.
 
+## Available Games
+
+### Demo Jump Game (demo_jump)
+- **Purpose**: Reference implementation demonstrating core game framework
+- **Features**: Basic geometric sprites, physics-based jumping, collision detection
+- **Assets**: Geometric shapes (rectangles) with color coding
+- **Jump Window**: Visual indicator showing optimal timing for obstacle clearance
+- **Status**: Complete and serving as development reference
+
+### Jumper Game (jumper) 
+- **Purpose**: Enhanced sprite-based jumping game with professional assets
+- **Features**: 
+  - Animated running player character (8-frame sprite sequence)
+  - Animated fire obstacles (5-frame burning animation) 
+  - Smooth jumping animation (6-frame sequence synchronized with physics)
+  - Jump window indicator matching demo_jump functionality
+  - 2x sprite scaling for better visibility
+  - Asset management system with JSON animation metadata
+  - Sound effects support (jump, collision, success sounds)
+  - Parallax scrolling background support (framework ready)
+- **Assets**: Professional sprite graphics with frame-by-frame animations
+- **Physics**: Identical mechanics to demo_jump for consistent difficulty
+- **Animation System**: JSON-based metadata with precise timing synchronization
+- **Status**: Complete with sprite animations and enhanced visual feedback
+
+## Asset Management System
+- **Structure**: Organized by game in `unipress/assets/images/games/{game_name}/`
+- **Animation Format**: JSON metadata files with frame sequences, durations, and hitboxes
+- **Asset Loading**: Lazy loading with caching for performance
+- **Sound Support**: Framework ready for OGG audio files
+- **Scaling**: Configurable sprite scaling (currently 2x for better visibility)
+- **Documentation**: Full ADR in `docs/adr/013-asset-management-system.md`
+
 ## Next Steps
-- Add more one-button games with sprites and sounds
-- Implement comprehensive testing
-- Add CI/CD pipeline
+- Add more one-button games with different mechanics
+- Implement comprehensive testing for asset system
+- Add background graphics and sound effects to jumper
 - Create game launcher/menu system
