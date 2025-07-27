@@ -36,12 +36,35 @@ uv run python main.py 10  # Hard: 0.2s reaction time
 ```
 
 ### Game Controls
-- **Left Mouse Click**: Primary action (jump, start game, restart)
+- **Left Mouse Click**: Primary action (jump, start game, restart, continue after life loss)
 - **ESC Key**: Toggle fullscreen mode (for development/testing)
+- **Lives System**: 3 lives by default, pause after death with player blinking
 - **Difficulty System**: Affects reaction time windows
   - Level 1: 2.0 seconds reaction time (trivial)
   - Level 10: 0.2 seconds reaction time (challenging)
 - **Display Mode**: Games start in fullscreen by default (no system bars/menus)
+- **Settings**: Configurable via TOML files (global and per-game)
+
+## ⚙️ Configuration
+
+### Settings System
+Games use TOML files for configuration with hierarchical priority:
+
+1. **Constructor parameters** (highest priority)
+2. **Game-specific settings**: `unipress/games/{game_name}/settings.toml`
+3. **Global settings**: `unipress/settings.toml`
+4. **Default values** (lowest priority)
+
+Example game-specific settings:
+```toml
+[game]
+difficulty = 3  # Override global difficulty
+lives = 5       # Override global lives count
+
+[demo_jump]
+obstacle_speed_base = 100
+jump_height_base = 150
+```
 
 ## 🛠️ Development
 
@@ -50,6 +73,7 @@ This project uses modern Python tooling and follows professional standards:
 - **arcade** for clean 2D game development  
 - **ruff** for linting and formatting
 - **pytest** for testing
+- **TOML** for human-readable configuration
 - **Conventional commits** with git-cz emojis
 
 ### Development Setup
@@ -77,7 +101,8 @@ All games must follow these design principles:
 - **Unified Difficulty**: 1-10 scale affecting reaction time windows
 - **Consistent Input**: Left mouse click (configurable)
 - **Fullscreen Display**: Games start in fullscreen mode by default
-- **Lives System**: 3 lives with score persistence across deaths
+- **Lives System**: 3 lives with pause-after-death and score persistence
+- **Settings Integration**: TOML-based configuration with per-game overrides
 - **Base Class**: Inherit from `BaseGame` for standardized structure
 - **Professional Code**: Follow ruff linting, type hints, documentation
 

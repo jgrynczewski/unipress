@@ -8,10 +8,14 @@
 
 ## Current Status
 - ✅ Project setup complete with professional structure
-- ✅ Demo game implemented with difficulty system
+- ✅ Demo game implemented with all systems integrated
 - ✅ GitHub repository created and CI/CD pipeline active
 - ✅ All code quality checks passing (ruff, mypy, pytest)
-- ✅ Game mechanics fixed and properly balanced
+- ✅ Fullscreen mode with ESC toggle implemented
+- ✅ 3-lives system with pause-after-death mechanics
+- ✅ TOML settings system with hierarchical configuration
+- ✅ Player blinking effect on life loss
+- ✅ Jumper game created as demo copy (needs updates)
 
 ## Communication Protocol
 - **User writes in Polish or English** 
@@ -70,18 +74,33 @@ Reference: https://www.npmjs.com/package/git-cz#custom-config
 - **Implementation**: Built into BaseGame class
 
 ### Lives System
-- **Default Lives**: 3 lives per game (configurable)
-- **Life Loss**: Each failure/death loses 1 life and restarts game state
-- **Score Persistence**: Score is maintained across life losses
-- **Game Over**: Final game over occurs only when all lives are lost
-- **Implementation**: Built into BaseGame class with `lose_life()` method
+- **Default Lives**: 3 lives per game (configurable via settings or constructor)
+- **Life Loss**: Each failure/death loses 1 life and enters pause state
+- **Pause After Death**: Game freezes, all objects stop, player blinks red/invisible for 1 second
+- **Click to Continue**: After blinking, player must click to restart game state
+- **Score Persistence**: Score maintained across life losses within same session
+- **Game Over**: Final game over only when all lives exhausted
+- **Methods**: Use `lose_life()` instead of `end_game()` for proper behavior
+- **Implementation**: Built into BaseGame with life_lost_pause state
+
+### Settings System (TOML-based)
+- **Format**: TOML files for human-readable configuration with comments
+- **Hierarchy**: Constructor params > Game settings > Global settings > Hardcoded defaults
+- **Global Settings**: `unipress/settings.toml` - shared defaults for all games
+- **Game Settings**: `unipress/games/{game_name}/settings.toml` - per-game overrides
+- **Constructor**: `BaseGame(game_name, difficulty=None, lives=None, fullscreen=None)`
+- **Available Settings**: difficulty (1-10), lives (int), fullscreen (bool), blink_duration (float)
+- **Loading**: Automatic via `load_settings()` with recursive merge
+- **Access**: `get_setting(settings, "game.difficulty", default=5)` dot notation
+- **Implementation**: `unipress/core/settings.py` with tomli dependency
 
 ### Structure Requirements
-- Inherit from BaseGame class
-- Support difficulty scaling in reaction time windows
-- Configurable input handling
-- Fullscreen display by default
-- 3-lives system with score persistence
+- Inherit from BaseGame class with `game_name` parameter
+- Support difficulty scaling in reaction time windows  
+- Configurable input handling (left mouse click default)
+- Fullscreen display by default with ESC toggle
+- 3-lives system with pause-after-death and score persistence
+- TOML settings integration for all configurable parameters
 
 ## Development Commands
 - `uv sync` - Install/sync dependencies
