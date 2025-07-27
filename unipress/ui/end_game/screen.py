@@ -130,18 +130,6 @@ class EndGameScreen:
             self.selected_button == EndGameAction.EXIT
         )
         
-        # Draw selection indicator
-        selected_text = (
-            self.messages.get_message("ui.play_again") 
-            if self.selected_button == EndGameAction.PLAY_AGAIN
-            else self.messages.get_message("ui.exit_game")
-        )
-        arcade.draw_text(
-            f"► {selected_text}",
-            center_x, center_y - 80,
-            self.selected_color, 24,
-            anchor_x="center"
-        )
 
     def _draw_button(self, text: str, center_x: float, center_y: float, 
                      width: float, height: float, is_selected: bool) -> None:
