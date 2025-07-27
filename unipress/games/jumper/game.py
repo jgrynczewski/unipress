@@ -495,14 +495,16 @@ class JumperGame(BaseGame):
             jump_zone_start, 45, jump_zone_width, 10, arcade.color.GREEN
         )
         
-        # Draw info text
-        info_text = f"Jump window: {jump_window_distance:.0f}px ({jump_duration:.2f}s)"
+        # Draw info text centered under jump window
+        info_text = f"{jump_window_distance:.0f}px ({jump_duration:.2f}s)"
+        text_x = jump_zone_start + jump_zone_width // 2  # Center under jump window
         arcade.draw_text(
             info_text,
-            10,
-            20,
+            text_x,
+            30,  # Position below green indicator
             arcade.color.WHITE,
             12,
+            anchor_x="center"  # Center the text horizontally
         )
 
     def on_draw(self) -> None:
