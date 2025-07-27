@@ -1,17 +1,17 @@
 # Jumper Game Settings
 
 [game]
-difficulty = 5
+difficulty = 3
 lives = 3
 
 [jumper]
 # Player settings
 player_speed = 200
-jump_height_base = 250
+jump_height_base = 400
 gravity = 800
 
 # Obstacle settings  
-obstacle_speed_base = 150
+obstacle_speed_base = 100
 obstacle_spawn_interval = 3.0
 obstacle_width = 64
 obstacle_height = 64
