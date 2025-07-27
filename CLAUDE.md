@@ -150,11 +150,12 @@ uv run ruff check && uv run ruff format && uv run mypy unipress && uv run pytest
 
 ## Development Workflow
 **MANDATORY WORKFLOW**: 
-1. **Immediate commit** - Create atomic commits with proper git-cz format after EACH completed change (feat, fix, docs, chore, etc.)
-2. **Push immediately** - Push all commits to GitHub repository after committing
-3. **Separate commits** - Never bundle unrelated changes (especially different fixes) into one commit
-4. **User confirmation** - Only proceed to next major task after user confirmation
-5. **Single author** - Commits should only show user as author, NEVER add co-author lines or Claude attribution
+1. **Complete features first** - Always commit and push finished feature before starting new work
+2. **Immediate commit** - Create atomic commits with proper git-cz format after EACH completed change (feat, fix, docs, chore, etc.)
+3. **Push immediately** - Push all commits to GitHub repository after committing
+4. **Separate commits** - Never bundle unrelated changes (especially different fixes) into one commit
+5. **User confirmation** - Only proceed to next major task after user confirmation
+6. **Single author** - Commits should only show user as author, NEVER add co-author lines or Claude attribution
 
 **Example**: If fixing 2 unrelated bugs, create 2 separate commits and push both immediately.
 
