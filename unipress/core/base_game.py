@@ -246,10 +246,10 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
             20,
         )
 
-        # Difficulty indicator - right bottom corner (aligned with lives)
+        # Difficulty indicator - right bottom corner
         arcade.draw_text(
             self.get_message("ui.difficulty", level=self.difficulty),
-            self.width - 150,
+            self.width - 200,
             20,
             arcade.color.WHITE,
             16,
