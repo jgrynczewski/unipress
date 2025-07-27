@@ -6,6 +6,10 @@
 difficulty = 3
 lives = 5
 
+# [ui]
+# Override language for this specific game
+# language = "en_US"
+
 [demo_jump]
 # Game-specific settings for demo jump game
 obstacle_speed_base = 100

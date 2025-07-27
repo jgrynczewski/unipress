@@ -8,6 +8,7 @@ from typing import Any
 
 import arcade
 
+from .messages import load_messages
 from .settings import get_setting, load_settings
 
 
@@ -37,6 +38,7 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
         input_key: int = arcade.MOUSE_BUTTON_LEFT,
         fullscreen: bool = None,
         lives: int = None,
+        language: str = None,
     ):
         """
         Initialize base game.
@@ -50,6 +52,7 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
             input_key: Input key/button (default: left mouse click)
             fullscreen: Whether to start in fullscreen mode (None = use settings)
             lives: Number of lives player starts with (None = use settings)
+            language: Language code for messages (None = use settings)
         """
         # Load settings with constructor overrides
         self.settings = load_settings(
@@ -57,12 +60,17 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
             difficulty=difficulty,
             fullscreen=fullscreen,
             lives=lives,
+            language=language,
         )
 
         # Use settings values
         final_difficulty = get_setting(self.settings, "game.difficulty", 5)
         final_lives = get_setting(self.settings, "game.lives", 3)
         final_fullscreen = get_setting(self.settings, "game.fullscreen", True)
+        final_language = get_setting(self.settings, "ui.language", "pl_PL")
+        
+        # Load localized messages
+        self.messages = load_messages(final_language, game_name)
 
         super().__init__(width, height, title, fullscreen=final_fullscreen)
 
@@ -104,6 +112,10 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
             "reaction_time": self.reaction_time,
             "difficulty": self.difficulty,
         }
+
+    def get_message(self, key: str, **kwargs) -> str:
+        """Get localized message with parameter substitution."""
+        return self.messages.get_message(key, **kwargs)
 
     def update_life_lost_effects(self, delta_time: float) -> None:
         """Update visual effects during life lost pause."""
@@ -194,12 +206,13 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
         """Draw common UI elements (score, difficulty info, etc.)."""
         # Score
         arcade.draw_text(
-            f"Score: {self.score}", 10, self.height - 30, arcade.color.WHITE, 20
+            self.get_message("ui.score", score=self.score),
+            10, self.height - 30, arcade.color.WHITE, 20
         )
 
         # Lives display
         arcade.draw_text(
-            f"Lives: {self.lives}/{self.max_lives}",
+            self.get_message("ui.lives", current=self.lives, max=self.max_lives),
             10,
             self.height - 60,
             arcade.color.WHITE,
@@ -208,7 +221,7 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
 
         # Difficulty indicator
         arcade.draw_text(
-            f"Difficulty: {self.difficulty}/10",
+            self.get_message("ui.difficulty", level=self.difficulty),
             10,
             self.height - 90,
             arcade.color.WHITE,
@@ -218,7 +231,7 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
         # Game over screen
         if self.game_over:
             arcade.draw_text(
-                "GAME OVER",
+                self.get_message("ui.game_over"),
                 self.width // 2,
                 self.height // 2,
                 arcade.color.RED,
@@ -226,7 +239,7 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
                 anchor_x="center",
             )
             arcade.draw_text(
-                f"Final Score: {self.score}",
+                self.get_message("ui.final_score", score=self.score),
                 self.width // 2,
                 self.height // 2 - 60,
                 arcade.color.WHITE,
@@ -234,7 +247,7 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
                 anchor_x="center",
             )
             arcade.draw_text(
-                "Click to restart",
+                self.get_message("ui.click_to_restart"),
                 self.width // 2,
                 self.height // 2 - 100,
                 arcade.color.WHITE,
@@ -245,7 +258,7 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
         # Start screen
         elif not self.game_started:
             arcade.draw_text(
-                "Click to start",
+                self.get_message("ui.click_to_start"),
                 self.width // 2,
                 self.height // 2,
                 arcade.color.WHITE,

@@ -64,7 +64,7 @@ class DemoJumpGame(BaseGame):  # type: ignore[misc]
         )
 
         # Update title to show actual difficulty from settings
-        self.set_caption(f"Demo Jump Game (Difficulty: {self.difficulty})")
+        self.set_caption(f"{self.get_message('game.title')} (Difficulty: {self.difficulty})")
 
         # Player settings
         self.player_x = 100.0
@@ -246,7 +246,9 @@ class DemoJumpGame(BaseGame):  # type: ignore[misc]
                 jump_zone_start, 45, jump_zone_width, 10, arcade.color.GREEN
             )
             arcade.draw_text(
-                f"Jump window: {jump_window_distance:.0f}px ({jump_duration:.2f}s)",
+                self.get_message("game.jump_window_info", 
+                                distance=jump_window_distance, 
+                                duration=jump_duration),
                 10,
                 20,
                 arcade.color.WHITE,
