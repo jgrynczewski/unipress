@@ -202,8 +202,13 @@ class JumperGame(BaseGame):
         # Convert jump height to initial velocity using physics formula (like demo_jump)
         self.jump_velocity = (2 * self.gravity * desired_jump_height) ** 0.5
         self.obstacle_speed = get_setting(self.settings, "jumper.obstacle_speed_base", 100) + (self.difficulty * 15)
-        self.obstacle_spawn_interval = max(1.0, get_setting(self.settings, "jumper.obstacle_spawn_interval", 3.0) - self.difficulty * 0.2)
         self.background_speed = get_setting(self.settings, "jumper.background_scroll_speed", 100)
+        
+        # Calculate initial random spawn interval with safe minimum distance
+        jump_duration = 2 * (2 * desired_jump_height / self.gravity) ** 0.5
+        min_safe_interval = jump_duration * 1.2  # 20% safety margin  
+        base_interval = max(min_safe_interval, 2.5)  # At least 2.5s base
+        self.obstacle_spawn_interval = base_interval * random.uniform(0.8, 2.5)
 
         # Player sprite and physics
         self.player = AnimatedSprite(150, 100, "jumper")
@@ -315,11 +320,20 @@ class JumperGame(BaseGame):
                     log_game_event("obstacle_cleared", score=self.score)
                 self.obstacles.remove(obstacle)
 
-        # Spawn new obstacles
+        # Spawn new obstacles with random intervals
         self.obstacle_timer += delta_time
         if self.obstacle_timer >= self.obstacle_spawn_interval:
             self.spawn_obstacle()
             self.obstacle_timer = 0.0
+            
+            # Calculate new random spawn interval with safe minimum distance
+            # Base interval ensures minimum time for double jumps
+            jump_duration = 2 * (2 * (64 + 100 + (11 - self.difficulty) * 20) / self.gravity) ** 0.5
+            min_safe_interval = jump_duration * 1.2  # 20% safety margin
+            base_interval = max(min_safe_interval, 2.5)  # At least 2.5s base
+            
+            # Add randomness: 0.8x to 2.5x variation
+            self.obstacle_spawn_interval = base_interval * random.uniform(0.8, 2.5)
 
     def check_collisions(self) -> None:
         """Check for player-obstacle collisions."""
