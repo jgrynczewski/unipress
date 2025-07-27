@@ -105,6 +105,7 @@ All games must follow these design principles:
 - **Consistent Input**: Left mouse click (configurable)
 - **Fullscreen Display**: Games start in fullscreen mode by default
 - **Lives System**: 3 lives with pause-after-death and score persistence
+- **End Game Screen**: Standardized UI with cycling Play Again/Exit buttons
 - **Settings Integration**: TOML-based configuration with per-game overrides
 - **Internationalization**: JSON-based messages with Polish default, English fallback
 - **Professional Logging**: Structured logging with Loguru, ALL exceptions logged with traceback
@@ -121,6 +122,9 @@ unipress/
 │   │   ├── settings.py      # TOML-based hierarchical settings
 │   │   ├── messages.py      # JSON-based internationalization
 │   │   └── logger.py        # Loguru-based structured logging
+│   ├── ui/                  # Shared UI components
+│   │   └── end_game/        # End game screen component
+│   │       └── screen.py    # Standardized end game UI
 │   ├── games/               # Individual game implementations
 │   │   └── demo_jump/       # Demo jumping game folder
 │   │       ├── __init__.py  # Package initialization
@@ -154,10 +158,12 @@ unipress/
 ### Game Framework Features
 - Consistent difficulty scaling across all games
 - Standardized game lifecycle (start, update, draw, reset)
-- Common UI elements (score, lives, difficulty indicator, game over screen)
+- Common UI elements (score, lives, difficulty indicator)
+- Standardized end game screen with cycling Play Again/Exit buttons
 - Automatic fullscreen mode with ESC toggle
 - Professional logging for all game events, player actions, and errors
 - Complete internationalization support for all user-facing text
+- Shared UI components with per-game customization capability
 - Professional code structure with type hints and comprehensive documentation
 
 ## 🤝 Contributing

@@ -46,3 +46,20 @@ All games must follow these design standards:
 - Difficulty affects reaction time windows (higher = shorter time)
 - Input method configurable via game settings
 - All games extend `BaseGame` and implement difficulty-specific logic
+
+## End Game Screen Standard
+**Decision**: All games use standardized end game screen with cycling buttons.
+
+**Rationale**:
+- Consistent user experience across all games
+- Reduces development effort through shared components
+- Professional appearance with proper UX patterns
+- Supports internationalization and future customization
+
+**Implementation**:
+- Shared UI component in `unipress/ui/end_game/screen.py`
+- Two cycling buttons: "Play Again" and "Exit"
+- Click cycles between options, selected button highlighted
+- Integrated into BaseGame, automatically shown on game over
+- Fully localized with Polish/English support
+- Foundation for per-game asset customization

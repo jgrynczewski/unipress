@@ -35,6 +35,7 @@
 10. **Settings System**: ✅ TOML-based hierarchical configuration
 11. **Internationalization**: ✅ JSON-based with Polish default, English fallback
 12. **Logging System**: ✅ Loguru-based with structured JSON logging
+13. **End Game Screen**: ✅ Standardized UI with cycling Play Again/Exit buttons
 
 ## Commit Standards (git-cz)
 **Format**: `type(scope): emoji subject` (space after emoji)
@@ -118,6 +119,16 @@ Reference: https://www.npmjs.com/package/git-cz#custom-config
 - **Files**: Logs stored in `logs/unipress-{date}.log` with automatic cleanup
 - **Integration**: Built into BaseGame and all components
 
+### End Game Screen (Standardized UI)
+- **Component**: Shared UI component in `unipress/ui/end_game/screen.py`
+- **Buttons**: Two cycling options - "Play Again" and "Exit"  
+- **Interaction**: Click cycles between buttons, selected button highlighted
+- **Actions**: Play Again restarts game, Exit closes application
+- **Visuals**: Professional overlay with semi-transparent background
+- **Localization**: Fully internationalized with Polish/English support
+- **Customization**: Foundation for per-game asset overrides (future)
+- **Integration**: Automatically displayed when all lives lost
+
 ### Code Standards
 - **Import Style**: Always use absolute imports (e.g., `from unipress.core.base_game import BaseGame`)
 - **Never use relative imports** (no `from .module` or `from ..module`)
@@ -132,6 +143,7 @@ Reference: https://www.npmjs.com/package/git-cz#custom-config
 - TOML settings integration for all configurable parameters
 - Internationalization support for all user-facing text
 - Professional logging throughout with structured events
+- Standardized end game screen with cycling Play Again/Exit buttons
 
 ## Development Commands
 - `uv sync` - Install/sync dependencies
