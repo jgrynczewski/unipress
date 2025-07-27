@@ -64,10 +64,16 @@ Reference: https://www.npmjs.com/package/git-cz#custom-config
 - **Requirement**: Input method easily configurable
 - **Implementation**: Abstracted input handling
 
+### Display Standard
+- **Fullscreen**: Games start in fullscreen mode by default (no system bars/menus)
+- **Escape Key**: ESC toggles fullscreen mode for development/testing
+- **Implementation**: Built into BaseGame class
+
 ### Structure Requirements
 - Inherit from BaseGame class
 - Support difficulty scaling in reaction time windows
 - Configurable input handling
+- Fullscreen display by default
 
 ## Development Commands
 - `uv sync` - Install/sync dependencies

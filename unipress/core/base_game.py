@@ -32,18 +32,20 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
         title: str = "Unipress Game",
         difficulty: int = 5,
         input_key: int = arcade.MOUSE_BUTTON_LEFT,
+        fullscreen: bool = True,
     ):
         """
         Initialize base game.
 
         Args:
-            width: Window width in pixels
-            height: Window height in pixels
+            width: Window width in pixels (ignored if fullscreen=True)
+            height: Window height in pixels (ignored if fullscreen=True)
             title: Game window title
             difficulty: Difficulty level 1-10 (1=easy, 10=hard)
             input_key: Input key/button (default: left mouse click)
+            fullscreen: Whether to start in fullscreen mode (default: True)
         """
-        super().__init__(width, height, title)
+        super().__init__(width, height, title, fullscreen=fullscreen)
 
         # Validate difficulty range
         if not 1 <= difficulty <= 10:
@@ -83,8 +85,10 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
 
     def on_key_press(self, key: int, modifiers: int) -> None:
         """Handle keyboard events (if needed for alternative input)."""
+        if key == arcade.key.ESCAPE:
+            # Toggle fullscreen mode
+            self.set_fullscreen(not self.fullscreen)
         # Override in subclass if keyboard input is needed
-        pass
 
     @abstractmethod
     def on_action_press(self) -> None:

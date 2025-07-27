@@ -36,9 +36,11 @@ uv run python main.py 10  # Hard: 0.2s reaction time
 
 ### Game Controls
 - **Left Mouse Click**: Primary action (jump, start game, restart)
+- **ESC Key**: Toggle fullscreen mode (for development/testing)
 - **Difficulty System**: Affects reaction time windows
   - Level 1: 2.0 seconds reaction time (trivial)
   - Level 10: 0.2 seconds reaction time (challenging)
+- **Display Mode**: Games start in fullscreen by default (no system bars/menus)
 
 ## 🛠️ Development
 
@@ -73,6 +75,7 @@ uv run ruff check && uv run ruff format && uv run pytest
 All games must follow these design principles:
 - **Unified Difficulty**: 1-10 scale affecting reaction time windows
 - **Consistent Input**: Left mouse click (configurable)
+- **Fullscreen Display**: Games start in fullscreen mode by default
 - **Base Class**: Inherit from `BaseGame` for standardized structure
 - **Professional Code**: Follow ruff linting, type hints, documentation
 
