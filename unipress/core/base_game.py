@@ -33,6 +33,7 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
         difficulty: int = 5,
         input_key: int = arcade.MOUSE_BUTTON_LEFT,
         fullscreen: bool = True,
+        lives: int = 3,
     ):
         """
         Initialize base game.
@@ -44,6 +45,7 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
             difficulty: Difficulty level 1-10 (1=easy, 10=hard)
             input_key: Input key/button (default: left mouse click)
             fullscreen: Whether to start in fullscreen mode (default: True)
+            lives: Number of lives player starts with (default: 3)
         """
         super().__init__(width, height, title, fullscreen=fullscreen)
 
@@ -62,6 +64,8 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
         self.game_started = False
         self.game_over = False
         self.score = 0
+        self.lives = lives
+        self.max_lives = lives
 
         arcade.set_background_color(arcade.color.BLACK)
 
@@ -111,10 +115,22 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
         """Start the game."""
         self.game_started = True
         self.game_over = False
+        self.lives = self.max_lives
+        self.score = 0
         self.reset_game()
 
+    def lose_life(self) -> None:
+        """Player loses a life. Restart level or end game if no lives left."""
+        self.lives -= 1
+        if self.lives <= 0:
+            self.game_over = True
+        else:
+            # Restart game state but keep score and lives
+            self.reset_game()
+
     def end_game(self) -> None:
-        """End the game."""
+        """End the game immediately (deprecated - use lose_life instead)."""
+        self.lives = 0
         self.game_over = True
 
     def draw_ui(self) -> None:
@@ -124,11 +140,20 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
             f"Score: {self.score}", 10, self.height - 30, arcade.color.WHITE, 20
         )
 
+        # Lives display
+        arcade.draw_text(
+            f"Lives: {self.lives}/{self.max_lives}",
+            10,
+            self.height - 60,
+            arcade.color.WHITE,
+            20,
+        )
+
         # Difficulty indicator
         arcade.draw_text(
             f"Difficulty: {self.difficulty}/10",
             10,
-            self.height - 60,
+            self.height - 90,
             arcade.color.WHITE,
             16,
         )

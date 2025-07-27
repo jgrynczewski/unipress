@@ -8,6 +8,7 @@ A collection of simple, engaging games controlled with just one button. Built wi
 Simple jumping game where you avoid red obstacles by clicking to jump.
 - **Controls**: Left mouse click to jump
 - **Difficulty**: 1-10 scale (affects reaction time window)
+- **Lives**: 3 lives system - lose a life on collision, keep score
 - **Features**: Physics-based jumping, collision detection, scoring
 
 ## 🚀 Quick Start
@@ -76,6 +77,7 @@ All games must follow these design principles:
 - **Unified Difficulty**: 1-10 scale affecting reaction time windows
 - **Consistent Input**: Left mouse click (configurable)
 - **Fullscreen Display**: Games start in fullscreen mode by default
+- **Lives System**: 3 lives with score persistence across deaths
 - **Base Class**: Inherit from `BaseGame` for standardized structure
 - **Professional Code**: Follow ruff linting, type hints, documentation
 

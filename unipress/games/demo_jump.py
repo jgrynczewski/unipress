@@ -175,7 +175,7 @@ class DemoJumpGame(BaseGame):  # type: ignore[misc]
 
             # Check collision
             if obstacle.collides_with(self.player_x, self.player_y, self.player_size):
-                self.end_game()
+                self.lose_life()
 
         # Increase score over time
         self.score += int(delta_time * 5)

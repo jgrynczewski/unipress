@@ -69,11 +69,19 @@ Reference: https://www.npmjs.com/package/git-cz#custom-config
 - **Escape Key**: ESC toggles fullscreen mode for development/testing
 - **Implementation**: Built into BaseGame class
 
+### Lives System
+- **Default Lives**: 3 lives per game (configurable)
+- **Life Loss**: Each failure/death loses 1 life and restarts game state
+- **Score Persistence**: Score is maintained across life losses
+- **Game Over**: Final game over occurs only when all lives are lost
+- **Implementation**: Built into BaseGame class with `lose_life()` method
+
 ### Structure Requirements
 - Inherit from BaseGame class
 - Support difficulty scaling in reaction time windows
 - Configurable input handling
 - Fullscreen display by default
+- 3-lives system with score persistence
 
 ## Development Commands
 - `uv sync` - Install/sync dependencies
