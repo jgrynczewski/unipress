@@ -237,20 +237,20 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
             20,
         )
 
-        # Lives display
+        # Lives display - right top corner
         arcade.draw_text(
             self.get_message("ui.lives", current=self.lives, max=self.max_lives),
-            10,
-            self.height - 60,
+            self.width - 150,
+            self.height - 30,
             arcade.color.WHITE,
             20,
         )
 
-        # Difficulty indicator
+        # Difficulty indicator - right bottom corner
         arcade.draw_text(
             self.get_message("ui.difficulty", level=self.difficulty),
-            10,
-            self.height - 90,
+            self.width - 120,
+            20,
             arcade.color.WHITE,
             16,
         )
