@@ -8,7 +8,13 @@ from typing import Any
 
 import arcade
 
-from unipress.core.logger import get_logger, log_error, log_game_event, log_player_action
+from unipress.core.high_scores import get_high_score, update_high_score
+from unipress.core.logger import (
+    get_logger,
+    log_error,
+    log_game_event,
+    log_player_action,
+)
 from unipress.core.messages import load_messages
 from unipress.core.settings import get_setting, load_settings
 from unipress.ui.end_game.screen import EndGameAction, EndGameScreen
@@ -77,6 +83,9 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
         # Initialize game logger
         self.logger = get_logger(game_name)
 
+        # Store game name for high score tracking
+        self.game_name = game_name
+
         super().__init__(width, height, title, fullscreen=final_fullscreen)
 
         # Validate difficulty range
@@ -97,7 +106,7 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
         self.score = 0
         self.lives = final_lives
         self.max_lives = final_lives
-        
+
         # End game screen
         self.end_game_screen = None
         self.show_end_screen = False
@@ -172,7 +181,7 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
                     elif action == EndGameAction.EXIT:
                         self._exit_game()
                     return
-                
+
                 self.on_action_press()
             except Exception as e:
                 log_error(e, "Error handling mouse press", button=button, x=x, y=y)
@@ -228,10 +237,16 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
         log_game_event("life_lost", lives_remaining=self.lives, score=self.score)
 
         if self.lives <= 0:
-            log_game_event("game_over", final_score=self.score)
+            # Update high score when game ends
+            is_new_record = update_high_score(self.game_name, self.score)
+            log_game_event(
+                "game_over", final_score=self.score, new_high_score=is_new_record
+            )
             self.game_over = True
             self.show_end_screen = True
-            self.end_game_screen = EndGameScreen(self.messages, self.score)
+            self.end_game_screen = EndGameScreen(
+                self.messages, self.score, game_name=self.game_name
+            )
         else:
             # Enter life lost pause state
             self.life_lost_pause = True
@@ -257,9 +272,13 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
 
     def draw_ui(self) -> None:
         """Draw common UI elements (score, difficulty info, etc.)."""
-        # Score
+        # Score with high score
+        high_score = get_high_score(self.game_name)
+        score_text = (
+            f"{self.get_message('ui.score', score=self.score)} / Record: {high_score}"
+        )
         arcade.draw_text(
-            self.get_message("ui.score", score=self.score),
+            score_text,
             10,
             self.height - 30,
             arcade.color.WHITE,

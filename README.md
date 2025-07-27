@@ -11,7 +11,7 @@ Simple jumping game where you avoid red obstacles by clicking to jump.
 - **Controls**: Left mouse click to jump
 - **Difficulty**: 1-10 scale (affects reaction time window)
 - **Lives**: 3 lives system - lose a life on collision, keep score
-- **Features**: Physics-based jumping, collision detection, scoring
+- **Features**: Physics-based jumping, collision detection, scoring, high score tracking
 
 ## 🚀 Quick Start
 
@@ -113,6 +113,7 @@ All games must follow these design principles:
 - **Professional Logging**: Structured logging with Loguru, ALL exceptions logged with traceback
 - **Base Class**: Inherit from `BaseGame` for standardized structure
 - **Professional Code**: Follow ruff linting, type hints, documentation
+- **High Score Tracking**: Persistent JSON-based high score storage with automatic new record detection
 
 ## 📁 Project Structure
 
@@ -123,7 +124,8 @@ unipress/
 │   │   ├── base_game.py     # Base game class with all systems
 │   │   ├── settings.py      # TOML-based hierarchical settings
 │   │   ├── messages.py      # JSON-based internationalization
-│   │   └── logger.py        # Loguru-based structured logging
+│   │   ├── logger.py        # Loguru-based structured logging
+│   │   └── high_scores.py   # JSON-based high score persistence
 │   ├── ui/                  # Shared UI components
 │   │   └── end_game/        # End game screen component
 │   │       └── screen.py    # Standardized end game UI
@@ -138,6 +140,7 @@ unipress/
 │   ├── settings.toml        # Global configuration
 │   └── assets/              # Game assets (future: images, sounds)
 ├── logs/                    # Log files (auto-created)
+├── high_scores.json         # High score storage (auto-created)
 ├── tests/                   # Test suite
 ├── docs/                    # Documentation
 │   └── adr/                 # Architecture Decision Records
@@ -156,6 +159,7 @@ unipress/
 - **Difficulty System**: Standardized 1-10 scale affecting gameplay timing
 - **Lives System**: 3-lives with pause-after-death and score persistence
 - **Input Abstraction**: Configurable input handling (default: left mouse click)
+- **High Score System**: JSON-based persistent high score tracking per game
 
 ### Game Framework Features
 - Consistent difficulty scaling across all games
@@ -167,6 +171,7 @@ unipress/
 - Complete internationalization support for all user-facing text
 - Shared UI components with per-game customization capability
 - Professional code structure with type hints and comprehensive documentation
+- Persistent high score tracking with automatic record detection and display
 
 ## 🤝 Contributing
 
