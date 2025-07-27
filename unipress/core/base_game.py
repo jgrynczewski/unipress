@@ -11,6 +11,7 @@ import arcade
 from unipress.core.logger import get_logger, log_error, log_game_event, log_player_action
 from unipress.core.messages import load_messages
 from unipress.core.settings import get_setting, load_settings
+from unipress.ui.end_game.screen import EndGameAction, EndGameScreen
 
 
 class GameMeta(type(arcade.Window), ABCMeta):  # type: ignore[misc]
@@ -96,6 +97,10 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
         self.score = 0
         self.lives = final_lives
         self.max_lives = final_lives
+        
+        # End game screen
+        self.end_game_screen = None
+        self.show_end_screen = False
 
         # Visual feedback for life lost
         self.blink_timer = 0.0
@@ -158,6 +163,15 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
         if button == self.input_key:
             log_player_action("mouse_click", button=button, x=x, y=y)
             try:
+                # Handle end game screen interactions
+                if self.show_end_screen and self.end_game_screen:
+                    action = self.end_game_screen.cycle_selection()
+                    if action == EndGameAction.PLAY_AGAIN:
+                        self._restart_game()
+                    elif action == EndGameAction.EXIT:
+                        self._exit_game()
+                    return
+                
                 self.on_action_press()
             except Exception as e:
                 log_error(e, "Error handling mouse press", button=button, x=x, y=y)
@@ -215,6 +229,8 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
         if self.lives <= 0:
             log_game_event("game_over", final_score=self.score)
             self.game_over = True
+            self.show_end_screen = True
+            self.end_game_screen = EndGameScreen(self.messages, self.score)
         else:
             # Enter life lost pause state
             self.life_lost_pause = True
@@ -225,6 +241,18 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
         """End the game immediately (deprecated - use lose_life instead)."""
         self.lives = 0
         self.game_over = True
+
+    def _restart_game(self) -> None:
+        """Restart the game from end screen."""
+        log_game_event("game_restarted", previous_score=self.score)
+        self.show_end_screen = False
+        self.end_game_screen = None
+        self.start_game()
+
+    def _exit_game(self) -> None:
+        """Exit the game from end screen."""
+        log_game_event("game_exited", final_score=self.score)
+        self.close()
 
     def draw_ui(self) -> None:
         """Draw common UI elements (score, difficulty info, etc.)."""
@@ -255,32 +283,9 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
             16,
         )
 
-        # Game over screen
-        if self.game_over:
-            arcade.draw_text(
-                self.get_message("ui.game_over"),
-                self.width // 2,
-                self.height // 2,
-                arcade.color.RED,
-                50,
-                anchor_x="center",
-            )
-            arcade.draw_text(
-                self.get_message("ui.final_score", score=self.score),
-                self.width // 2,
-                self.height // 2 - 60,
-                arcade.color.WHITE,
-                30,
-                anchor_x="center",
-            )
-            arcade.draw_text(
-                self.get_message("ui.click_to_restart"),
-                self.width // 2,
-                self.height // 2 - 100,
-                arcade.color.WHITE,
-                20,
-                anchor_x="center",
-            )
+        # End game screen (replaces old game over screen)
+        if self.show_end_screen and self.end_game_screen:
+            self.end_game_screen.draw(self.width, self.height)
 
         # Start screen
         elif not self.game_started:

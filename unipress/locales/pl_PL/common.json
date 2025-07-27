@@ -8,6 +8,9 @@
     "click_to_start": "Kliknij aby rozpocząć",
     "click_to_restart": "Kliknij aby zrestartować",
     "click_to_continue": "Kliknij aby kontynuować",
+    "click_to_select": "Kliknij aby wybrać opcję",
+    "play_again": "Zagraj ponownie",
+    "exit_game": "Wyjdź",
     "esc_fullscreen": "ESC: Przełącz tryb pełnoekranowy"
   },
   "system": {

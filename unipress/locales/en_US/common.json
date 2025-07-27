@@ -8,6 +8,9 @@
     "click_to_start": "Click to start",
     "click_to_restart": "Click to restart",
     "click_to_continue": "Click to continue",
+    "click_to_select": "Click to select option",
+    "play_again": "Play Again",
+    "exit_game": "Exit",
     "esc_fullscreen": "ESC: Toggle fullscreen"
   },
   "system": {
