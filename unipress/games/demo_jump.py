@@ -121,6 +121,10 @@ class DemoJumpGame(BaseGame):  # type: ignore[misc]
 
     def on_action_press(self) -> None:
         """Handle main action (jump or start/restart game)."""
+        # Check if we're in life lost pause first
+        if self.handle_life_lost_continue():
+            return
+
         if not self.game_started:
             self.start_game()
         elif self.game_over:
@@ -137,7 +141,11 @@ class DemoJumpGame(BaseGame):  # type: ignore[misc]
 
     def on_update(self, delta_time: float) -> None:
         """Update game logic."""
-        if not self.game_started or self.game_over:
+        # Always update life lost effects for blinking
+        self.update_life_lost_effects(delta_time)
+
+        # Pause game logic during life lost pause
+        if self.is_game_paused():
             return
 
         self.time_elapsed += delta_time
@@ -188,17 +196,24 @@ class DemoJumpGame(BaseGame):  # type: ignore[misc]
             # Draw ground line
             arcade.draw_line(0, 100, self.width, 100, arcade.color.WHITE, 2)
 
-            # Draw player
-            color = (
-                arcade.color.BLUE if self.player_on_ground else arcade.color.LIGHT_BLUE
-            )
-            arcade.draw_lbwh_rectangle_filled(
-                self.player_x,
-                self.player_y,
-                self.player_size,
-                self.player_size,
-                color,
-            )
+            # Draw player (with blinking effect during life lost)
+            if self.should_draw_player():
+                if self.life_lost_pause:
+                    color = arcade.color.RED
+                else:
+                    color = (
+                        arcade.color.BLUE
+                        if self.player_on_ground
+                        else arcade.color.LIGHT_BLUE
+                    )
+
+                arcade.draw_lbwh_rectangle_filled(
+                    self.player_x,
+                    self.player_y,
+                    self.player_size,
+                    self.player_size,
+                    color,
+                )
 
             # Draw obstacles
             for obstacle in self.obstacles:

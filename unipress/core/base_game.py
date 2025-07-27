@@ -63,9 +63,15 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
         # Game state
         self.game_started = False
         self.game_over = False
+        self.life_lost_pause = False
         self.score = 0
         self.lives = lives
         self.max_lives = lives
+
+        # Visual feedback for life lost
+        self.blink_timer = 0.0
+        self.blink_duration = 1.0  # Blink for 1 second
+        self.show_player = True
 
         arcade.set_background_color(arcade.color.BLACK)
 
@@ -82,6 +88,28 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
             "difficulty": self.difficulty,
         }
 
+    def update_life_lost_effects(self, delta_time: float) -> None:
+        """Update visual effects during life lost pause."""
+        if self.life_lost_pause and self.blink_timer < self.blink_duration:
+            self.blink_timer += delta_time
+            # Blink effect: toggle visibility every 0.1 seconds
+            if int(self.blink_timer * 10) % 2 == 0:
+                self.show_player = True
+            else:
+                self.show_player = False
+
+            # After blinking duration, keep player visible
+            if self.blink_timer >= self.blink_duration:
+                self.show_player = True
+
+    def should_draw_player(self) -> bool:
+        """Check if player should be drawn (handles blinking effect)."""
+        return self.show_player
+
+    def is_game_paused(self) -> bool:
+        """Check if game is currently paused (life lost or game over)."""
+        return self.life_lost_pause or self.game_over or not self.game_started
+
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int) -> None:
         """Handle mouse press events."""
         if button == self.input_key:
@@ -93,6 +121,16 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
             # Toggle fullscreen mode
             self.set_fullscreen(not self.fullscreen)
         # Override in subclass if keyboard input is needed
+
+    def handle_life_lost_continue(self) -> bool:
+        """Handle click during life lost pause - continue game."""
+        if self.life_lost_pause:
+            self.life_lost_pause = False
+            self.blink_timer = 0.0
+            self.show_player = True
+            self.reset_game()
+            return True
+        return False
 
     @abstractmethod
     def on_action_press(self) -> None:
@@ -120,13 +158,15 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
         self.reset_game()
 
     def lose_life(self) -> None:
-        """Player loses a life. Restart level or end game if no lives left."""
+        """Player loses a life. Pause game and wait for click to continue."""
         self.lives -= 1
         if self.lives <= 0:
             self.game_over = True
         else:
-            # Restart game state but keep score and lives
-            self.reset_game()
+            # Enter life lost pause state
+            self.life_lost_pause = True
+            self.blink_timer = 0.0
+            self.show_player = True
 
     def end_game(self) -> None:
         """End the game immediately (deprecated - use lose_life instead)."""
