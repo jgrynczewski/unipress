@@ -384,12 +384,50 @@ class JumperGame(BaseGame):
         if self.should_draw_player():
             self.player.draw()
 
+    def draw_jump_window(self) -> None:
+        """Draw jump window indicator like in demo_jump."""
+        if not self.game_started or self.game_over:
+            return
+            
+        # Calculate jump duration using same physics as game
+        gravity = self.gravity
+        obstacle_height = 64
+        base_jump_height = obstacle_height + 100
+        difficulty_bonus = (11 - self.difficulty) * 20
+        jump_height = base_jump_height + difficulty_bonus
+        
+        # Total jump time = 2 * sqrt(2 * jump_height / gravity)
+        jump_duration = 2 * (2 * jump_height / gravity) ** 0.5
+        
+        # Distance an obstacle travels during jump
+        jump_window_distance = self.obstacle_speed * jump_duration
+        
+        # Draw the jump window as a green zone on screen
+        player_size = 64  # Scaled sprite size
+        jump_zone_start = self.player.x + player_size // 2
+        jump_zone_width = min(jump_window_distance, 200)  # Cap at 200px for display
+        
+        arcade.draw_lbwh_rectangle_filled(
+            jump_zone_start, 45, jump_zone_width, 10, arcade.color.GREEN
+        )
+        
+        # Draw info text
+        info_text = f"Jump window: {jump_window_distance:.0f}px ({jump_duration:.2f}s)"
+        arcade.draw_text(
+            info_text,
+            10,
+            20,
+            arcade.color.WHITE,
+            12,
+        )
+
     def on_draw(self) -> None:
         """Draw the game."""
         self.clear()
         
         self.draw_background()
         self.draw_game_objects()
+        self.draw_jump_window()
         self.draw_ui()
 
 
