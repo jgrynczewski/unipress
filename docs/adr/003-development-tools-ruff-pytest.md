@@ -45,9 +45,18 @@ We will use **Ruff** for linting and formatting, and **pytest** for testing.
 - Potential learning curve for teams used to black+flake8
 - Excellent test organization and maintainability
 
+## Code Standards
+
+### Import Style
+- **Always use absolute imports**: `from unipress.core.base_game import BaseGame`
+- **Never use relative imports**: No `from .module` or `from ..module`
+- **Rationale**: Absolute imports are clearer, more maintainable, and avoid path confusion
+- **Enforcement**: Code reviews and linting tools should catch relative imports
+
 ## Implementation
 - Use `uv add --dev ruff pytest` to install
 - Configure ruff in `pyproject.toml`
 - Use `uv run ruff check` for linting
 - Use `uv run ruff format` for formatting
 - Use `uv run pytest` for testing
+- Follow absolute import standard in all modules
