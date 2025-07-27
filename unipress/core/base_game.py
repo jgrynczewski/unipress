@@ -8,6 +8,8 @@ from typing import Any
 
 import arcade
 
+from .settings import get_setting, load_settings
+
 
 class GameMeta(type(arcade.Window), ABCMeta):  # type: ignore[misc]
     """Metaclass that combines arcade.Window and ABC metaclasses."""
@@ -27,50 +29,65 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
 
     def __init__(
         self,
+        game_name: str,
         width: int = 800,
         height: int = 600,
         title: str = "Unipress Game",
-        difficulty: int = 5,
+        difficulty: int = None,
         input_key: int = arcade.MOUSE_BUTTON_LEFT,
-        fullscreen: bool = True,
-        lives: int = 3,
+        fullscreen: bool = None,
+        lives: int = None,
     ):
         """
         Initialize base game.
 
         Args:
+            game_name: Name of the game for settings loading
             width: Window width in pixels (ignored if fullscreen=True)
             height: Window height in pixels (ignored if fullscreen=True)
             title: Game window title
-            difficulty: Difficulty level 1-10 (1=easy, 10=hard)
+            difficulty: Difficulty level 1-10 (None = use settings)
             input_key: Input key/button (default: left mouse click)
-            fullscreen: Whether to start in fullscreen mode (default: True)
-            lives: Number of lives player starts with (default: 3)
+            fullscreen: Whether to start in fullscreen mode (None = use settings)
+            lives: Number of lives player starts with (None = use settings)
         """
-        super().__init__(width, height, title, fullscreen=fullscreen)
+        # Load settings with constructor overrides
+        self.settings = load_settings(
+            game_name,
+            difficulty=difficulty,
+            fullscreen=fullscreen,
+            lives=lives,
+        )
+
+        # Use settings values
+        final_difficulty = get_setting(self.settings, "game.difficulty", 5)
+        final_lives = get_setting(self.settings, "game.lives", 3)
+        final_fullscreen = get_setting(self.settings, "game.fullscreen", True)
+
+        super().__init__(width, height, title, fullscreen=final_fullscreen)
 
         # Validate difficulty range
-        if not 1 <= difficulty <= 10:
+        if not 1 <= final_difficulty <= 10:
             raise ValueError("Difficulty must be between 1 and 10")
 
-        self.difficulty = difficulty
+        self.difficulty = final_difficulty
         self.input_key = input_key
 
         # Calculate reaction time window based on difficulty
         # Difficulty 1: 2.0 seconds, Difficulty 10: 0.2 seconds
-        self.reaction_time = 2.2 - (difficulty * 0.2)
+        self.reaction_time = 2.2 - (final_difficulty * 0.2)
 
         # Game state
         self.game_started = False
         self.game_over = False
         self.life_lost_pause = False
         self.score = 0
-        self.lives = lives
-        self.max_lives = lives
+        self.lives = final_lives
+        self.max_lives = final_lives
 
         # Visual feedback for life lost
         self.blink_timer = 0.0
-        self.blink_duration = 1.0  # Blink for 1 second
+        self.blink_duration = get_setting(self.settings, "ui.blink_duration", 1.0)
         self.show_player = True
 
         arcade.set_background_color(arcade.color.BLACK)

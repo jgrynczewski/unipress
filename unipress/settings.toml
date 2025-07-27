@@ -1,0 +1,16 @@
+# Unipress Global Game Settings
+# These are default values for all games in the collection
+
+[game]
+# Difficulty level (1-10): 1=easy, 10=hard
+difficulty = 5
+
+# Number of lives per game
+lives = 3
+
+# Start games in fullscreen mode
+fullscreen = true
+
+[ui]
+# Duration of player blinking effect after losing a life (seconds)
+blink_duration = 1.0

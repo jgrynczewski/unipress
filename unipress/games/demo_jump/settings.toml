@@ -1,0 +1,12 @@
+# Demo Jump Game Settings
+# These override global settings for the demo jumping game
+
+[game]
+# Demo game uses easier difficulty and more lives
+difficulty = 3
+lives = 5
+
+[demo_jump]
+# Game-specific settings for demo jump game
+obstacle_speed_base = 100
+jump_height_base = 150

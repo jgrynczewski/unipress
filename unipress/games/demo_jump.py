@@ -54,13 +54,17 @@ class DemoJumpGame(BaseGame):  # type: ignore[misc]
     - Difficulty affects obstacle spacing (reaction time)
     """
 
-    def __init__(self, difficulty: int = 5):
+    def __init__(self, difficulty: int = None):
         super().__init__(
+            game_name="demo_jump",
             width=800,
             height=600,
-            title=f"Demo Jump Game (Difficulty: {difficulty})",
+            title="Demo Jump Game",
             difficulty=difficulty,
         )
+
+        # Update title to show actual difficulty from settings
+        self.set_caption(f"Demo Jump Game (Difficulty: {self.difficulty})")
 
         # Player settings
         self.player_x = 100.0
