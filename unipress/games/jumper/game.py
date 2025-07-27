@@ -41,9 +41,38 @@ class BackgroundLayer:
             self.x_offset += self.texture.width
 
     def draw(self, window_width: int, window_height: int) -> None:
-        """Draw the background layer with seamless tiling (placeholder)."""
-        # TODO: Implement texture drawing when background assets available
-        pass
+        """Draw the background layer with seamless tiling."""
+        if not self.texture:
+            return
+            
+        # Draw texture with tiling to fill the window
+        texture_width = self.texture.width
+        texture_height = self.texture.height
+        
+        # Calculate how many tiles we need horizontally
+        tiles_needed = (window_width // texture_width) + 2  # +2 for smooth scrolling
+        
+        # Calculate scale to fit window height
+        scale_y = window_height / texture_height
+        scaled_width = texture_width * scale_y
+        
+        # Recalculate tiles needed based on scaled width
+        tiles_needed = int((window_width / scaled_width)) + 2
+        
+        # Draw tiles from left to right
+        for i in range(tiles_needed):
+            x = i * scaled_width + (self.x_offset * scale_y)
+            
+            # Create sprite for this tile
+            sprite = arcade.Sprite()
+            sprite.texture = self.texture
+            sprite.center_x = x + scaled_width // 2
+            sprite.center_y = window_height // 2  # Center vertically
+            sprite.scale = scale_y  # Scale to fit window height
+            
+            sprite_list = arcade.SpriteList()
+            sprite_list.append(sprite)
+            sprite_list.draw()
 
 
 class AnimatedSprite:
@@ -223,6 +252,9 @@ class JumperGame(BaseGame):
         self.obstacles: List[Obstacle] = []
         self.background_layers: List[BackgroundLayer] = []
         
+        # Load background layers
+        self.load_background_layers()
+        
         # Timing
         self.obstacle_timer = 0.0
         
@@ -243,6 +275,41 @@ class JumperGame(BaseGame):
         preload_assets("jumper", asset_list)
 
         log_game_event("jumper_game_initialized", difficulty=self.difficulty)
+
+    def load_background_layers(self) -> None:
+        """Load background layers from JSON configuration."""
+        import json
+        import os
+        
+        try:
+            # Load background configuration
+            bg_path = os.path.join("unipress", "assets", "images", "games", "jumper", "backgrounds", "forest_background.json")
+            if not os.path.exists(bg_path):
+                log_game_event("background_config_not_found", path=bg_path)
+                return
+                
+            with open(bg_path, 'r') as f:
+                bg_config = json.load(f)
+            
+            # Load each layer
+            for layer_config in bg_config.get("layers", []):
+                texture_path = os.path.join("unipress", "assets", "images", "games", "jumper", "backgrounds", layer_config["file"])
+                
+                if os.path.exists(texture_path):
+                    texture = arcade.load_texture(texture_path)
+                    layer = BackgroundLayer(
+                        texture=texture,
+                        scroll_speed=layer_config["scroll_speed"],
+                        z_order=layer_config["z_order"]
+                    )
+                    self.background_layers.append(layer)
+                    log_game_event("background_layer_loaded", file=layer_config["file"])
+                else:
+                    log_game_event("background_layer_not_found", file=texture_path)
+                    
+        except Exception as e:
+            from unipress.core.logger import log_error
+            log_error(e, "Failed to load background layers")
 
     def reset_game(self) -> None:
         """Reset game to initial state."""
