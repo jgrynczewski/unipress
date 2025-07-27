@@ -131,8 +131,8 @@ class AnimatedSprite:
             sprite.texture = texture
             sprite.center_x = self.x
             sprite.center_y = self.y
-            # Scale up the sprite (2x larger)
-            sprite.scale = 2.0
+            # Scale up the sprite (2.5x larger)
+            sprite.scale = 2.5
             
             sprite_list = arcade.SpriteList()
             sprite_list.append(sprite)
@@ -173,8 +173,8 @@ class Obstacle:
             sprite.texture = texture
             sprite.center_x = self.sprite.x
             sprite.center_y = self.sprite.y
-            # Scale fire sprites to match player size
-            sprite.scale = 2.0
+            # Scale fire sprites smaller than player
+            sprite.scale = 1.5
             
             sprite_list = arcade.SpriteList()
             sprite_list.append(sprite)
@@ -366,7 +366,7 @@ class JumperGame(BaseGame):
     def spawn_obstacle(self) -> None:
         """Spawn a new fire obstacle."""
         obstacle_x = self.width + 50
-        obstacle_y = self.ground_y
+        obstacle_y = self.ground_y - 35  # Lower obstacles
         obstacle = Obstacle(obstacle_x, obstacle_y, self.obstacle_speed, "jumper")
         self.obstacles.append(obstacle)
         log_game_event("obstacle_spawned", x=obstacle_x)
