@@ -247,8 +247,8 @@ class DemoJumpGame(BaseGame):  # type: ignore[misc]
             )
             arcade.draw_text(
                 self.get_message("game.jump_window_info", 
-                                distance=jump_window_distance, 
-                                duration=jump_duration),
+                                distance=f"{jump_window_distance:.2f}", 
+                                duration=f"{jump_duration:.2f}"),
                 10,
                 20,
                 arcade.color.WHITE,
