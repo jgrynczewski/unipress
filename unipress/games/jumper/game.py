@@ -210,6 +210,9 @@ class JumperGame(BaseGame):
         self.player_y_velocity = 0
         self.is_jumping = False
         self.ground_y = 100
+        
+        # Set initial animation so player is visible from start
+        self.player.set_animation("player/running")
 
         # Game objects
         self.obstacles: List[Obstacle] = []
