@@ -7,7 +7,7 @@ Main entry point for running games.
 import sys
 
 from unipress.core.logger import get_logger, init_logger, log_error
-from unipress.games.demo_jump import DemoJumpGame
+from unipress.games.demo_jump.game import DemoJumpGame
 
 
 def main():

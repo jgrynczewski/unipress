@@ -9,8 +9,8 @@ import random
 
 import arcade
 
-from ..core.base_game import BaseGame
-from ..core.logger import log_game_event
+from unipress.core.base_game import BaseGame
+from unipress.core.logger import log_game_event
 
 
 class Obstacle:
@@ -284,7 +284,7 @@ class DemoJumpGame(BaseGame):  # type: ignore[misc]
 
 def main() -> None:
     """Run the demo game."""
-    from ..core.logger import init_logger
+    from unipress.core.logger import init_logger
 
     # Initialize logging for standalone game execution
     init_logger("demo_jump")
@@ -293,7 +293,7 @@ def main() -> None:
         # You can change difficulty here (1-10)
         DemoJumpGame(difficulty=5).run()
     except Exception as e:
-        from ..core.logger import log_error
+        from unipress.core.logger import log_error
 
         log_error(e, "Demo game crashed during standalone execution")
         raise
