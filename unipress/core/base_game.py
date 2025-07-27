@@ -196,12 +196,16 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
         # Override in subclass if keyboard input is needed
 
     def handle_life_lost_continue(self) -> bool:
-        """Handle click during life lost pause - continue game."""
+        """Handle click during life lost pause - continue game only after blinking ends."""
         if self.life_lost_pause:
-            self.life_lost_pause = False
-            self.blink_timer = 0.0
-            self.show_player = True
-            self.reset_game()
+            # Only allow continuation after blinking period is complete
+            if self.blink_timer >= self.blink_duration:
+                self.life_lost_pause = False
+                self.blink_timer = 0.0
+                self.show_player = True
+                self.reset_game()
+                return True
+            # During blinking period, ignore clicks
             return True
         return False
 
