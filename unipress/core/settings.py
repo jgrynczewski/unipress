@@ -24,6 +24,7 @@ def get_default_settings() -> dict[str, Any]:
         },
         "ui": {
             "blink_duration": 1.0,
+            "language": "pl_PL",
         }
     }
 
@@ -86,7 +87,7 @@ def load_settings(game_name: str, **constructor_overrides) -> dict[str, Any]:
                     if "game" not in game_overrides:
                         game_overrides["game"] = {}
                     game_overrides["game"][key] = value
-                elif key in ["blink_duration"]:
+                elif key in ["blink_duration", "language"]:
                     if "ui" not in game_overrides:
                         game_overrides["ui"] = {}
                     game_overrides["ui"][key] = value

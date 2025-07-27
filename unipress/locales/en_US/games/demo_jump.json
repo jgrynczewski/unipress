@@ -1,0 +1,10 @@
+{
+  "game": {
+    "title": "Demo Jump Game",
+    "instructions": "Click to jump over red obstacles!",
+    "subtitle": "Higher difficulty = less reaction time",
+    "jump_window_info": "Jump window: {distance}px ({duration}s)",
+    "loading_message": "Starting Demo Jump Game",
+    "difficulty_indicator": "Loaded with Difficulty: {difficulty}, Lives: {lives}"
+  }
+}

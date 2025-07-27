@@ -1,0 +1,10 @@
+{
+  "game": {
+    "title": "Gra Demo - Skakanie",
+    "instructions": "Kliknij aby przeskoczyć czerwone przeszkody!",
+    "subtitle": "Wyższa trudność = mniej czasu na reakcję",
+    "jump_window_info": "Okno skoku: {distance}px ({duration}s)",
+    "loading_message": "Uruchamianie gry demo skakania",
+    "difficulty_indicator": "Załadowano z trudnością: {difficulty}, życia: {lives}"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "ui": {
+    "score": "Score: {score}",
+    "lives": "Lives: {current}/{max}",
+    "difficulty": "Difficulty: {level}/10",
+    "game_over": "GAME OVER",
+    "final_score": "Final Score: {score}",
+    "click_to_start": "Click to start",
+    "click_to_restart": "Click to restart",
+    "click_to_continue": "Click to continue",
+    "esc_fullscreen": "ESC: Toggle fullscreen"
+  },
+  "system": {
+    "loading": "Loading...",
+    "error": "Error occurred"
+  }
+}

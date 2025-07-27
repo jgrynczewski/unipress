@@ -14,3 +14,6 @@ fullscreen = true
 [ui]
 # Duration of player blinking effect after losing a life (seconds)
 blink_duration = 1.0
+
+# Default language for UI messages (pl_PL = Polish, en_US = English)
+language = "pl_PL"
