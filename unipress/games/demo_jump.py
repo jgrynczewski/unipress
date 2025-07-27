@@ -10,6 +10,7 @@ import random
 import arcade
 
 from ..core.base_game import BaseGame
+from ..core.logger import log_game_event
 
 
 class Obstacle:
@@ -64,7 +65,9 @@ class DemoJumpGame(BaseGame):  # type: ignore[misc]
         )
 
         # Update title to show actual difficulty from settings
-        self.set_caption(f"{self.get_message('game.title')} (Difficulty: {self.difficulty})")
+        self.set_caption(
+            f"{self.get_message('game.title')} (Difficulty: {self.difficulty})"
+        )
 
         # Player settings
         self.player_x = 100.0
@@ -143,6 +146,15 @@ class DemoJumpGame(BaseGame):  # type: ignore[misc]
             self.player_jump_speed = (2 * gravity * desired_jump_height) ** 0.5
             self.player_on_ground = False
 
+            # Log jump action with physics details
+            log_game_event(
+                "player_jump",
+                jump_height=desired_jump_height,
+                jump_speed=self.player_jump_speed,
+                gravity=gravity,
+                difficulty=self.difficulty,
+            )
+
     def on_update(self, delta_time: float) -> None:
         """Update game logic."""
         # Always update life lost effects for blinking
@@ -184,9 +196,18 @@ class DemoJumpGame(BaseGame):  # type: ignore[misc]
             if obstacle.x + obstacle.width < 0:
                 self.obstacles.remove(obstacle)
                 self.score += 10
+                log_game_event("obstacle_cleared", score=self.score)
 
             # Check collision
             if obstacle.collides_with(self.player_x, self.player_y, self.player_size):
+                log_game_event(
+                    "obstacle_collision",
+                    player_x=self.player_x,
+                    player_y=self.player_y,
+                    obstacle_x=obstacle.x,
+                    obstacle_y=obstacle.y,
+                    score=self.score,
+                )
                 self.lose_life()
 
         # Increase score over time
@@ -246,9 +267,11 @@ class DemoJumpGame(BaseGame):  # type: ignore[misc]
                 jump_zone_start, 45, jump_zone_width, 10, arcade.color.GREEN
             )
             arcade.draw_text(
-                self.get_message("game.jump_window_info", 
-                                distance=f"{jump_window_distance:.2f}", 
-                                duration=f"{jump_duration:.2f}"),
+                self.get_message(
+                    "game.jump_window_info",
+                    distance=f"{jump_window_distance:.2f}",
+                    duration=f"{jump_duration:.2f}",
+                ),
                 10,
                 20,
                 arcade.color.WHITE,
@@ -261,8 +284,19 @@ class DemoJumpGame(BaseGame):  # type: ignore[misc]
 
 def main() -> None:
     """Run the demo game."""
-    # You can change difficulty here (1-10)
-    DemoJumpGame(difficulty=5).run()
+    from ..core.logger import init_logger
+
+    # Initialize logging for standalone game execution
+    init_logger("demo_jump")
+
+    try:
+        # You can change difficulty here (1-10)
+        DemoJumpGame(difficulty=5).run()
+    except Exception as e:
+        from ..core.logger import log_error
+
+        log_error(e, "Demo game crashed during standalone execution")
+        raise
 
 
 if __name__ == "__main__":

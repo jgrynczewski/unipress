@@ -8,6 +8,7 @@ from typing import Any
 
 import arcade
 
+from .logger import get_logger, log_error, log_game_event, log_player_action
 from .messages import load_messages
 from .settings import get_setting, load_settings
 
@@ -68,9 +69,12 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
         final_lives = get_setting(self.settings, "game.lives", 3)
         final_fullscreen = get_setting(self.settings, "game.fullscreen", True)
         final_language = get_setting(self.settings, "ui.language", "pl_PL")
-        
+
         # Load localized messages
         self.messages = load_messages(final_language, game_name)
+
+        # Initialize game logger
+        self.logger = get_logger(game_name)
 
         super().__init__(width, height, title, fullscreen=final_fullscreen)
 
@@ -99,6 +103,16 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
         self.show_player = True
 
         arcade.set_background_color(arcade.color.BLACK)
+
+        # Log game initialization
+        log_game_event(
+            "game_initialized",
+            game_name=game_name,
+            difficulty=self.difficulty,
+            lives=self.lives,
+            fullscreen=final_fullscreen,
+            language=final_language,
+        )
 
     def get_difficulty_settings(self) -> dict[str, Any]:
         """
@@ -142,11 +156,17 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int) -> None:
         """Handle mouse press events."""
         if button == self.input_key:
-            self.on_action_press()
+            log_player_action("mouse_click", button=button, x=x, y=y)
+            try:
+                self.on_action_press()
+            except Exception as e:
+                log_error(e, "Error handling mouse press", button=button, x=x, y=y)
+                raise
 
     def on_key_press(self, key: int, modifiers: int) -> None:
         """Handle keyboard events (if needed for alternative input)."""
         if key == arcade.key.ESCAPE:
+            log_player_action("key_press", key="ESCAPE", action="toggle_fullscreen")
             # Toggle fullscreen mode
             self.set_fullscreen(not self.fullscreen)
         # Override in subclass if keyboard input is needed
@@ -180,6 +200,7 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
 
     def start_game(self) -> None:
         """Start the game."""
+        log_game_event("game_started", lives=self.max_lives, difficulty=self.difficulty)
         self.game_started = True
         self.game_over = False
         self.lives = self.max_lives
@@ -189,7 +210,10 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
     def lose_life(self) -> None:
         """Player loses a life. Pause game and wait for click to continue."""
         self.lives -= 1
+        log_game_event("life_lost", lives_remaining=self.lives, score=self.score)
+
         if self.lives <= 0:
+            log_game_event("game_over", final_score=self.score)
             self.game_over = True
         else:
             # Enter life lost pause state
@@ -207,7 +231,10 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
         # Score
         arcade.draw_text(
             self.get_message("ui.score", score=self.score),
-            10, self.height - 30, arcade.color.WHITE, 20
+            10,
+            self.height - 30,
+            arcade.color.WHITE,
+            20,
         )
 
         # Lives display

@@ -25,7 +25,7 @@ def get_default_settings() -> dict[str, Any]:
         "ui": {
             "blink_duration": 1.0,
             "language": "pl_PL",
-        }
+        },
     }
 
 
@@ -54,11 +54,11 @@ def merge_settings(base: dict[str, Any], override: dict[str, Any]) -> dict[str, 
 def load_settings(game_name: str, **constructor_overrides) -> dict[str, Any]:
     """
     Load settings with hierarchical priority.
-    
+
     Args:
         game_name: Name of the game (e.g., "demo_jump")
         **constructor_overrides: Settings passed to BaseGame constructor
-        
+
     Returns:
         Merged settings dictionary
     """
@@ -101,12 +101,12 @@ def load_settings(game_name: str, **constructor_overrides) -> dict[str, Any]:
 def get_setting(settings: dict[str, Any], key_path: str, default: Any = None) -> Any:
     """
     Get setting value using dot notation.
-    
+
     Args:
         settings: Settings dictionary
         key_path: Dot-separated path (e.g., "game.difficulty")
         default: Default value if key not found
-        
+
     Returns:
         Setting value or default
     """

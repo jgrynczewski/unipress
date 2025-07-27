@@ -6,30 +6,49 @@ Main entry point for running games.
 
 import sys
 
+from unipress.core.logger import get_logger, init_logger, log_error
 from unipress.games.demo_jump import DemoJumpGame
 
 
 def main():
     """Main entry point."""
+    # Initialize logging system
+    init_logger()
+    logger = get_logger("main")
+
     difficulty = None  # Use settings by default
-    
+
     if len(sys.argv) > 1:
         try:
             difficulty = int(sys.argv[1])
             if not 1 <= difficulty <= 10:
-                print("Difficulty must be between 1 and 10")
+                logger.error(
+                    "Invalid difficulty level",
+                    extra={"provided": sys.argv[1], "valid_range": "1-10"},
+                )
                 return
-        except ValueError:
-            print("Difficulty must be a number between 1 and 10")
+        except ValueError as e:
+            log_error(e, "Failed to parse difficulty argument", provided=sys.argv[1])
             return
 
-    print("Starting Demo Jump Game")
-    print("Left click to jump over red obstacles!")
-    print("Higher difficulty = less reaction time")
+    logger.info("Starting Demo Jump Game")
+    logger.info("Game controls: Left click to jump over red obstacles!")
+    logger.info("Difficulty affects reaction time - higher = less time to react")
 
-    game = DemoJumpGame(difficulty=difficulty)
-    print(f"Loaded with Difficulty: {game.difficulty}, Lives: {game.lives}")
-    game.run()
+    try:
+        game = DemoJumpGame(difficulty=difficulty)
+        logger.info(
+            "Game initialized",
+            extra={
+                "difficulty": game.difficulty,
+                "lives": game.lives,
+                "fullscreen": game.fullscreen,
+            },
+        )
+        game.run()
+    except Exception as e:
+        log_error(e, "Game crashed during execution", difficulty=difficulty)
+        raise
 
 
 if __name__ == "__main__":
