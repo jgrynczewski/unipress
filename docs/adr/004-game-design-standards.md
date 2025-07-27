@@ -19,10 +19,13 @@ All games must follow these design standards:
 - **Implementation**: Each game defines reaction time windows based on difficulty
 - **Configuration**: Easily changeable via game constructor parameter
 
-### 2. Input Standard
-- **Primary Input**: Left mouse button click
-- **Requirement**: Input method must be easily configurable
-- **Implementation**: Input handling abstracted to allow easy modification
+### 2. Input Standard - ONE-BUTTON CONSTRAINT
+- **Primary Input**: Left mouse button click (BINARY SIGNAL ONLY)
+- **CRITICAL CONSTRAINT**: Players CANNOT move cursors, select UI elements, or target coordinates
+- **Required Mechanics**: All interactions via timing, automatic cycling, or sequences
+- **Implementation**: Input handling abstracted for binary signals only
+
+**FUNDAMENTAL PRINCIPLE**: This is a one-button game collection. Players can only send a binary signal (press/release) and cannot perform any cursor-based interactions, targeting, or selection. Every game mechanic and UI element must be designed around this absolute constraint.
 
 ### 3. Game Structure
 - All games inherit from base game class

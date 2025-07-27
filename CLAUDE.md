@@ -6,6 +6,15 @@
 - **Language**: Python
 - **Target**: Professional code quality with best practices
 
+## 🔴 FUNDAMENTAL DESIGN PRINCIPLE (CRITICAL)
+**ONE-BUTTON INPUT ONLY**: Players can ONLY send a binary signal (click/press). They CANNOT:
+- Move or aim cursors
+- Select specific UI elements
+- Target specific screen areas
+- Use precise positioning
+
+ALL game mechanics and UI must work with timing-based or automatic cycling interactions, never requiring cursor positioning or direct element selection. This is the core constraint that defines every aspect of game design.
+
 ## Current Status
 - ✅ Project setup complete with professional structure
 - ✅ Demo game implemented with all systems integrated
@@ -69,10 +78,11 @@ Reference: https://www.npmjs.com/package/git-cz#custom-config
 - **Implementation**: Each game adjusts reaction time based on difficulty level
 - **Configuration**: `difficulty` parameter in game constructor
 
-### Input Standard
-- **Primary**: Left mouse button click
-- **Requirement**: Input method easily configurable
-- **Implementation**: Abstracted input handling
+### Input Standard (ONE-BUTTON ONLY)
+- **Primary**: Left mouse button click (binary signal only)
+- **Constraint**: NO cursor positioning, targeting, or selection allowed
+- **Requirement**: All interactions via timing, cycling, or automatic systems
+- **Implementation**: Abstracted input handling for binary signals only
 
 ### Display Standard
 - **Fullscreen**: Games start in fullscreen mode by default (no system bars/menus)

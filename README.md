@@ -2,6 +2,8 @@
 
 A collection of simple, engaging games controlled with just one button. Built with Python and Arcade.
 
+> **Note**: These are true one-button games - players can only send binary signals (click/press) without cursor positioning or element selection. All interactions use timing-based or automatic cycling mechanics.
+
 ## 🎮 Available Games
 
 ### Demo Jump Game
