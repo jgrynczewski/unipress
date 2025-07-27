@@ -166,7 +166,7 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
     def on_key_press(self, key: int, modifiers: int) -> None:
         """Handle keyboard events (if needed for alternative input)."""
         if key == arcade.key.ESCAPE:
-            log_player_action("key_press", key="ESCAPE", action="toggle_fullscreen")
+            log_player_action("key_press", key="ESCAPE", operation="toggle_fullscreen")
             # Toggle fullscreen mode
             self.set_fullscreen(not self.fullscreen)
         # Override in subclass if keyboard input is needed
