@@ -122,7 +122,10 @@ unipress/
 │   │   ├── messages.py      # JSON-based internationalization
 │   │   └── logger.py        # Loguru-based structured logging
 │   ├── games/               # Individual game implementations
-│   │   └── demo_jump.py     # Demo jumping game
+│   │   └── demo_jump/       # Demo jumping game folder
+│   │       ├── __init__.py  # Package initialization
+│   │       ├── game.py      # Game implementation
+│   │       └── settings.toml # Game-specific settings
 │   ├── locales/             # Internationalization messages
 │   │   ├── pl_PL/           # Polish (default)
 │   │   └── en_US/           # English (fallback)

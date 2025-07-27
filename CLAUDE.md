@@ -140,7 +140,7 @@ Reference: https://www.npmjs.com/package/git-cz#custom-config
 - `uv run mypy unipress` - Run type checking
 - `uv run pytest` - Run tests
 - `uv run python main.py [difficulty]` - Run demo game
-- `uv run python -m unipress.games.GAMENAME` - Run specific game
+- `uv run python -m unipress.games.GAMENAME.game` - Run specific game
 
 ## Quality Assurance Pipeline
 **Pre-commit checks** (run all before committing):
