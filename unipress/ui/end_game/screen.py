@@ -88,7 +88,7 @@ class EndGameScreen:
         # Draw semi-transparent overlay
         arcade.draw_lbwh_rectangle_filled(
             0, 0, window_width, window_height, 
-            (*arcade.color.BLACK, 180)  # Semi-transparent black
+            (0, 0, 0, 180)  # Semi-transparent black (R, G, B, A)
         )
         
         # Draw game over title

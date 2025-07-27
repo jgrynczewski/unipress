@@ -4,7 +4,7 @@
 [game]
 # Demo game uses easier difficulty and more lives
 difficulty = 3
-lives = 5
+lives = 1
 
 # [ui]
 # Override language for this specific game
