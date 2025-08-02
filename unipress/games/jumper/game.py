@@ -240,10 +240,10 @@ class JumperGame(BaseGame):
         self.obstacle_spawn_interval = base_interval * random.uniform(0.8, 2.5)
 
         # Player sprite and physics
-        self.player = AnimatedSprite(150, 100, "jumper")
+        self.ground_y = int(self.height * 0.25)  # Ground at 25% of screen height
+        self.player = AnimatedSprite(150, self.ground_y, "jumper")
         self.player_y_velocity = 0
         self.is_jumping = False
-        self.ground_y = 100
         
         # Set initial animation so player is visible from start
         self.player.set_animation("player/running")
@@ -325,6 +325,21 @@ class JumperGame(BaseGame):
         
         log_game_event("jumper_game_reset")
 
+    def on_resize(self, width: int, height: int) -> None:
+        """Handle window resize to maintain proper ground positioning."""
+        super().on_resize(width, height)
+        
+        # Update ground position relative to new window height
+        old_ground_y = self.ground_y
+        self.ground_y = int(height * 0.25)
+        
+        # Update player position if not jumping
+        if not self.is_jumping:
+            self.player.y = self.ground_y
+        
+        log_game_event("window_resize", width=width, height=height, 
+                      old_ground_y=old_ground_y, new_ground_y=self.ground_y)
+
     def on_action_press(self) -> None:
         """Handle jump action."""
         if self.is_game_paused():
@@ -366,7 +381,7 @@ class JumperGame(BaseGame):
     def spawn_obstacle(self) -> None:
         """Spawn a new fire obstacle."""
         obstacle_x = self.width + 50
-        obstacle_y = self.ground_y - 35  # Lower obstacles
+        obstacle_y = self.ground_y - 40  # Position obstacles on ground level
         obstacle = Obstacle(obstacle_x, obstacle_y, self.obstacle_speed, "jumper")
         self.obstacles.append(obstacle)
         log_game_event("obstacle_spawned", x=obstacle_x)
