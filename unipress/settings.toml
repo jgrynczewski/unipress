@@ -11,6 +11,22 @@ lives = 3
 # Start games in fullscreen mode
 fullscreen = true
 
+[audio]
+# Master volume (0.0-1.0)
+master_volume = 1.0
+
+# Sound effects volume (0.0-1.0)
+sfx_volume = 0.7
+
+# Background music volume (0.0-1.0)
+music_volume = 0.5
+
+# UI sound effects volume (0.0-1.0)
+ui_volume = 0.6
+
+# Play startup sound before game begins
+startup_delay = true
+
 [ui]
 # Duration of player blinking effect after losing a life (seconds)
 blink_duration = 1.0

@@ -13,6 +13,7 @@ import arcade
 from unipress.core.assets import Animation, get_sound, load_animation, preload_assets
 from unipress.core.base_game import BaseGame
 from unipress.core.logger import log_game_event, log_player_action
+from unipress.core.sound import STANDARD_SOUND_EVENTS
 from unipress.core.settings import get_setting
 
 
@@ -173,8 +174,8 @@ class Obstacle:
             sprite.texture = texture
             sprite.center_x = self.sprite.x
             sprite.center_y = self.sprite.y
-            # Scale fire sprites smaller than player
-            sprite.scale = 1.5
+            # Scale fire sprites larger for better visibility
+            sprite.scale = 2.5
             
             sprite_list = arcade.SpriteList()
             sprite_list.append(sprite)
@@ -263,19 +264,14 @@ class JumperGame(BaseGame):
         # Timing
         self.obstacle_timer = 0.0
         
-        # Sound effects
-        self.jump_sound = get_sound("player/jump_01.ogg", "jumper")
-        self.collision_sound = get_sound("player/collision_01.ogg", "jumper")
-        self.success_sound = get_sound("ambient/success_chord.ogg", "jumper")
+        # Preload standard sound events
+        self.sound_manager.preload_sounds(STANDARD_SOUND_EVENTS)
 
         # Preload assets
         asset_list = [
             "player/running_anim.json",
             "player/jumping_anim.json", 
             "obstacles/fire/burning_anim.json",
-            "player/jump_01.ogg",
-            "player/collision_01.ogg",
-            "ambient/success_chord.ogg"
         ]
         preload_assets("jumper", asset_list)
 
@@ -329,6 +325,15 @@ class JumperGame(BaseGame):
         self.player.set_animation("player/running")
         
         log_game_event("jumper_game_reset")
+    
+    def reset_animations(self) -> None:
+        """Reset all animations to prevent accumulated time during startup sound."""
+        # Reset player animation by setting it fresh
+        self.player.set_animation("player/running", force=True)
+        
+        # Reset all obstacle animations
+        for obstacle in self.obstacles:
+            obstacle.sprite.set_animation("obstacles/fire/burning", force=True)
 
     def on_resize(self, width: int, height: int) -> None:
         """Handle window resize to maintain proper ground positioning."""
@@ -344,7 +349,7 @@ class JumperGame(BaseGame):
         
         # Update all existing obstacles positions
         for obstacle in self.obstacles:
-            obstacle.y = self.ground_y - 40
+            obstacle.sprite.y = self.ground_y - 30
         
         log_game_event("window_resize", width=width, height=height, 
                       old_ground_y=old_ground_y, new_ground_y=self.ground_y)
@@ -353,6 +358,9 @@ class JumperGame(BaseGame):
         """Handle jump action."""
         if self.is_game_paused():
             if self.handle_life_lost_continue():
+                return
+            if self.waiting_for_start_click:
+                self.start_game()
                 return
             if not self.game_started:
                 self.start_game()
@@ -365,8 +373,7 @@ class JumperGame(BaseGame):
             self.player.set_animation("player/jumping")
             
             # Play jump sound
-            if self.jump_sound:
-                arcade.play_sound(self.jump_sound)
+            self.play_sound_event("jump")
                 
             log_player_action("jump", y_velocity=self.player_y_velocity)
 
@@ -390,7 +397,7 @@ class JumperGame(BaseGame):
     def spawn_obstacle(self) -> None:
         """Spawn a new fire obstacle."""
         obstacle_x = self.width + 50
-        obstacle_y = self.ground_y - 40  # Position obstacles on ground level
+        obstacle_y = self.ground_y - 30  # Position obstacles on ground level
         obstacle = Obstacle(obstacle_x, obstacle_y, self.obstacle_speed, "jumper")
         self.obstacles.append(obstacle)
         log_game_event("obstacle_spawned", x=obstacle_x)
@@ -406,8 +413,11 @@ class JumperGame(BaseGame):
                 if not obstacle.cleared:
                     self.score += 10
                     obstacle.cleared = True
-                    if self.success_sound:
-                        arcade.play_sound(self.success_sound)
+                    self.play_sound_event("success")
+                    
+                    # Check if new high score was achieved
+                    self.check_and_play_high_score_sound(self.score)
+                    
                     log_game_event("obstacle_cleared", score=self.score)
                 self.obstacles.remove(obstacle)
 
@@ -443,8 +453,7 @@ class JumperGame(BaseGame):
                 player_rect["y"] + player_rect["height"] > obstacle_rect["y"]):
                 
                 # Collision detected
-                if self.collision_sound:
-                    arcade.play_sound(self.collision_sound)
+                self.play_sound_event("failure")
                     
                 log_game_event("obstacle_collision", score=self.score)
                 self.lose_life()
@@ -462,7 +471,12 @@ class JumperGame(BaseGame):
             return
 
         if self.is_game_paused():
-            self.update_life_lost_effects(delta_time)
+            # Update sound timer for non-blocking sound completion
+            self.update_sound_timer(delta_time)
+            
+            # Only update life lost effects, don't update animations during waiting for start
+            if not self.waiting_for_start_click and not self.waiting_for_sound:
+                self.update_life_lost_effects(delta_time)
             return
 
         self.update_player(delta_time)
