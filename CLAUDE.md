@@ -48,6 +48,8 @@ ALL game mechanics and UI must work with timing-based or automatic cycling inter
 11. **Internationalization**: ✅ JSON-based with Polish default, English fallback
 12. **Logging System**: ✅ Loguru-based with structured JSON logging
 13. **End Game Screen**: ✅ Standardized UI with cycling Play Again/Exit buttons
+14. **Responsive Positioning**: ✅ Game objects scale with window size changes (fullscreen toggle)
+15. **AI Development Tools**: ✅ Claude Code selected for development assistance (ADR-015)
 
 ## Commit Standards (git-cz)
 **Format**: `type(scope): emoji subject` (space after emoji)
@@ -157,6 +159,8 @@ Reference: https://www.npmjs.com/package/git-cz#custom-config
 - Internationalization support for all user-facing text
 - Professional logging throughout with structured events
 - Standardized end game screen with cycling Play Again/Exit buttons
+- Responsive positioning system that scales with window size changes
+- Physics-based obstacle spacing with safety margins (ADR-014)
 
 ## Development Commands
 - `uv sync` - Install/sync dependencies
@@ -209,11 +213,13 @@ uv run ruff check && uv run ruff format && uv run mypy unipress && uv run pytest
   - 2x sprite scaling for better visibility
   - Asset management system with JSON animation metadata
   - Sound effects support (jump, collision, success sounds)
-  - Parallax scrolling background support (framework ready)
+  - Full parallax scrolling background with 5 layers (sky, mountains, far trees, near trees, ground)
+  - Responsive positioning system - game objects scale properly with window resize
+  - Physics-based obstacle spacing synchronized with ground layer movement
 - **Assets**: Professional sprite graphics with frame-by-frame animations
 - **Physics**: Identical mechanics to demo_jump for consistent difficulty
 - **Animation System**: JSON-based metadata with precise timing synchronization
-- **Status**: Complete with sprite animations and enhanced visual feedback
+- **Status**: Complete with sprite animations, parallax backgrounds, and responsive scaling
 
 ## Asset Management System
 - **Structure**: Organized by game in `unipress/assets/images/games/{game_name}/`
@@ -226,5 +232,6 @@ uv run ruff check && uv run ruff format && uv run mypy unipress && uv run pytest
 ## Next Steps
 - Add more one-button games with different mechanics
 - Implement comprehensive testing for asset system
-- Add background graphics and sound effects to jumper
+- Add sound effects to jumper game
 - Create game launcher/menu system
+- Consider procedural background generation for variety
