@@ -271,7 +271,7 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
             log_player_action("mouse_click", button=button, x=x, y=y)
             try:
                 # Handle end game screen interactions
-                if self.show_end_screen and self.end_game_screen:
+                if self.show_end_screen and self.end_game_screen and not self.waiting_for_sound:
                     action = self.end_game_screen.get_selected_action()
                     log_player_action("end_screen_action", operation=action.value)
                     if action == EndGameAction.PLAY_AGAIN:
@@ -296,8 +296,8 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
     def handle_life_lost_continue(self) -> bool:
         """Handle click during life lost pause - continue game only after blinking ends."""
         if self.life_lost_pause:
-            # Only allow continuation after blinking period is complete
-            if self.blink_timer >= self.blink_duration:
+            # Only allow continuation after blinking period is complete and not already processing sound
+            if self.blink_timer >= self.blink_duration and not self.waiting_for_sound:
                 # Play button click sound
                 self.play_sound_event("ui_confirm")
                 

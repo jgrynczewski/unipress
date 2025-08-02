@@ -359,10 +359,11 @@ class JumperGame(BaseGame):
         if self.is_game_paused():
             if self.handle_life_lost_continue():
                 return
-            if self.waiting_for_start_click:
+            # Only allow start_game() if not already waiting for sound completion
+            if self.waiting_for_start_click and not self.waiting_for_sound:
                 self.start_game()
                 return
-            if not self.game_started:
+            if not self.game_started and not self.waiting_for_sound:
                 self.start_game()
             return
 
