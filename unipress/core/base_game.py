@@ -17,6 +17,7 @@ from unipress.core.logger import (
 )
 from unipress.core.messages import load_messages
 from unipress.core.settings import get_setting, load_settings
+from unipress.core.sound import SoundManager, SoundEvent, STANDARD_SOUND_EVENTS
 from unipress.ui.end_game.screen import EndGameAction, EndGameScreen
 
 
@@ -86,6 +87,9 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
         # Store game name for high score tracking
         self.game_name = game_name
 
+        # Initialize sound system
+        self.sound_manager = SoundManager(game_name, self.settings)
+        
         super().__init__(width, height, title, fullscreen=final_fullscreen)
 
         # Validate difficulty range
@@ -103,9 +107,14 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
         self.game_started = False
         self.game_over = False
         self.life_lost_pause = False
+        self.waiting_for_start_click = True  # New state to prevent updates during startup sound
+        self.waiting_for_sound = False  # State for non-blocking sound completion
+        self.sound_timer = 0.0  # Timer for sound completion
+        self._life_lost_completion_pending = False  # Flag for life lost completion
         self.score = 0
         self.lives = final_lives
         self.max_lives = final_lives
+        self.high_score_played_this_game = False  # Track if high score sound played this session
 
         # End game screen
         self.end_game_screen = None
@@ -144,6 +153,95 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
     def get_message(self, key: str, **kwargs) -> str:
         """Get localized message with parameter substitution."""
         return self.messages.get_message(key, **kwargs)
+    
+    def play_sound_event(self, event_name: str, volume_override: float = None) -> arcade.Sound:
+        """Play a standard sound event.
+        
+        Args:
+            event_name: Name of the sound event (from STANDARD_SOUND_EVENTS)
+            volume_override: Optional volume override (0.0-1.0)
+            
+        Returns:
+            Playing arcade.Sound or None if sound unavailable
+        """
+        if event_name in STANDARD_SOUND_EVENTS:
+            event = STANDARD_SOUND_EVENTS[event_name]
+            return self.sound_manager.play_sound(event, volume_override)
+        else:
+            log_error(f"Unknown sound event: {event_name}")
+            return None
+    
+    def play_custom_sound_event(self, event: SoundEvent, volume_override: float = None) -> arcade.Sound:
+        """Play a custom sound event.
+        
+        Args:
+            event: Custom SoundEvent definition
+            volume_override: Optional volume override (0.0-1.0)
+            
+        Returns:
+            Playing arcade.Sound or None if sound unavailable
+        """
+        return self.sound_manager.play_sound(event, volume_override)
+    
+    def start_game_sound_timer(self) -> None:
+        """Start non-blocking game start sound timer."""
+        if get_setting(self.settings, "audio.startup_delay", True):
+            startup_sound = self.play_sound_event("game_start")
+            if startup_sound:
+                self.waiting_for_sound = True
+                self.sound_timer = 3.0  # Assume 3 seconds for game start sound
+                log_game_event("game_start_sound_started")
+            else:
+                # No sound to wait for, continue immediately
+                self.complete_game_start()
+        else:
+            # Sound disabled, continue immediately  
+            self.complete_game_start()
+    
+    def update_sound_timer(self, delta_time: float) -> None:
+        """Update non-blocking sound timer."""
+        if self.waiting_for_sound:
+            self.sound_timer -= delta_time
+            if self.sound_timer <= 0:
+                self.waiting_for_sound = False
+                self.sound_timer = 0.0
+                log_game_event("game_start_sound_completed")
+                
+                if self._life_lost_completion_pending:
+                    self._life_lost_completion_pending = False
+                    self._complete_life_lost_continue()
+                else:
+                    self.complete_game_start()
+    
+    def complete_game_start(self) -> None:
+        """Complete the game start sequence."""
+        self.game_started = True
+        self.game_over = False
+        self.waiting_for_start_click = False
+        self.waiting_for_sound = False
+        self.lives = self.max_lives
+        self.score = 0
+        self.high_score_played_this_game = False  # Reset high score sound flag for new game
+        
+        # Reset animations to prevent accumulated time during startup sound
+        self.reset_animations()
+        
+        self.reset_game()
+    
+    def check_and_play_high_score_sound(self, new_score: int) -> None:
+        """Check if new score beats high score and play sound once per game."""
+        if not self.high_score_played_this_game:
+            current_high_score = get_high_score(self.game_name)
+            if new_score > current_high_score:
+                self.play_sound_event("high_score")
+                self.high_score_played_this_game = True
+                log_game_event("high_score_sound_played", new_score=new_score, 
+                              previous_high_score=current_high_score)
+    
+    def _complete_life_lost_continue(self) -> None:
+        """Complete the life lost continuation sequence."""
+        # Visual reset already done, just ensure game can continue
+        pass
 
     def update_life_lost_effects(self, delta_time: float) -> None:
         """Update visual effects during life lost pause."""
@@ -165,7 +263,7 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
 
     def is_game_paused(self) -> bool:
         """Check if game is currently paused (life lost or game over)."""
-        return self.life_lost_pause or self.game_over or not self.game_started
+        return self.life_lost_pause or self.game_over or not self.game_started or self.waiting_for_start_click or self.waiting_for_sound
 
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int) -> None:
         """Handle mouse press events."""
@@ -200,10 +298,30 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
         if self.life_lost_pause:
             # Only allow continuation after blinking period is complete
             if self.blink_timer >= self.blink_duration:
+                # Play button click sound
+                self.play_sound_event("ui_confirm")
+                
+                # Reset visual state immediately
                 self.life_lost_pause = False
                 self.blink_timer = 0.0
                 self.show_player = True
+                
+                # Reset animations and game state visually
+                self.reset_animations()
                 self.reset_game()
+                
+                # Start non-blocking game start sound for life continuation
+                if get_setting(self.settings, "audio.startup_delay", True):
+                    startup_sound = self.play_sound_event("game_start")
+                    if startup_sound:
+                        self.waiting_for_sound = True
+                        self.sound_timer = 3.0  # Assume 3 seconds for game start sound
+                        # Set up completion callback for life lost
+                        self._life_lost_completion_pending = True
+                    else:
+                        self._complete_life_lost_continue()
+                else:
+                    self._complete_life_lost_continue()
                 return True
             # During blinking period, ignore clicks
             return True
@@ -225,15 +343,23 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
         Must be implemented by each game.
         """
         pass
+    
+    def reset_animations(self) -> None:
+        """
+        Reset all animations to prevent accumulated time.
+        Override in subclass if needed.
+        """
+        pass
 
     def start_game(self) -> None:
-        """Start the game."""
+        """Start the game after user clicks."""
+        # Play button click sound
+        self.play_sound_event("ui_confirm")
+        
         log_game_event("game_started", lives=self.max_lives, difficulty=self.difficulty)
-        self.game_started = True
-        self.game_over = False
-        self.lives = self.max_lives
-        self.score = 0
-        self.reset_game()
+        
+        # Start non-blocking game start sound timer
+        self.start_game_sound_timer()
 
     def lose_life(self) -> None:
         """Player loses a life. Pause game and wait for click to continue."""
@@ -243,6 +369,10 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
         if self.lives <= 0:
             # Update high score when game ends
             is_new_record = update_high_score(self.game_name, self.score)
+            
+            # Always play game over sound (high score already played during game)
+            self.play_sound_event("game_over")
+            
             log_game_event(
                 "game_over", final_score=self.score, new_high_score=is_new_record
             )
@@ -267,7 +397,30 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
         log_game_event("game_restarted", previous_score=self.score)
         self.show_end_screen = False
         self.end_game_screen = None
-        self.start_game()
+        
+        # Play button click sound
+        self.play_sound_event("ui_confirm")
+        
+        # Reset visual state immediately (same as life lost continuation)
+        self.game_over = False
+        self.lives = self.max_lives
+        self.score = 0
+        
+        # Reset animations and game state visually
+        self.reset_animations()
+        self.reset_game()
+        
+        # Start non-blocking game start sound
+        if get_setting(self.settings, "audio.startup_delay", True):
+            startup_sound = self.play_sound_event("game_start")
+            if startup_sound:
+                self.waiting_for_sound = True
+                self.sound_timer = 3.0  # Assume 3 seconds for game start sound
+                # This will trigger complete_game_start() when sound finishes
+            else:
+                self.complete_game_start()
+        else:
+            self.complete_game_start()
 
     def _exit_game(self) -> None:
         """Exit the game from end screen."""
