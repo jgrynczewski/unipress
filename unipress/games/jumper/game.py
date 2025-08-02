@@ -230,8 +230,13 @@ class JumperGame(BaseGame):
         
         # Convert jump height to initial velocity using physics formula (like demo_jump)
         self.jump_velocity = (2 * self.gravity * desired_jump_height) ** 0.5
-        self.obstacle_speed = get_setting(self.settings, "jumper.obstacle_speed_base", 100) + (self.difficulty * 15)
+        
+        # Load background scroll speed first
         self.background_speed = get_setting(self.settings, "jumper.background_scroll_speed", 100)
+        
+        # Obstacle speed should match ground layer scroll speed for realistic physics
+        ground_scroll_speed = self.background_speed * 1.0  # Ground layer has scroll_speed 1.0
+        self.obstacle_speed = ground_scroll_speed
         
         # Calculate initial random spawn interval with safe minimum distance
         jump_duration = 2 * (2 * desired_jump_height / self.gravity) ** 0.5
@@ -336,6 +341,10 @@ class JumperGame(BaseGame):
         # Update player position if not jumping
         if not self.is_jumping:
             self.player.y = self.ground_y
+        
+        # Update all existing obstacles positions
+        for obstacle in self.obstacles:
+            obstacle.y = self.ground_y - 40
         
         log_game_event("window_resize", width=width, height=height, 
                       old_ground_y=old_ground_y, new_ground_y=self.ground_y)
