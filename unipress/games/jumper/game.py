@@ -240,7 +240,7 @@ class JumperGame(BaseGame):
         
         # Calculate initial random spawn interval with safe minimum distance
         jump_duration = 2 * (2 * desired_jump_height / self.gravity) ** 0.5
-        min_safe_interval = jump_duration * 1.2  # 20% safety margin  
+        min_safe_interval = jump_duration * 1.44  # 44% safety margin (20% increase)  
         base_interval = max(min_safe_interval, 2.5)  # At least 2.5s base
         self.obstacle_spawn_interval = base_interval * random.uniform(0.8, 2.5)
 
@@ -420,7 +420,7 @@ class JumperGame(BaseGame):
             # Calculate new random spawn interval with safe minimum distance
             # Base interval ensures minimum time for double jumps
             jump_duration = 2 * (2 * (64 + 100 + (11 - self.difficulty) * 20) / self.gravity) ** 0.5
-            min_safe_interval = jump_duration * 1.2  # 20% safety margin
+            min_safe_interval = jump_duration * 1.44  # 44% safety margin (20% increase)
             base_interval = max(min_safe_interval, 2.5)  # At least 2.5s base
             
             # Add randomness: 0.8x to 2.5x variation
