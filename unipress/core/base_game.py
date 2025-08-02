@@ -473,20 +473,26 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
             score_text,
             10,
             self.height - 30,
-            arcade.color.WHITE,
+            arcade.color.BLACK,  # Simple black text for good contrast
             20,
+            font_name="Kenney Pixel Square"  # Keep the nicer font
         )
 
         # Lives display - hearts in right top corner
         self.draw_hearts()
 
         # Difficulty indicator - right bottom corner
+        difficulty_text = self.get_message("ui.difficulty", level=self.difficulty)
+        diff_x = self.width - 200
+        diff_y = 20
+        
         arcade.draw_text(
-            self.get_message("ui.difficulty", level=self.difficulty),
-            self.width - 200,
-            20,
-            arcade.color.WHITE,
+            difficulty_text,
+            diff_x,
+            diff_y,
+            arcade.color.BLACK,  # Simple black text for good contrast
             16,
+            font_name="Kenney Pixel Square"
         )
 
         # End game screen (replaces old game over screen)
@@ -495,11 +501,16 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
 
         # Start screen
         elif not self.game_started:
+            start_text = self.get_message("ui.click_to_start")
+            start_x = self.width // 2
+            start_y = self.height // 2
+            
             arcade.draw_text(
-                self.get_message("ui.click_to_start"),
-                self.width // 2,
-                self.height // 2,
-                arcade.color.WHITE,
+                start_text,
+                start_x,
+                start_y,
+                arcade.color.BLACK,  # Simple black text for good contrast
                 30,
                 anchor_x="center",
+                font_name="Kenney Pixel Square"
             )
