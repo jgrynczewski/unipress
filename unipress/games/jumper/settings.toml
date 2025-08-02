@@ -17,7 +17,7 @@ obstacle_width = 64
 obstacle_height = 64
 
 # Background settings
-background_scroll_speed = 100
+background_scroll_speed = 200
 parallax_enabled = true
 
 # Animation settings
