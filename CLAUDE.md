@@ -28,6 +28,9 @@ ALL game mechanics and UI must work with timing-based or automatic cycling inter
 - ✅ Player blinking effect on life loss  
 - ✅ Jump window indicator showing optimal timing
 - ✅ High score system with persistent JSON storage
+- ✅ Comprehensive sound system with professional audio events
+- ✅ Parallax scrolling backgrounds with responsive positioning
+- ✅ UI styling with clean black text on light backgrounds
 
 ## Communication Protocol
 - **User writes in Polish or English** 
@@ -50,6 +53,7 @@ ALL game mechanics and UI must work with timing-based or automatic cycling inter
 13. **End Game Screen**: ✅ Standardized UI with cycling Play Again/Exit buttons
 14. **Responsive Positioning**: ✅ Game objects scale with window size changes (fullscreen toggle)
 15. **AI Development Tools**: ✅ Claude Code selected for development assistance (ADR-015)
+16. **Sound System**: ✅ Comprehensive audio with OGG format and event-based architecture (ADR-016)
 
 ## Commit Standards (git-cz)
 **Format**: `type(scope): emoji subject` (space after emoji)
@@ -144,6 +148,24 @@ Reference: https://www.npmjs.com/package/git-cz#custom-config
 - **Customization**: Foundation for per-game asset overrides (future)
 - **Integration**: Automatically displayed when all lives lost
 
+### Sound System (Professional Audio)
+- **Architecture**: Comprehensive sound system with event-based audio (ADR-016)
+- **Format**: OGG Vorbis files only (cross-platform compatibility, patent-free)
+- **Categories**: 7 sound event types - game_start, player_action, success, failure, achievement, ui_feedback, ambient
+- **Volume Control**: 4-level hierarchy (master, sfx, music, ui) with per-event multipliers
+- **File Organization**: 
+  - Global sounds: `unipress/assets/sounds/global/` (shared across games)
+  - Game-specific: `unipress/assets/sounds/games/{game_name}/` (per-game sounds)
+- **Sound Events**: Standardized events (game_start.ogg, jump.ogg, success.ogg, failure.ogg, etc.)
+- **Integration**: Built into BaseGame with `play_sound_event(event_name)` method
+- **Performance**: Sound caching, lazy loading, optional preloading for better performance
+- **Settings**: Full TOML configuration with hierarchical volume control
+- **Non-blocking Audio**: Games wait for sound completion without freezing gameplay
+- **Error Handling**: Graceful degradation when sound files missing
+- **Implementation**: `unipress/core/sound.py` with full SoundManager class
+- **Usage**: Active in jumper game with 7 different sound events
+- **Status**: ✅ Complete and fully implemented with professional-grade features
+
 ### Code Standards
 - **Import Style**: Always use absolute imports (e.g., `from unipress.core.base_game import BaseGame`)
 - **Never use relative imports** (no `from .module` or `from ..module`)
@@ -161,6 +183,7 @@ Reference: https://www.npmjs.com/package/git-cz#custom-config
 - Standardized end game screen with cycling Play Again/Exit buttons
 - Responsive positioning system that scales with window size changes
 - Physics-based obstacle spacing with safety margins (ADR-014)
+- Sound event integration with professional audio feedback
 
 ## Development Commands
 - `uv sync` - Install/sync dependencies
@@ -212,26 +235,31 @@ uv run ruff check && uv run ruff format && uv run mypy unipress && uv run pytest
   - Jump window indicator matching demo_jump functionality
   - 2x sprite scaling for better visibility
   - Asset management system with JSON animation metadata
-  - Sound effects support (jump, collision, success sounds)
+  - Comprehensive sound system with 7 different audio events (jump, success, failure, high score, etc.)
   - Full parallax scrolling background with 5 layers (sky, mountains, far trees, near trees, ground)
   - Responsive positioning system - game objects scale properly with window resize
   - Physics-based obstacle spacing synchronized with ground layer movement
-- **Assets**: Professional sprite graphics with frame-by-frame animations
+  - Non-blocking audio system with game startup sound delays
+- **Assets**: Professional sprite graphics with frame-by-frame animations + OGG audio files
 - **Physics**: Identical mechanics to demo_jump for consistent difficulty
 - **Animation System**: JSON-based metadata with precise timing synchronization
-- **Status**: Complete with sprite animations, parallax backgrounds, and responsive scaling
+- **Sound System**: Full implementation of professional audio events with volume control
+- **Status**: Complete with sprite animations, parallax backgrounds, responsive scaling, and professional sound
 
 ## Asset Management System
-- **Structure**: Organized by game in `unipress/assets/images/games/{game_name}/`
+- **Structure**: Organized by game in `unipress/assets/images/games/{game_name}/` and `unipress/assets/sounds/`
 - **Animation Format**: JSON metadata files with frame sequences, durations, and hitboxes
-- **Asset Loading**: Lazy loading with caching for performance
-- **Sound Support**: Framework ready for OGG audio files
+- **Sound Format**: OGG Vorbis files organized by event categories and games
+- **Asset Loading**: Lazy loading with caching for performance (images and sounds)
+- **Sound Support**: Complete implementation with global and per-game audio assets
 - **Scaling**: Configurable sprite scaling (currently 2x for better visibility)
-- **Documentation**: Full ADR in `docs/adr/013-asset-management-system.md`
+- **Audio Organization**: Global sounds + game-specific sounds with proper directory structure
+- **Documentation**: Full ADRs in `docs/adr/013-asset-management-system.md` and `docs/adr/016-comprehensive-sound-system.md`
 
 ## Next Steps
 - Add more one-button games with different mechanics
-- Implement comprehensive testing for asset system
-- Add sound effects to jumper game
-- Create game launcher/menu system
+- Implement comprehensive testing for asset system and sound system
+- Create game launcher/menu system with sound effects
 - Consider procedural background generation for variety
+- Expand sound library with more audio assets
+- Add music background tracks for ambient category

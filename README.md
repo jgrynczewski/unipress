@@ -25,9 +25,10 @@ Enhanced sprite-based jumping game with animated characters and fire obstacles.
   - Jump window indicator showing optimal timing
   - 2x sprite scaling for better visibility
   - Physics-based jump mechanics matching demo_jump
-  - Sound effects support (jump, collision, success)
-  - Parallax scrolling background support
-- **Assets**: Professional sprite-based graphics with animation metadata
+  - Professional sound system with 7 different audio events
+  - Parallax scrolling background with 5 layers
+  - Non-blocking audio with volume control system
+- **Assets**: Professional sprite-based graphics with animation metadata + OGG audio files
 - **Run**: `uv run python -c "from unipress.games.jumper.game import JumperGame; JumperGame().run()"`
 
 ## 🚀 Quick Start
@@ -80,6 +81,12 @@ Example game-specific settings:
 difficulty = 3  # Override global difficulty
 lives = 5       # Override global lives count
 
+[audio]
+master_volume = 1.0  # Global volume control
+sfx_volume = 0.7     # Sound effects volume
+music_volume = 0.5   # Background music volume
+ui_volume = 0.6      # UI sound volume
+
 [demo_jump]
 obstacle_speed_base = 100
 jump_height_base = 150
@@ -128,6 +135,7 @@ All games must follow these design principles:
 - **Settings Integration**: TOML-based configuration with per-game overrides
 - **Internationalization**: JSON-based messages with Polish default, English fallback
 - **Professional Logging**: Structured logging with Loguru, ALL exceptions logged with traceback
+- **Sound System**: Professional audio with OGG format, event-based architecture, volume control
 - **Base Class**: Inherit from `BaseGame` for standardized structure
 - **Professional Code**: Follow ruff linting, type hints, documentation
 - **High Score Tracking**: Persistent JSON-based high score storage with automatic new record detection
@@ -142,7 +150,9 @@ unipress/
 │   │   ├── settings.py      # TOML-based hierarchical settings
 │   │   ├── messages.py      # JSON-based internationalization
 │   │   ├── logger.py        # Loguru-based structured logging
-│   │   └── high_scores.py   # JSON-based high score persistence
+│   │   ├── high_scores.py   # JSON-based high score persistence
+│   │   ├── sound.py         # Professional sound system with events
+│   │   └── assets.py        # Asset management for images and sounds
 │   ├── ui/                  # Shared UI components
 │   │   └── end_game/        # End game screen component
 │   │       └── screen.py    # Standardized end game UI
@@ -165,8 +175,10 @@ unipress/
 │       │       └── jumper/  # Jumper game sprites
 │       │           ├── player/      # Player animations
 │       │           └── obstacles/   # Fire obstacle animations
-│       └── sounds/          # Audio files (future)
+│       └── sounds/          # OGG audio files
+│           ├── global/      # Shared sounds across all games
 │           └── games/       # Per-game sound organization
+│               └── jumper/  # Jumper game specific sounds
 ├── logs/                    # Log files (auto-created)
 ├── high_scores.json         # High score storage (auto-created)
 ├── tests/                   # Test suite
@@ -184,6 +196,7 @@ unipress/
 - **Settings System**: TOML-based hierarchical configuration (global → game → constructor)
 - **Internationalization**: JSON message files with Polish default, English fallback
 - **Logging System**: Structured Loguru logging with automatic rotation and exception tracking
+- **Sound System**: Professional audio with OGG format, event categories, volume control
 - **Difficulty System**: Standardized 1-10 scale affecting gameplay timing
 - **Lives System**: 3-lives with pause-after-death and score persistence
 - **Input Abstraction**: Configurable input handling (default: left mouse click)
@@ -195,6 +208,7 @@ unipress/
 - Common UI elements (score, lives, difficulty indicator)
 - Standardized end game screen with cycling Play Again/Exit buttons
 - Automatic fullscreen mode with ESC toggle
+- Professional sound system with event-based audio and volume control
 - Professional logging for all game events, player actions, and errors
 - Complete internationalization support for all user-facing text
 - Shared UI components with per-game customization capability
