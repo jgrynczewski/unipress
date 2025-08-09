@@ -29,7 +29,7 @@ Enhanced sprite-based jumping game with animated characters and fire obstacles.
   - Parallax scrolling background with 5 layers
   - Non-blocking audio with volume control system
 - **Assets**: Professional sprite-based graphics with animation metadata + OGG audio files
-- **Run**: `uv run python -c "from unipress.games.jumper.game import JumperGame; JumperGame().run()"`
+- **Run**: `uv run python -m unipress.games.jumper.game [difficulty]`
 
 ## 🚀 Quick Start
 
@@ -53,6 +53,10 @@ uv run python main.py
 # Run with specific difficulty (1=easy, 10=hard)
 uv run python main.py 1   # Easy: 2.0s reaction time
 uv run python main.py 10  # Hard: 0.2s reaction time
+
+# Run specific games directly (recommended simplest form)
+uv run python -m unipress.games.jumper.game 5
+uv run python -m unipress.games.demo_jump.game 5
 ```
 
 ### Game Controls
