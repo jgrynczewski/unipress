@@ -170,3 +170,7 @@ unipress/assets/
 - Asset streaming for larger games
 - Integration with external asset pipelines
 - Asset versioning and updates
+
+## Appendix: Asset Libraries (References)
+
+- https://craftpix.net/ — Curated 2D game assets (sprites, UI, tilesets). License varies by pack; verify per asset/library (commercial-friendly packs available).
