@@ -31,6 +31,17 @@ Enhanced sprite-based jumping game with animated characters and fire obstacles.
 - **Assets**: Professional sprite-based graphics with animation metadata + OGG audio files
 - **Run**: `uv run python -m unipress.games.jumper.game [difficulty]`
 
+## 🖱️ Game Controls
+
+- **Left Mouse Click**: Primary action (jump, start game, restart, continue after life loss)
+- **ESC Key**: Toggle fullscreen mode (for development/testing)
+- **Lives System**: 3 lives by default, pause after death with player blinking
+- **Difficulty System**: Affects reaction time windows
+  - Level 1: 2.0 seconds reaction time (trivial)
+  - Level 10: 0.2 seconds reaction time (challenging)
+- **Display Mode**: Games start in fullscreen by default (no system bars/menus)
+- **Settings**: Configurable via TOML files (global and per-game)
+
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -135,15 +146,7 @@ docker build --target dev -t unipress:dev .
 - “Permission denied: logs”: don’t override the container user in compose.
 - GLX/DRI errors or low FPS: ensure `/dev/dri` is mapped and host `video`/`render` GIDs are added; try Xorg session.
 
-### Game Controls
-- **Left Mouse Click**: Primary action (jump, start game, restart, continue after life loss)
-- **ESC Key**: Toggle fullscreen mode (for development/testing)
-- **Lives System**: 3 lives by default, pause after death with player blinking
-- **Difficulty System**: Affects reaction time windows
-  - Level 1: 2.0 seconds reaction time (trivial)
-  - Level 10: 0.2 seconds reaction time (challenging)
-- **Display Mode**: Games start in fullscreen by default (no system bars/menus)
-- **Settings**: Configurable via TOML files (global and per-game)
+ 
 
 ## ⚙️ Configuration
 
