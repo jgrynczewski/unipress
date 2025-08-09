@@ -37,6 +37,21 @@ ALL game mechanics and UI must work with timing-based or automatic cycling inter
 - **Assistant responds in English only**
 - **All code, comments, and documentation in English**
 
+### Assistant Action Approval Policy (MANDATORY)
+To ensure full user control and transparency, the assistant MUST follow this approval policy for EVERY action (including read-only tool calls, code edits, commands, and configuration changes):
+
+- Before executing any action, present a short proposal containing:
+  - Intent: one-sentence summary of what will be done and why
+  - Exact steps: list of commands to run (verbatim) and/or files to edit
+  - File edits: precise description per file; when possible, include a minimal diff/edits preview
+  - Risks/Side-effects: brief note (e.g., may restart app, long-running, modifies state)
+- Wait for explicit user approval before proceeding. Accepted approval phrases: "Approve", "Proceed", or "OK" (case-insensitive). No action should be taken without this approval.
+- If the plan changes meaningfully after approval, re-propose the updated steps and request approval again.
+- Batch small actions into a single proposal when appropriate to reduce approval overhead, but keep steps explicit and reviewable.
+- If blocked or uncertain, ask a clarifying question instead of guessing.
+
+Exceptions: None by default. Even read-only diagnostics should be proposed first unless the user explicitly grants a temporary exception.
+
 ## Key Decisions (ADRs)
 1. **Dependency Management**: ✅ uv (fast, modern)
 2. **Game Framework**: ✅ arcade (clean API, modern)
