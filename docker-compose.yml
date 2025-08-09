@@ -1,0 +1,40 @@
+version: "3.9"
+
+services:
+  run:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        PYTHON_VERSION: 3.12-slim
+    image: unipress:latest
+    environment:
+      - PYTHONUNBUFFERED=1
+      - UNIPRESS_DIFFICULTY=5
+      - DISPLAY=${DISPLAY}
+      # Uncomment if DRI3 causes issues:
+      # - LIBGL_DRI3_DISABLE=1
+    network_mode: host
+    volumes:
+      - ./high_scores.json:/app/high_scores.json
+      - /tmp/.X11-unix:/tmp/.X11-unix:ro
+    group_add:
+      - "audio"
+      - "44"      # video
+      - "992"     # render
+    devices:
+      - "/dev/snd:/dev/snd"
+      - "/dev/dri:/dev/dri"
+
+  devtest:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+      args:
+        PYTHON_VERSION: 3.12-slim
+    image: unipress:dev
+    command: ["bash", "-lc", "echo Dev image built with QA checks"]
+
+
+
