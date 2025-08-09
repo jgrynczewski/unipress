@@ -210,6 +210,15 @@ Reference: https://www.npmjs.com/package/git-cz#custom-config
 - `uv run python -m unipress.games.GAMENAME.game` - Run specific game
 - `PYTHONPATH=/path/to/project uv run python unipress/games/jumper/game.py` - Run jumper game directly
 
+### Containerization (quick)
+- Build image: `docker build -t unipress:latest .`
+- Allow X11: `xhost +si:localuser:$(whoami)`
+- Run via compose: `docker compose up --build run`
+- Difficulty: `docker compose run --rm run 7`
+- Other game (direct docker):
+  - `docker run … unipress:latest uv run python -m unipress.games.demo_jump.game 5`
+  - Include: `-e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix:ro --device /dev/snd --device /dev/dri --group-add audio --group-add $(getent group video | cut -d: -f3) --group-add $(getent group render | cut -d: -f3)`
+
 ## Quality Assurance Pipeline
 **Pre-commit checks** (run all before committing):
 ```bash
