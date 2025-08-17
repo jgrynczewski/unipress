@@ -12,27 +12,13 @@ tutorials/installation
 tutorials/quick_start
 tutorials/development_setup
 tutorials/first_game
-tutorials/game_design
-tutorials/assets
-tutorials/sound
-tutorials/performance
-tutorials/testing
-tutorials/i18n
-tutorials/docker
-tutorials/contributing
 
+api/index
 api/base_game
-api/settings
-api/sound
-api/assets
-api/server
 
 architecture/overview
 architecture/decisions
 architecture/uml
-architecture/components
-architecture/data_flow
-architecture/deployment
 ```
 
 ## 🎮 What is Unipress?
@@ -57,31 +43,15 @@ Unipress is a professional-grade game development framework that focuses on **on
 
 ### Game Development
 - [Creating Your First Game](tutorials/first_game.md) - Step-by-step guide to creating a new game
-- [Game Design Standards](tutorials/game_design.md) - Understanding the one-button constraint
-- [Asset Management](tutorials/assets.md) - Working with sprites, sounds, and animations
-- [Sound System](tutorials/sound.md) - Adding audio to your games
 
 ### API Reference
 - [Complete API Reference](api/index.html) - Full API documentation with all modules
 - [BaseGame Class](api/base_game.html) - Core game framework class
-- [Settings System](api/settings.html) - Configuration management
-- [Sound Manager](api/sound.html) - Audio system reference
-- [Asset Manager](api/assets.html) - Resource management
-- [HTTP Server](api/server.html) - Game server API
 
 ### Architecture
 - [System Overview](architecture/overview.md) - High-level architecture
 - [Architecture Decision Records](architecture/decisions.md) - ADR collection and rationale
 - [UML Diagrams](architecture/uml.md) - Visual architecture documentation
-- [Component Details](architecture/components.md) - Detailed component descriptions
-- [Data Flow](architecture/data_flow.md) - How data flows through the system
-- [Deployment](architecture/deployment.md) - Deployment strategies
-
-### Advanced Topics
-- [Performance Optimization](tutorials/performance.md) - Making your games run smoothly
-- [Testing](tutorials/testing.md) - Writing tests for your games
-- [Internationalization](tutorials/i18n.md) - Adding multiple language support
-- [Docker Deployment](tutorials/docker.md) - Containerized deployment
 
 ## 🚀 Quick Start
 

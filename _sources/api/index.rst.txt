@@ -1,147 +1,139 @@
-# API Reference
+API Reference
+============
 
-## Overview
+Overview
+--------
 
 This section contains the complete API documentation for all Unipress modules, automatically generated from docstrings in the source code.
 
-## Core Framework
+Core Framework
+--------------
 
-### Base Game Framework
+Base Game Framework
+~~~~~~~~~~~~~~~~~~
 
-```{eval-rst}
 .. automodule:: unipress.core.base_game
    :members:
    :undoc-members:
    :show-inheritance:
    :special-members: __init__
-```
 
-### Asset Management
+Asset Management
+~~~~~~~~~~~~~~~
 
-```{eval-rst}
 .. automodule:: unipress.core.assets
    :members:
    :undoc-members:
    :show-inheritance:
    :special-members: __init__
-```
 
-### Sound System
+Sound System
+~~~~~~~~~~~
 
-```{eval-rst}
 .. automodule:: unipress.core.sound
    :members:
    :undoc-members:
    :show-inheritance:
    :special-members: __init__
-```
 
-### Settings Management
+Settings Management
+~~~~~~~~~~~~~~~~~~
 
-```{eval-rst}
 .. automodule:: unipress.core.settings
    :members:
    :undoc-members:
    :show-inheritance:
    :special-members: __init__
-```
 
-### Logging System
+Logging System
+~~~~~~~~~~~~~
 
-```{eval-rst}
 .. automodule:: unipress.core.logger
    :members:
    :undoc-members:
    :show-inheritance:
    :special-members: __init__
-```
 
-### High Scores
+High Scores
+~~~~~~~~~~
 
-```{eval-rst}
 .. automodule:: unipress.core.high_scores
    :members:
    :undoc-members:
    :show-inheritance:
    :special-members: __init__
-```
 
-### Game Server
+Game Server
+~~~~~~~~~~
 
-```{eval-rst}
 .. automodule:: unipress.core.game_server
    :members:
    :undoc-members:
    :show-inheritance:
    :special-members: __init__
-```
 
-### Messages
+Messages
+~~~~~~~~
 
-```{eval-rst}
 .. automodule:: unipress.core.messages
    :members:
    :undoc-members:
    :show-inheritance:
    :special-members: __init__
-```
 
-## Client Interface
+Client Interface
+---------------
 
-```{eval-rst}
 .. automodule:: unipress.client
    :members:
    :undoc-members:
    :show-inheritance:
    :special-members: __init__
-```
 
-## Game Implementations
+Game Implementations
+-------------------
 
-### Demo Jump Game
+Demo Jump Game
+~~~~~~~~~~~~~
 
-```{eval-rst}
 .. automodule:: unipress.games.demo_jump.game
    :members:
    :undoc-members:
    :show-inheritance:
    :special-members: __init__
-```
 
-### Jumper Game
+Jumper Game
+~~~~~~~~~~
 
-```{eval-rst}
 .. automodule:: unipress.games.jumper.game
    :members:
    :undoc-members:
    :show-inheritance:
    :special-members: __init__
-```
 
-## UI Components
+UI Components
+-------------
 
-### End Game Screen
+End Game Screen
+~~~~~~~~~~~~~~
 
-```{eval-rst}
 .. automodule:: unipress.ui.end_game.screen
    :members:
    :undoc-members:
    :show-inheritance:
    :special-members: __init__
-```
 
-## Package Information
+Package Information
+------------------
 
-```{eval-rst}
 .. automodule:: unipress
    :members:
    :undoc-members:
    :show-inheritance:
-```
 
-## Module Index
+Module Index
+-----------
 
-```{eval-rst}
 .. toctree::
    :maxdepth: 2
    :caption: API Modules:
@@ -155,4 +147,3 @@ This section contains the complete API documentation for all Unipress modules, a
    game_server
    messages
    client
-```
