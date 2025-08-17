@@ -425,4 +425,10 @@ We use conventional commits with git-cz emojis:
 
 ## 📄 License
 
-MIT License - See LICENSE file for details
+GNU General Public License v3.0 - See LICENSE file for details
+
+This project is licensed under the GNU GPL v3, which ensures that:
+- The software remains free and open source
+- Derivative works must also be open source (copyleft)
+- Users have the freedom to use, modify, and distribute the software
+- All modifications must be shared under the same license
