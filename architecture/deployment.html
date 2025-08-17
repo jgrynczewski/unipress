@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>UML Diagrams &mdash; Unipress 0.1.0 documentation</title>
+  <title>&lt;no title&gt; &mdash; Unipress 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -22,8 +22,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="&lt;no title&gt;" href="components.html" />
-    <link rel="prev" title="Architecture Decision Records (ADRs)" href="decisions.html" /> 
+    <link rel="prev" title="&lt;no title&gt;" href="data_flow.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,7 +45,7 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../tutorials/installation.html">Installation Guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../tutorials/installation.html#prerequisites">Prerequisites</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../tutorials/installation.html#system-requirements">System Requirements</a></li>
@@ -328,53 +327,53 @@
 <li class="toctree-l2"><a class="reference internal" href="decisions.html#related-resources">Related Resources</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">UML Diagrams</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#available-diagrams">Available Diagrams</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#architecture-overview">1. Architecture Overview</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#class-hierarchy">2. Class Hierarchy</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#data-flow">3. Data Flow</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#deployment-diagram">4. Deployment Diagram</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#game-lifecycle">5. Game Lifecycle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="uml.html">UML Diagrams</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="uml.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uml.html#available-diagrams">Available Diagrams</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="uml.html#architecture-overview">1. Architecture Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uml.html#class-hierarchy">2. Class Hierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uml.html#data-flow">3. Data Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uml.html#deployment-diagram">4. Deployment Diagram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uml.html#game-lifecycle">5. Game Lifecycle</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#diagram-conventions">Diagram Conventions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#naming-standards">Naming Standards</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#visual-standards">Visual Standards</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#content-guidelines">Content Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uml.html#diagram-conventions">Diagram Conventions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="uml.html#naming-standards">Naming Standards</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uml.html#visual-standards">Visual Standards</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uml.html#content-guidelines">Content Guidelines</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#generating-diagrams">Generating Diagrams</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#build-commands">Build Commands</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#makefile-targets">Makefile Targets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uml.html#generating-diagrams">Generating Diagrams</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="uml.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uml.html#build-commands">Build Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uml.html#makefile-targets">Makefile Targets</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#diagram-maintenance">Diagram Maintenance</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#update-process">Update Process</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#version-control">Version Control</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#quality-checks">Quality Checks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uml.html#diagram-maintenance">Diagram Maintenance</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="uml.html#update-process">Update Process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uml.html#version-control">Version Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uml.html#quality-checks">Quality Checks</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#using-diagrams">Using Diagrams</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#in-documentation">In Documentation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#in-presentations">In Presentations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#in-development">In Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uml.html#using-diagrams">Using Diagrams</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="uml.html#in-documentation">In Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uml.html#in-presentations">In Presentations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uml.html#in-development">In Development</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#advanced-features">Advanced Features</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#custom-themes">Custom Themes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#include-files">Include Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#dynamic-content">Dynamic Content</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uml.html#advanced-features">Advanced Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="uml.html#custom-themes">Custom Themes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uml.html#include-files">Include Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uml.html#dynamic-content">Dynamic Content</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#best-practices">Best Practices</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#design-principles">Design Principles</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#maintenance">Maintenance</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#collaboration">Collaboration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uml.html#best-practices">Best Practices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="uml.html#design-principles">Design Principles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uml.html#maintenance">Maintenance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uml.html#collaboration">Collaboration</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#related-resources">Related Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uml.html#related-resources">Related Resources</a></li>
 </ul>
 </li>
 </ul>
@@ -393,9 +392,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">UML Diagrams</li>
+      <li class="breadcrumb-item active">&lt;no title&gt;</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/architecture/uml.md.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/architecture/deployment.md.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -403,279 +402,12 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section class="tex2jax_ignore mathjax_ignore" id="uml-diagrams">
-<h1>UML Diagrams<a class="headerlink" href="#uml-diagrams" title="Link to this heading"></a></h1>
-<section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
-<p>Unipress uses PlantUML to generate comprehensive UML diagrams that visualize the system architecture, data flow, and component relationships. These diagrams are maintained as text files and automatically generated as PNG images.</p>
-</section>
-<section id="available-diagrams">
-<h2>Available Diagrams<a class="headerlink" href="#available-diagrams" title="Link to this heading"></a></h2>
-<section id="architecture-overview">
-<h3>1. Architecture Overview<a class="headerlink" href="#architecture-overview" title="Link to this heading"></a></h3>
-<p><strong>File</strong>: <code class="docutils literal notranslate"><span class="pre">docs/uml/architecture-overview.puml</span></code>
-<strong>Image</strong>: <code class="docutils literal notranslate"><span class="pre">docs/uml/ArchitectureOverview.png</span></code></p>
-<p>Shows the high-level system architecture including:</p>
-<ul class="simple">
-<li><p>Core framework components</p></li>
-<li><p>Game implementations</p></li>
-<li><p>Infrastructure components</p></li>
-<li><p>External dependencies</p></li>
-</ul>
-</section>
-<section id="class-hierarchy">
-<h3>2. Class Hierarchy<a class="headerlink" href="#class-hierarchy" title="Link to this heading"></a></h3>
-<p><strong>File</strong>: <code class="docutils literal notranslate"><span class="pre">docs/uml/class-hierarchy.puml</span></code>
-<strong>Image</strong>: <code class="docutils literal notranslate"><span class="pre">docs/uml/ClassHierarchy.png</span></code></p>
-<p>Displays the inheritance structure:</p>
-<ul class="simple">
-<li><p>BaseGame abstract class</p></li>
-<li><p>Concrete game implementations</p></li>
-<li><p>Core system classes</p></li>
-<li><p>Interface relationships</p></li>
-</ul>
-</section>
-<section id="data-flow">
-<h3>3. Data Flow<a class="headerlink" href="#data-flow" title="Link to this heading"></a></h3>
-<p><strong>File</strong>: <code class="docutils literal notranslate"><span class="pre">docs/uml/data-flow.puml</span></code>
-<strong>Image</strong>: <code class="docutils literal notranslate"><span class="pre">docs/uml/DataFlow.png</span></code></p>
-<p>Illustrates how data moves through the system:</p>
-<ul class="simple">
-<li><p>User input processing</p></li>
-<li><p>Game state management</p></li>
-<li><p>Asset loading and caching</p></li>
-<li><p>Score persistence</p></li>
-<li><p>Logging and monitoring</p></li>
-</ul>
-</section>
-<section id="deployment-diagram">
-<h3>4. Deployment Diagram<a class="headerlink" href="#deployment-diagram" title="Link to this heading"></a></h3>
-<p><strong>File</strong>: <code class="docutils literal notranslate"><span class="pre">docs/uml/deployment-diagram.puml</span></code>
-<strong>Image</strong>: <code class="docutils literal notranslate"><span class="pre">docs/uml/DeploymentDiagram.png</span></code></p>
-<p>Shows the deployment architecture:</p>
-<ul class="simple">
-<li><p>Container structure</p></li>
-<li><p>Network communication</p></li>
-<li><p>External services</p></li>
-<li><p>Resource allocation</p></li>
-</ul>
-</section>
-<section id="game-lifecycle">
-<h3>5. Game Lifecycle<a class="headerlink" href="#game-lifecycle" title="Link to this heading"></a></h3>
-<p><strong>File</strong>: <code class="docutils literal notranslate"><span class="pre">docs/uml/game-lifecycle.puml</span></code>
-<strong>Image</strong>: <code class="docutils literal notranslate"><span class="pre">docs/uml/GameLifecycle.png</span></code></p>
-<p>Describes the game execution flow:</p>
-<ul class="simple">
-<li><p>Initialization sequence</p></li>
-<li><p>Main game loop</p></li>
-<li><p>State transitions</p></li>
-<li><p>Cleanup procedures</p></li>
-</ul>
-</section>
-</section>
-<section id="diagram-conventions">
-<h2>Diagram Conventions<a class="headerlink" href="#diagram-conventions" title="Link to this heading"></a></h2>
-<section id="naming-standards">
-<h3>Naming Standards<a class="headerlink" href="#naming-standards" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Files</strong>: Lowercase with hyphens (e.g., <code class="docutils literal notranslate"><span class="pre">architecture-overview.puml</span></code>)</p></li>
-<li><p><strong>Images</strong>: PascalCase (e.g., <code class="docutils literal notranslate"><span class="pre">ArchitectureOverview.png</span></code>)</p></li>
-<li><p><strong>Components</strong>: Clear, descriptive names</p></li>
-</ul>
-</section>
-<section id="visual-standards">
-<h3>Visual Standards<a class="headerlink" href="#visual-standards" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Colors</strong>: Consistent color scheme across diagrams</p></li>
-<li><p><strong>Shapes</strong>: Standard UML notation</p></li>
-<li><p><strong>Layout</strong>: Logical flow from top to bottom, left to right</p></li>
-<li><p><strong>Annotations</strong>: Clear labels and descriptions</p></li>
-</ul>
-</section>
-<section id="content-guidelines">
-<h3>Content Guidelines<a class="headerlink" href="#content-guidelines" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Scope</strong>: Each diagram focuses on a specific aspect</p></li>
-<li><p><strong>Detail Level</strong>: Appropriate abstraction for the target audience</p></li>
-<li><p><strong>Consistency</strong>: Related diagrams use consistent terminology</p></li>
-<li><p><strong>Maintenance</strong>: Diagrams updated with code changes</p></li>
-</ul>
-</section>
-</section>
-<section id="generating-diagrams">
-<h2>Generating Diagrams<a class="headerlink" href="#generating-diagrams" title="Link to this heading"></a></h2>
-<section id="prerequisites">
-<h3>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading"></a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install PlantUML</span>
-sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>plantuml
-<span class="c1"># or</span>
-brew<span class="w"> </span>install<span class="w"> </span>plantuml
-</pre></div>
-</div>
-</section>
-<section id="build-commands">
-<h3>Build Commands<a class="headerlink" href="#build-commands" title="Link to this heading"></a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate all diagrams</span>
-<span class="nb">cd</span><span class="w"> </span>docs/uml
-plantuml<span class="w"> </span>*.puml
-
-<span class="c1"># Generate specific diagram</span>
-plantuml<span class="w"> </span>architecture-overview.puml
-
-<span class="c1"># Generate with custom theme</span>
-plantuml<span class="w"> </span>-theme<span class="w"> </span>path/to/theme.puml<span class="w"> </span>*.puml
-</pre></div>
-</div>
-</section>
-<section id="makefile-targets">
-<h3>Makefile Targets<a class="headerlink" href="#makefile-targets" title="Link to this heading"></a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Build all diagrams</span>
-make<span class="w"> </span>uml
-
-<span class="c1"># Clean generated images</span>
-make<span class="w"> </span>clean-uml
-
-<span class="c1"># Watch for changes</span>
-make<span class="w"> </span>watch-uml
-</pre></div>
-</div>
-</section>
-</section>
-<section id="diagram-maintenance">
-<h2>Diagram Maintenance<a class="headerlink" href="#diagram-maintenance" title="Link to this heading"></a></h2>
-<section id="update-process">
-<h3>Update Process<a class="headerlink" href="#update-process" title="Link to this heading"></a></h3>
-<ol class="arabic simple">
-<li><p><strong>Modify PlantUML source</strong> (<code class="docutils literal notranslate"><span class="pre">.puml</span></code> files)</p></li>
-<li><p><strong>Regenerate images</strong> using PlantUML</p></li>
-<li><p><strong>Review changes</strong> for accuracy</p></li>
-<li><p><strong>Commit both source and images</strong></p></li>
-</ol>
-</section>
-<section id="version-control">
-<h3>Version Control<a class="headerlink" href="#version-control" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Source files</strong>: Always commit <code class="docutils literal notranslate"><span class="pre">.puml</span></code> files</p></li>
-<li><p><strong>Generated images</strong>: Commit PNG files for easy viewing</p></li>
-<li><p><strong>Changes</strong>: Update diagrams when architecture changes</p></li>
-</ul>
-</section>
-<section id="quality-checks">
-<h3>Quality Checks<a class="headerlink" href="#quality-checks" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Syntax validation</strong>: PlantUML validates syntax</p></li>
-<li><p><strong>Visual review</strong>: Check generated images</p></li>
-<li><p><strong>Consistency</strong>: Ensure diagrams align with code</p></li>
-<li><p><strong>Documentation</strong>: Update related documentation</p></li>
-</ul>
-</section>
-</section>
-<section id="using-diagrams">
-<h2>Using Diagrams<a class="headerlink" href="#using-diagrams" title="Link to this heading"></a></h2>
-<section id="in-documentation">
-<h3>In Documentation<a class="headerlink" href="#in-documentation" title="Link to this heading"></a></h3>
-<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>![<span class="nt">Architecture Overview</span>](<span class="na">../uml/ArchitectureOverview.png</span>)
-<span class="ge">*System architecture showing core components and relationships*</span>
-</pre></div>
-</div>
-</section>
-<section id="in-presentations">
-<h3>In Presentations<a class="headerlink" href="#in-presentations" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>PNG format</strong>: High quality for presentations</p></li>
-<li><p><strong>SVG format</strong>: Scalable for different screen sizes</p></li>
-<li><p><strong>PDF export</strong>: For printed materials</p></li>
-</ul>
-</section>
-<section id="in-development">
-<h3>In Development<a class="headerlink" href="#in-development" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Reference</strong>: Use diagrams for architectural decisions</p></li>
-<li><p><strong>Onboarding</strong>: Help new developers understand the system</p></li>
-<li><p><strong>Planning</strong>: Guide feature development and refactoring</p></li>
-</ul>
-</section>
-</section>
-<section id="advanced-features">
-<h2>Advanced Features<a class="headerlink" href="#advanced-features" title="Link to this heading"></a></h2>
-<section id="custom-themes">
-<h3>Custom Themes<a class="headerlink" href="#custom-themes" title="Link to this heading"></a></h3>
-<p>Create custom PlantUML themes for consistent styling:</p>
-<div class="highlight-plantuml notranslate"><div class="highlight"><pre><span></span>!theme custom-theme
-@startuml
-&#39; Diagram content
-@enduml
-</pre></div>
-</div>
-</section>
-<section id="include-files">
-<h3>Include Files<a class="headerlink" href="#include-files" title="Link to this heading"></a></h3>
-<p>Reuse common elements across diagrams:</p>
-<div class="highlight-plantuml notranslate"><div class="highlight"><pre><span></span>!include common-elements.puml
-@startuml
-&#39; Diagram content
-@enduml
-</pre></div>
-</div>
-</section>
-<section id="dynamic-content">
-<h3>Dynamic Content<a class="headerlink" href="#dynamic-content" title="Link to this heading"></a></h3>
-<p>Generate diagrams with external data:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate diagram with current data</span>
-python<span class="w"> </span>generate-diagram.py<span class="w"> </span>&gt;<span class="w"> </span>dynamic-diagram.puml
-plantuml<span class="w"> </span>dynamic-diagram.puml
-</pre></div>
-</div>
-</section>
-</section>
-<section id="best-practices">
-<h2>Best Practices<a class="headerlink" href="#best-practices" title="Link to this heading"></a></h2>
-<section id="design-principles">
-<h3>Design Principles<a class="headerlink" href="#design-principles" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Simplicity</strong>: Focus on essential relationships</p></li>
-<li><p><strong>Clarity</strong>: Use clear, descriptive names</p></li>
-<li><p><strong>Consistency</strong>: Maintain visual and naming standards</p></li>
-<li><p><strong>Completeness</strong>: Include all relevant components</p></li>
-</ul>
-</section>
-<section id="maintenance">
-<h3>Maintenance<a class="headerlink" href="#maintenance" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Regular updates</strong>: Keep diagrams current with code</p></li>
-<li><p><strong>Automated generation</strong>: Use CI/CD for diagram updates</p></li>
-<li><p><strong>Review process</strong>: Validate diagrams with team</p></li>
-<li><p><strong>Documentation</strong>: Explain diagram purpose and scope</p></li>
-</ul>
-</section>
-<section id="collaboration">
-<h3>Collaboration<a class="headerlink" href="#collaboration" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Shared understanding</strong>: Ensure team consensus on diagrams</p></li>
-<li><p><strong>Feedback loops</strong>: Incorporate developer feedback</p></li>
-<li><p><strong>Evolution</strong>: Adapt diagrams as system grows</p></li>
-<li><p><strong>Training</strong>: Help team understand diagram conventions</p></li>
-</ul>
-</section>
-</section>
-<section id="related-resources">
-<h2>Related Resources<a class="headerlink" href="#related-resources" title="Link to this heading"></a></h2>
-<ul class="simple">
-<li><p><a class="reference external" href="https://plantuml.com/">PlantUML Documentation</a></p></li>
-<li><p><a class="reference external" href="https://www.uml.org/">UML Standards</a></p></li>
-<li><p><a class="reference internal" href="overview.html"><span class="std std-doc">Architecture Overview</span></a> - Detailed system architecture</p></li>
-<li><p><a class="reference internal" href="#../tutorials/development_standards.md"><span class="xref myst">Development Standards</span></a> - Coding guidelines</p></li>
-<li><p><a class="reference internal" href="decisions.html"><span class="std std-doc">ADR Collection</span></a> - Architecture decision records</p></li>
-</ul>
-</section>
-</section>
-
+  
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="decisions.html" class="btn btn-neutral float-left" title="Architecture Decision Records (ADRs)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="components.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="data_flow.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
