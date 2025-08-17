@@ -4,22 +4,7 @@ Welcome to the Unipress documentation! Unipress is a collection of one-button ga
 
 > **Note**: This documentation is also available on [Read the Docs](https://unipress.readthedocs.io/) and [GitHub Pages](https://jgrynczewski.github.io/unipress/).
 
-```{toctree}
-:maxdepth: 3
-:caption: Contents:
 
-tutorials/installation
-tutorials/quick_start
-tutorials/development_setup
-tutorials/first_game
-
-api/index
-api/base_game
-
-architecture/overview
-architecture/decisions
-architecture/uml
-```
 
 ## 🎮 What is Unipress?
 

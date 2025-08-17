@@ -21,9 +21,7 @@
       <script src="../_static/copybutton.js?v=30646c52"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Quick Start Guide" href="quick_start.html" />
-    <link rel="prev" title="Unipress Documentation" href="../index.html" /> 
+    <link rel="search" title="Search" href="../search.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -45,646 +43,95 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation Guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#system-requirements">System Requirements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#required-software">Required Software</a></li>
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Installation Guide</a><ul>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a><ul>
+<li><a class="reference internal" href="#system-requirements">System Requirements</a></li>
+<li><a class="reference internal" href="#required-software">Required Software</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#installation-methods">Installation Methods</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#method-1-development-installation-recommended">Method 1: Development Installation (Recommended)</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#clone-the-repository">1. Clone the Repository</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#install-uv-package-manager">2. Install uv Package Manager</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#install-dependencies">3. Install Dependencies</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#verify-installation">4. Verify Installation</a></li>
+<li><a class="reference internal" href="#installation-methods">Installation Methods</a><ul>
+<li><a class="reference internal" href="#method-1-development-installation-recommended">Method 1: Development Installation (Recommended)</a><ul>
+<li><a class="reference internal" href="#clone-the-repository">1. Clone the Repository</a></li>
+<li><a class="reference internal" href="#install-uv-package-manager">2. Install uv Package Manager</a></li>
+<li><a class="reference internal" href="#install-dependencies">3. Install Dependencies</a></li>
+<li><a class="reference internal" href="#verify-installation">4. Verify Installation</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#method-2-docker-installation">Method 2: Docker Installation</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id1">1. Clone the Repository</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#build-docker-image">2. Build Docker Image</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#run-with-docker-compose">3. Run with Docker Compose</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#run-individual-container">4. Run Individual Container</a></li>
+<li><a class="reference internal" href="#method-2-docker-installation">Method 2: Docker Installation</a><ul>
+<li><a class="reference internal" href="#id1">1. Clone the Repository</a></li>
+<li><a class="reference internal" href="#build-docker-image">2. Build Docker Image</a></li>
+<li><a class="reference internal" href="#run-with-docker-compose">3. Run with Docker Compose</a></li>
+<li><a class="reference internal" href="#run-individual-container">4. Run Individual Container</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#platform-specific-instructions">Platform-Specific Instructions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#linux-ubuntu-debian">Linux (Ubuntu/Debian)</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#install-system-dependencies">Install System Dependencies</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#audio-support-optional">Audio Support (Optional)</a></li>
+<li><a class="reference internal" href="#platform-specific-instructions">Platform-Specific Instructions</a><ul>
+<li><a class="reference internal" href="#linux-ubuntu-debian">Linux (Ubuntu/Debian)</a><ul>
+<li><a class="reference internal" href="#install-system-dependencies">Install System Dependencies</a></li>
+<li><a class="reference internal" href="#audio-support-optional">Audio Support (Optional)</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#macos">macOS</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id2">Install System Dependencies</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#audio-support">Audio Support</a></li>
+<li><a class="reference internal" href="#macos">macOS</a><ul>
+<li><a class="reference internal" href="#id2">Install System Dependencies</a></li>
+<li><a class="reference internal" href="#audio-support">Audio Support</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#windows">Windows</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id3">Install System Dependencies</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id4">Audio Support</a></li>
+<li><a class="reference internal" href="#windows">Windows</a><ul>
+<li><a class="reference internal" href="#id3">Install System Dependencies</a></li>
+<li><a class="reference internal" href="#id4">Audio Support</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#configuration">Configuration</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#initial-setup">Initial Setup</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#create-configuration-file">1. Create Configuration File</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#customize-settings">2. Customize Settings</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#set-up-logging">3. Set Up Logging</a></li>
+<li><a class="reference internal" href="#configuration">Configuration</a><ul>
+<li><a class="reference internal" href="#initial-setup">Initial Setup</a><ul>
+<li><a class="reference internal" href="#create-configuration-file">1. Create Configuration File</a></li>
+<li><a class="reference internal" href="#customize-settings">2. Customize Settings</a></li>
+<li><a class="reference internal" href="#set-up-logging">3. Set Up Logging</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#environment-variables">Environment Variables</a></li>
+<li><a class="reference internal" href="#environment-variables">Environment Variables</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#verification">Verification</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#test-installation">Test Installation</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#run-demo-game">1. Run Demo Game</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#run-specific-game">2. Run Specific Game</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#check-audio">3. Check Audio</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#verify-dependencies">4. Verify Dependencies</a></li>
+<li><a class="reference internal" href="#verification">Verification</a><ul>
+<li><a class="reference internal" href="#test-installation">Test Installation</a><ul>
+<li><a class="reference internal" href="#run-demo-game">1. Run Demo Game</a></li>
+<li><a class="reference internal" href="#run-specific-game">2. Run Specific Game</a></li>
+<li><a class="reference internal" href="#check-audio">3. Check Audio</a></li>
+<li><a class="reference internal" href="#verify-dependencies">4. Verify Dependencies</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#troubleshooting">Troubleshooting</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#common-issues">Common Issues</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#python-version-issues">Python Version Issues</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#audio-issues">Audio Issues</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#display-issues">Display Issues</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#permission-issues">Permission Issues</a></li>
+<li><a class="reference internal" href="#troubleshooting">Troubleshooting</a><ul>
+<li><a class="reference internal" href="#common-issues">Common Issues</a><ul>
+<li><a class="reference internal" href="#python-version-issues">Python Version Issues</a></li>
+<li><a class="reference internal" href="#audio-issues">Audio Issues</a></li>
+<li><a class="reference internal" href="#display-issues">Display Issues</a></li>
+<li><a class="reference internal" href="#permission-issues">Permission Issues</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#getting-help">Getting Help</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#check-logs">Check Logs</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#debug-mode">Debug Mode</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#community-support">Community Support</a></li>
+<li><a class="reference internal" href="#getting-help">Getting Help</a><ul>
+<li><a class="reference internal" href="#check-logs">Check Logs</a></li>
+<li><a class="reference internal" href="#debug-mode">Debug Mode</a></li>
+<li><a class="reference internal" href="#community-support">Community Support</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#next-steps">Next Steps</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#uninstallation">Uninstallation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#remove-installation">Remove Installation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#remove-dependencies">Remove Dependencies</a></li>
+<li><a class="reference internal" href="#next-steps">Next Steps</a></li>
+<li><a class="reference internal" href="#uninstallation">Uninstallation</a><ul>
+<li><a class="reference internal" href="#remove-installation">Remove Installation</a></li>
+<li><a class="reference internal" href="#remove-dependencies">Remove Dependencies</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start Guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="quick_start.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quick_start.html#prerequisites">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quick_start.html#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quick_start.html#your-first-game">Your First Game</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quick_start.html#next-steps">Next Steps</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quick_start.html#troubleshooting">Troubleshooting</a></li>
 </ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="development_setup.html">Development Setup</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="development_setup.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="development_setup.html#prerequisites">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="development_setup.html#development-installation">Development Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="development_setup.html#development-tools">Development Tools</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="development_setup.html#code-quality">Code Quality</a></li>
-<li class="toctree-l3"><a class="reference internal" href="development_setup.html#commands">Commands</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="development_setup.html#project-structure">Project Structure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="development_setup.html#contributing">Contributing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="development_setup.html#next-steps">Next Steps</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="first_game.html">Creating Your First Game</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="first_game.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="first_game.html#prerequisites">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="first_game.html#game-concept">Game Concept</a></li>
-<li class="toctree-l2"><a class="reference internal" href="first_game.html#implementation-steps">Implementation Steps</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="first_game.html#create-game-class">1. Create Game Class</a></li>
-<li class="toctree-l3"><a class="reference internal" href="first_game.html#implement-game-logic">2. Implement Game Logic</a></li>
-<li class="toctree-l3"><a class="reference internal" href="first_game.html#add-rendering">3. Add Rendering</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="first_game.html#next-steps">Next Steps</a></li>
-<li class="toctree-l2"><a class="reference internal" href="first_game.html#complete-example">Complete Example</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../api/index.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api/index.html#core-framework">Core Framework</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../api/index.html#base-game-framework">Base Game Framework</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.base_game.GameMeta"><code class="docutils literal notranslate"><span class="pre">GameMeta</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.base_game.BaseGame"><code class="docutils literal notranslate"><span class="pre">BaseGame</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../api/index.html#asset-management">Asset Management</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.assets.AnimationFrame"><code class="docutils literal notranslate"><span class="pre">AnimationFrame</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.assets.Animation"><code class="docutils literal notranslate"><span class="pre">Animation</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.assets.AssetManager"><code class="docutils literal notranslate"><span class="pre">AssetManager</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.assets.get_asset_manager"><code class="docutils literal notranslate"><span class="pre">get_asset_manager()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.assets.get_texture"><code class="docutils literal notranslate"><span class="pre">get_texture()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.assets.load_animation"><code class="docutils literal notranslate"><span class="pre">load_animation()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.assets.get_sound"><code class="docutils literal notranslate"><span class="pre">get_sound()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.assets.preload_assets"><code class="docutils literal notranslate"><span class="pre">preload_assets()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.assets.clear_assets"><code class="docutils literal notranslate"><span class="pre">clear_assets()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../api/index.html#sound-system">Sound System</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.sound.SoundCategory"><code class="docutils literal notranslate"><span class="pre">SoundCategory</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.sound.SoundEvent"><code class="docutils literal notranslate"><span class="pre">SoundEvent</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.sound.SoundManager"><code class="docutils literal notranslate"><span class="pre">SoundManager</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../api/index.html#settings-management">Settings Management</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.settings.get_default_settings"><code class="docutils literal notranslate"><span class="pre">get_default_settings()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.settings.load_toml_file"><code class="docutils literal notranslate"><span class="pre">load_toml_file()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.settings.merge_settings"><code class="docutils literal notranslate"><span class="pre">merge_settings()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.settings.load_settings"><code class="docutils literal notranslate"><span class="pre">load_settings()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.settings.get_setting"><code class="docutils literal notranslate"><span class="pre">get_setting()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../api/index.html#logging-system">Logging System</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.logger.init_logger"><code class="docutils literal notranslate"><span class="pre">init_logger()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.logger.get_logger"><code class="docutils literal notranslate"><span class="pre">get_logger()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.logger.log_game_event"><code class="docutils literal notranslate"><span class="pre">log_game_event()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.logger.log_player_action"><code class="docutils literal notranslate"><span class="pre">log_player_action()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.logger.log_performance"><code class="docutils literal notranslate"><span class="pre">log_performance()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.logger.log_error"><code class="docutils literal notranslate"><span class="pre">log_error()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../api/index.html#high-scores">High Scores</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.high_scores.HighScoreManager"><code class="docutils literal notranslate"><span class="pre">HighScoreManager</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.high_scores.get_high_score_manager"><code class="docutils literal notranslate"><span class="pre">get_high_score_manager()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.high_scores.get_high_score"><code class="docutils literal notranslate"><span class="pre">get_high_score()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.high_scores.update_high_score"><code class="docutils literal notranslate"><span class="pre">update_high_score()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.high_scores.is_new_high_score"><code class="docutils literal notranslate"><span class="pre">is_new_high_score()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../api/index.html#game-server">Game Server</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.game_server.run_game_in_thread"><code class="docutils literal notranslate"><span class="pre">run_game_in_thread()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.game_server.health"><code class="docutils literal notranslate"><span class="pre">health()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.game_server.run_game"><code class="docutils literal notranslate"><span class="pre">run_game()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.game_server.stop_game"><code class="docutils literal notranslate"><span class="pre">stop_game()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.game_server.game_status"><code class="docutils literal notranslate"><span class="pre">game_status()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.game_server.list_games"><code class="docutils literal notranslate"><span class="pre">list_games()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.game_server.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../api/index.html#module-unipress.core.messages">Messages</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.messages.MessageLoader"><code class="docutils literal notranslate"><span class="pre">MessageLoader</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.core.messages.load_messages"><code class="docutils literal notranslate"><span class="pre">load_messages()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../api/index.html#client-interface">Client Interface</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../api/index.html#unipress.client.UnipressClient"><code class="docutils literal notranslate"><span class="pre">UnipressClient</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.client.UnipressClient.__init__"><code class="docutils literal notranslate"><span class="pre">UnipressClient.__init__()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.client.UnipressClient.health_check"><code class="docutils literal notranslate"><span class="pre">UnipressClient.health_check()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.client.UnipressClient.list_games"><code class="docutils literal notranslate"><span class="pre">UnipressClient.list_games()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.client.UnipressClient.run_game"><code class="docutils literal notranslate"><span class="pre">UnipressClient.run_game()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.client.UnipressClient.stop_game"><code class="docutils literal notranslate"><span class="pre">UnipressClient.stop_game()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.client.UnipressClient.game_status"><code class="docutils literal notranslate"><span class="pre">UnipressClient.game_status()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.client.UnipressClient.wait_for_game_completion"><code class="docutils literal notranslate"><span class="pre">UnipressClient.wait_for_game_completion()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../api/index.html#unipress.client.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../api/index.html#game-implementations">Game Implementations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../api/index.html#demo-jump-game">Demo Jump Game</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.games.demo_jump.game.Obstacle"><code class="docutils literal notranslate"><span class="pre">Obstacle</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.games.demo_jump.game.DemoJumpGame"><code class="docutils literal notranslate"><span class="pre">DemoJumpGame</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.games.demo_jump.game.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../api/index.html#jumper-game">Jumper Game</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.games.jumper.game.BackgroundLayer"><code class="docutils literal notranslate"><span class="pre">BackgroundLayer</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.games.jumper.game.AnimatedSprite"><code class="docutils literal notranslate"><span class="pre">AnimatedSprite</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.games.jumper.game.Obstacle"><code class="docutils literal notranslate"><span class="pre">Obstacle</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.games.jumper.game.JumperGame"><code class="docutils literal notranslate"><span class="pre">JumperGame</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../api/index.html#ui-components">UI Components</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../api/index.html#end-game-screen">End Game Screen</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.ui.end_game.screen.EndGameAction"><code class="docutils literal notranslate"><span class="pre">EndGameAction</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/index.html#unipress.ui.end_game.screen.EndGameScreen"><code class="docutils literal notranslate"><span class="pre">EndGameScreen</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../api/index.html#package-information">Package Information</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api/index.html#module-index">Module Index</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../api/base_game.html">BaseGame Class</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#overview">Overview</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#class-definition">Class Definition</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#inheritance">Inheritance</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#core-features">Core Features</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#abstract-methods">Abstract Methods</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#concrete-methods">Concrete Methods</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#configuration">Configuration</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#usage-example">Usage Example</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#best-practices">Best Practices</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#related-classes">Related Classes</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../api/base_game.html">BaseGame Class</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../api/base_game.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api/base_game.html#class-definition">Class Definition</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.GameMeta"><code class="docutils literal notranslate"><span class="pre">GameMeta</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.GameMeta.__init__"><code class="docutils literal notranslate"><span class="pre">GameMeta.__init__()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.GameMeta.__instancecheck__"><code class="docutils literal notranslate"><span class="pre">GameMeta.__instancecheck__()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.GameMeta.__subclasscheck__"><code class="docutils literal notranslate"><span class="pre">GameMeta.__subclasscheck__()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.GameMeta._abc_caches_clear"><code class="docutils literal notranslate"><span class="pre">GameMeta._abc_caches_clear()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.GameMeta._abc_registry_clear"><code class="docutils literal notranslate"><span class="pre">GameMeta._abc_registry_clear()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.GameMeta._dump_registry"><code class="docutils literal notranslate"><span class="pre">GameMeta._dump_registry()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.GameMeta.mro"><code class="docutils literal notranslate"><span class="pre">GameMeta.mro()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.GameMeta.register"><code class="docutils literal notranslate"><span class="pre">GameMeta.register()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame"><code class="docutils literal notranslate"><span class="pre">BaseGame</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.__init__"><code class="docutils literal notranslate"><span class="pre">BaseGame.__init__()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.get_difficulty_settings"><code class="docutils literal notranslate"><span class="pre">BaseGame.get_difficulty_settings()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.get_message"><code class="docutils literal notranslate"><span class="pre">BaseGame.get_message()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.play_sound_event"><code class="docutils literal notranslate"><span class="pre">BaseGame.play_sound_event()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.play_custom_sound_event"><code class="docutils literal notranslate"><span class="pre">BaseGame.play_custom_sound_event()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.start_game_sound_timer"><code class="docutils literal notranslate"><span class="pre">BaseGame.start_game_sound_timer()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.update_sound_timer"><code class="docutils literal notranslate"><span class="pre">BaseGame.update_sound_timer()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.complete_game_start"><code class="docutils literal notranslate"><span class="pre">BaseGame.complete_game_start()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.check_and_play_high_score_sound"><code class="docutils literal notranslate"><span class="pre">BaseGame.check_and_play_high_score_sound()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame._complete_life_lost_continue"><code class="docutils literal notranslate"><span class="pre">BaseGame._complete_life_lost_continue()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.update_life_lost_effects"><code class="docutils literal notranslate"><span class="pre">BaseGame.update_life_lost_effects()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.should_draw_player"><code class="docutils literal notranslate"><span class="pre">BaseGame.should_draw_player()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.is_game_paused"><code class="docutils literal notranslate"><span class="pre">BaseGame.is_game_paused()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.on_mouse_press"><code class="docutils literal notranslate"><span class="pre">BaseGame.on_mouse_press()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.on_key_press"><code class="docutils literal notranslate"><span class="pre">BaseGame.on_key_press()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.handle_life_lost_continue"><code class="docutils literal notranslate"><span class="pre">BaseGame.handle_life_lost_continue()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.on_action_press"><code class="docutils literal notranslate"><span class="pre">BaseGame.on_action_press()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.reset_game"><code class="docutils literal notranslate"><span class="pre">BaseGame.reset_game()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.reset_animations"><code class="docutils literal notranslate"><span class="pre">BaseGame.reset_animations()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.start_game"><code class="docutils literal notranslate"><span class="pre">BaseGame.start_game()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.lose_life"><code class="docutils literal notranslate"><span class="pre">BaseGame.lose_life()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.end_game"><code class="docutils literal notranslate"><span class="pre">BaseGame.end_game()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame._restart_game"><code class="docutils literal notranslate"><span class="pre">BaseGame._restart_game()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame._exit_game"><code class="docutils literal notranslate"><span class="pre">BaseGame._exit_game()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.draw_heart"><code class="docutils literal notranslate"><span class="pre">BaseGame.draw_heart()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.draw_hearts"><code class="docutils literal notranslate"><span class="pre">BaseGame.draw_hearts()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.draw_ui"><code class="docutils literal notranslate"><span class="pre">BaseGame.draw_ui()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.CURSOR_CROSSHAIR"><code class="docutils literal notranslate"><span class="pre">BaseGame.CURSOR_CROSSHAIR</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.CURSOR_DEFAULT"><code class="docutils literal notranslate"><span class="pre">BaseGame.CURSOR_DEFAULT</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.CURSOR_HAND"><code class="docutils literal notranslate"><span class="pre">BaseGame.CURSOR_HAND</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.CURSOR_HELP"><code class="docutils literal notranslate"><span class="pre">BaseGame.CURSOR_HELP</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.CURSOR_NO"><code class="docutils literal notranslate"><span class="pre">BaseGame.CURSOR_NO</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.CURSOR_SIZE"><code class="docutils literal notranslate"><span class="pre">BaseGame.CURSOR_SIZE</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.CURSOR_SIZE_DOWN"><code class="docutils literal notranslate"><span class="pre">BaseGame.CURSOR_SIZE_DOWN</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.CURSOR_SIZE_DOWN_LEFT"><code class="docutils literal notranslate"><span class="pre">BaseGame.CURSOR_SIZE_DOWN_LEFT</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.CURSOR_SIZE_DOWN_RIGHT"><code class="docutils literal notranslate"><span class="pre">BaseGame.CURSOR_SIZE_DOWN_RIGHT</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.CURSOR_SIZE_LEFT"><code class="docutils literal notranslate"><span class="pre">BaseGame.CURSOR_SIZE_LEFT</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.CURSOR_SIZE_LEFT_RIGHT"><code class="docutils literal notranslate"><span class="pre">BaseGame.CURSOR_SIZE_LEFT_RIGHT</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.CURSOR_SIZE_RIGHT"><code class="docutils literal notranslate"><span class="pre">BaseGame.CURSOR_SIZE_RIGHT</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.CURSOR_SIZE_UP"><code class="docutils literal notranslate"><span class="pre">BaseGame.CURSOR_SIZE_UP</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.CURSOR_SIZE_UP_DOWN"><code class="docutils literal notranslate"><span class="pre">BaseGame.CURSOR_SIZE_UP_DOWN</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.CURSOR_SIZE_UP_LEFT"><code class="docutils literal notranslate"><span class="pre">BaseGame.CURSOR_SIZE_UP_LEFT</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.CURSOR_SIZE_UP_RIGHT"><code class="docutils literal notranslate"><span class="pre">BaseGame.CURSOR_SIZE_UP_RIGHT</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.CURSOR_TEXT"><code class="docutils literal notranslate"><span class="pre">BaseGame.CURSOR_TEXT</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.CURSOR_WAIT"><code class="docutils literal notranslate"><span class="pre">BaseGame.CURSOR_WAIT</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.CURSOR_WAIT_ARROW"><code class="docutils literal notranslate"><span class="pre">BaseGame.CURSOR_WAIT_ARROW</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.WINDOW_STYLE_BORDERLESS"><code class="docutils literal notranslate"><span class="pre">BaseGame.WINDOW_STYLE_BORDERLESS</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.WINDOW_STYLE_DEFAULT"><code class="docutils literal notranslate"><span class="pre">BaseGame.WINDOW_STYLE_DEFAULT</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.WINDOW_STYLE_DIALOG"><code class="docutils literal notranslate"><span class="pre">BaseGame.WINDOW_STYLE_DIALOG</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.WINDOW_STYLE_OVERLAY"><code class="docutils literal notranslate"><span class="pre">BaseGame.WINDOW_STYLE_OVERLAY</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.WINDOW_STYLE_TOOL"><code class="docutils literal notranslate"><span class="pre">BaseGame.WINDOW_STYLE_TOOL</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.WINDOW_STYLE_TRANSPARENT"><code class="docutils literal notranslate"><span class="pre">BaseGame.WINDOW_STYLE_TRANSPARENT</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame._create"><code class="docutils literal notranslate"><span class="pre">BaseGame._create()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame._create_cursor_from_image"><code class="docutils literal notranslate"><span class="pre">BaseGame._create_cursor_from_image()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame._dispatch_frame"><code class="docutils literal notranslate"><span class="pre">BaseGame._dispatch_frame()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame._dispatch_updates"><code class="docutils literal notranslate"><span class="pre">BaseGame._dispatch_updates()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame._get_handlers"><code class="docutils literal notranslate"><span class="pre">BaseGame._get_handlers()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame._on_resize"><code class="docutils literal notranslate"><span class="pre">BaseGame._on_resize()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame._remove_handler"><code class="docutils literal notranslate"><span class="pre">BaseGame._remove_handler()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame._translate_button"><code class="docutils literal notranslate"><span class="pre">BaseGame._translate_button()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.activate"><code class="docutils literal notranslate"><span class="pre">BaseGame.activate()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.aspect_ratio"><code class="docutils literal notranslate"><span class="pre">BaseGame.aspect_ratio</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.background_color"><code class="docutils literal notranslate"><span class="pre">BaseGame.background_color</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.caption"><code class="docutils literal notranslate"><span class="pre">BaseGame.caption</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.center"><code class="docutils literal notranslate"><span class="pre">BaseGame.center</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.center_window"><code class="docutils literal notranslate"><span class="pre">BaseGame.center_window()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.center_x"><code class="docutils literal notranslate"><span class="pre">BaseGame.center_x</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.center_y"><code class="docutils literal notranslate"><span class="pre">BaseGame.center_y</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.clear"><code class="docutils literal notranslate"><span class="pre">BaseGame.clear()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.close"><code class="docutils literal notranslate"><span class="pre">BaseGame.close()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.config"><code class="docutils literal notranslate"><span class="pre">BaseGame.config</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.context"><code class="docutils literal notranslate"><span class="pre">BaseGame.context</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.ctx"><code class="docutils literal notranslate"><span class="pre">BaseGame.ctx</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.current_camera"><code class="docutils literal notranslate"><span class="pre">BaseGame.current_camera</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.current_view"><code class="docutils literal notranslate"><span class="pre">BaseGame.current_view</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.default_camera"><code class="docutils literal notranslate"><span class="pre">BaseGame.default_camera</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.delta_time"><code class="docutils literal notranslate"><span class="pre">BaseGame.delta_time</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.dispatch_event"><code class="docutils literal notranslate"><span class="pre">BaseGame.dispatch_event()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.dispatch_events"><code class="docutils literal notranslate"><span class="pre">BaseGame.dispatch_events()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.dispatch_pending_events"><code class="docutils literal notranslate"><span class="pre">BaseGame.dispatch_pending_events()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.dispatch_platform_event"><code class="docutils literal notranslate"><span class="pre">BaseGame.dispatch_platform_event()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.dispatch_platform_event_view"><code class="docutils literal notranslate"><span class="pre">BaseGame.dispatch_platform_event_view()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.display"><code class="docutils literal notranslate"><span class="pre">BaseGame.display</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.dpi"><code class="docutils literal notranslate"><span class="pre">BaseGame.dpi</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.draw"><code class="docutils literal notranslate"><span class="pre">BaseGame.draw()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.draw_mouse_cursor"><code class="docutils literal notranslate"><span class="pre">BaseGame.draw_mouse_cursor()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.event"><code class="docutils literal notranslate"><span class="pre">BaseGame.event()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.event_types"><code class="docutils literal notranslate"><span class="pre">BaseGame.event_types</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.fixed_delta_time"><code class="docutils literal notranslate"><span class="pre">BaseGame.fixed_delta_time</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.fixed_time"><code class="docutils literal notranslate"><span class="pre">BaseGame.fixed_time</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.flip"><code class="docutils literal notranslate"><span class="pre">BaseGame.flip()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.fullscreen"><code class="docutils literal notranslate"><span class="pre">BaseGame.fullscreen</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.get_caption"><code class="docutils literal notranslate"><span class="pre">BaseGame.get_caption()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.get_clipboard_text"><code class="docutils literal notranslate"><span class="pre">BaseGame.get_clipboard_text()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.get_framebuffer_size"><code class="docutils literal notranslate"><span class="pre">BaseGame.get_framebuffer_size()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.get_location"><code class="docutils literal notranslate"><span class="pre">BaseGame.get_location()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.get_pixel_ratio"><code class="docutils literal notranslate"><span class="pre">BaseGame.get_pixel_ratio()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.get_requested_size"><code class="docutils literal notranslate"><span class="pre">BaseGame.get_requested_size()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.get_single_property"><code class="docutils literal notranslate"><span class="pre">BaseGame.get_single_property()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.get_size"><code class="docutils literal notranslate"><span class="pre">BaseGame.get_size()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.get_system_mouse_cursor"><code class="docutils literal notranslate"><span class="pre">BaseGame.get_system_mouse_cursor()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.has_exit"><code class="docutils literal notranslate"><span class="pre">BaseGame.has_exit</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.height"><code class="docutils literal notranslate"><span class="pre">BaseGame.height</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.hide_view"><code class="docutils literal notranslate"><span class="pre">BaseGame.hide_view()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.invalid"><code class="docutils literal notranslate"><span class="pre">BaseGame.invalid</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.maximize"><code class="docutils literal notranslate"><span class="pre">BaseGame.maximize()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.minimize"><code class="docutils literal notranslate"><span class="pre">BaseGame.minimize()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.on_action"><code class="docutils literal notranslate"><span class="pre">BaseGame.on_action()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.on_close"><code class="docutils literal notranslate"><span class="pre">BaseGame.on_close()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.on_draw"><code class="docutils literal notranslate"><span class="pre">BaseGame.on_draw()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.on_fixed_update"><code class="docutils literal notranslate"><span class="pre">BaseGame.on_fixed_update()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.on_key_release"><code class="docutils literal notranslate"><span class="pre">BaseGame.on_key_release()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.on_mouse_drag"><code class="docutils literal notranslate"><span class="pre">BaseGame.on_mouse_drag()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.on_mouse_enter"><code class="docutils literal notranslate"><span class="pre">BaseGame.on_mouse_enter()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.on_mouse_leave"><code class="docutils literal notranslate"><span class="pre">BaseGame.on_mouse_leave()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.on_mouse_motion"><code class="docutils literal notranslate"><span class="pre">BaseGame.on_mouse_motion()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.on_mouse_release"><code class="docutils literal notranslate"><span class="pre">BaseGame.on_mouse_release()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.on_mouse_scroll"><code class="docutils literal notranslate"><span class="pre">BaseGame.on_mouse_scroll()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.on_resize"><code class="docutils literal notranslate"><span class="pre">BaseGame.on_resize()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.on_scale"><code class="docutils literal notranslate"><span class="pre">BaseGame.on_scale()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.on_update"><code class="docutils literal notranslate"><span class="pre">BaseGame.on_update()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.parse_filenames"><code class="docutils literal notranslate"><span class="pre">BaseGame.parse_filenames()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.pop_handlers"><code class="docutils literal notranslate"><span class="pre">BaseGame.pop_handlers()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.projection"><code class="docutils literal notranslate"><span class="pre">BaseGame.projection</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.push_handlers"><code class="docutils literal notranslate"><span class="pre">BaseGame.push_handlers()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.rect"><code class="docutils literal notranslate"><span class="pre">BaseGame.rect</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.register_event_type"><code class="docutils literal notranslate"><span class="pre">BaseGame.register_event_type()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.remove_handler"><code class="docutils literal notranslate"><span class="pre">BaseGame.remove_handler()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.remove_handlers"><code class="docutils literal notranslate"><span class="pre">BaseGame.remove_handlers()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.resizeable"><code class="docutils literal notranslate"><span class="pre">BaseGame.resizeable</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.run"><code class="docutils literal notranslate"><span class="pre">BaseGame.run()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.scale"><code class="docutils literal notranslate"><span class="pre">BaseGame.scale</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.screen"><code class="docutils literal notranslate"><span class="pre">BaseGame.screen</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.set_caption"><code class="docutils literal notranslate"><span class="pre">BaseGame.set_caption()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.set_clipboard_text"><code class="docutils literal notranslate"><span class="pre">BaseGame.set_clipboard_text()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.set_draw_rate"><code class="docutils literal notranslate"><span class="pre">BaseGame.set_draw_rate()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.set_exclusive_keyboard"><code class="docutils literal notranslate"><span class="pre">BaseGame.set_exclusive_keyboard()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.set_exclusive_mouse"><code class="docutils literal notranslate"><span class="pre">BaseGame.set_exclusive_mouse()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.set_fullscreen"><code class="docutils literal notranslate"><span class="pre">BaseGame.set_fullscreen()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.set_handler"><code class="docutils literal notranslate"><span class="pre">BaseGame.set_handler()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.set_handlers"><code class="docutils literal notranslate"><span class="pre">BaseGame.set_handlers()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.set_icon"><code class="docutils literal notranslate"><span class="pre">BaseGame.set_icon()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.set_location"><code class="docutils literal notranslate"><span class="pre">BaseGame.set_location()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.set_maximum_size"><code class="docutils literal notranslate"><span class="pre">BaseGame.set_maximum_size()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.set_minimum_size"><code class="docutils literal notranslate"><span class="pre">BaseGame.set_minimum_size()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.set_mouse_cursor"><code class="docutils literal notranslate"><span class="pre">BaseGame.set_mouse_cursor()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.set_mouse_platform_visible"><code class="docutils literal notranslate"><span class="pre">BaseGame.set_mouse_platform_visible()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.set_mouse_position"><code class="docutils literal notranslate"><span class="pre">BaseGame.set_mouse_position()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.set_mouse_visible"><code class="docutils literal notranslate"><span class="pre">BaseGame.set_mouse_visible()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.set_size"><code class="docutils literal notranslate"><span class="pre">BaseGame.set_size()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.set_update_rate"><code class="docutils literal notranslate"><span class="pre">BaseGame.set_update_rate()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.set_visible"><code class="docutils literal notranslate"><span class="pre">BaseGame.set_visible()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.set_vsync"><code class="docutils literal notranslate"><span class="pre">BaseGame.set_vsync()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.set_wm_class"><code class="docutils literal notranslate"><span class="pre">BaseGame.set_wm_class()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.show_view"><code class="docutils literal notranslate"><span class="pre">BaseGame.show_view()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.size"><code class="docutils literal notranslate"><span class="pre">BaseGame.size</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.style"><code class="docutils literal notranslate"><span class="pre">BaseGame.style</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.switch_to"><code class="docutils literal notranslate"><span class="pre">BaseGame.switch_to()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.test"><code class="docutils literal notranslate"><span class="pre">BaseGame.test()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.time"><code class="docutils literal notranslate"><span class="pre">BaseGame.time</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.use"><code class="docutils literal notranslate"><span class="pre">BaseGame.use()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.view"><code class="docutils literal notranslate"><span class="pre">BaseGame.view</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.viewport"><code class="docutils literal notranslate"><span class="pre">BaseGame.viewport</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.visible"><code class="docutils literal notranslate"><span class="pre">BaseGame.visible</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.vsync"><code class="docutils literal notranslate"><span class="pre">BaseGame.vsync</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.width"><code class="docutils literal notranslate"><span class="pre">BaseGame.width</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.closed"><code class="docutils literal notranslate"><span class="pre">BaseGame.closed</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.headless"><code class="docutils literal notranslate"><span class="pre">BaseGame.headless</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.keyboard"><code class="docutils literal notranslate"><span class="pre">BaseGame.keyboard</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#unipress.core.base_game.BaseGame.mouse"><code class="docutils literal notranslate"><span class="pre">BaseGame.mouse</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../api/base_game.html#inheritance">Inheritance</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api/base_game.html#core-features">Core Features</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../api/base_game.html#one-button-input-constraint">One-Button Input Constraint</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../api/base_game.html#asset-management">Asset Management</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../api/base_game.html#sound-system">Sound System</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../api/base_game.html#settings-integration">Settings Integration</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../api/base_game.html#logging">Logging</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../api/base_game.html#abstract-methods">Abstract Methods</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../api/base_game.html#setup">setup()</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../api/base_game.html#update-delta-time-float">update(delta_time: float)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../api/base_game.html#on-draw">on_draw()</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../api/base_game.html#concrete-methods">Concrete Methods</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../api/base_game.html#input-handling">Input Handling</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#on-key-press-key-int-modifiers-int">on_key_press(key: int, modifiers: int)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#on-mouse-press-x-int-y-int-button-int-modifiers-int">on_mouse_press(x: int, y: int, button: int, modifiers: int)</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../api/base_game.html#id3">Asset Management</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#load-assets">load_assets()</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#get-sprite-name-str-arcade-sprite">get_sprite(name: str) -&gt; arcade.Sprite</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../api/base_game.html#sound-management">Sound Management</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#play-sound-category-str-name-str">play_sound(category: str, name: str)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#set-volume-volume-float">set_volume(volume: float)</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../api/base_game.html#settings-management">Settings Management</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#get-setting-section-str-key-str-default-none">get_setting(section: str, key: str, default=None)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#set-setting-section-str-key-str-value-any">set_setting(section: str, key: str, value: Any)</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../api/base_game.html#game-state-management">Game State Management</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#start-game">start_game()</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#end-game">end_game()</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#reset-game">reset_game()</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../api/base_game.html#ui-rendering">UI Rendering</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#draw-ui">draw_ui()</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#draw-text-text-str-x-int-y-int-color-arcade-color-size-int-20">draw_text(text: str, x: int, y: int, color: arcade.Color, size: int = 20)</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../api/base_game.html#id4">Logging</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/base_game.html#log-event-event-str-data-dict-none">log_event(event: str, data: dict = None)</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../api/base_game.html#configuration">Configuration</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../api/base_game.html#settings-structure">Settings Structure</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../api/base_game.html#asset-structure">Asset Structure</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../api/base_game.html#usage-example">Usage Example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api/base_game.html#best-practices">Best Practices</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api/base_game.html#related-classes">Related Classes</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../architecture/overview.html">System Architecture Overview</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../architecture/overview.html#introduction">Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../architecture/overview.html#high-level-architecture">High-Level Architecture</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/overview.html#core-framework">Core Framework</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/overview.html#game-layer">Game Layer</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/overview.html#infrastructure">Infrastructure</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../architecture/overview.html#component-relationships">Component Relationships</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/overview.html#detailed-architecture">Detailed Architecture</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../architecture/overview.html#key-design-principles">Key Design Principles</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/overview.html#one-button-constraint">1. One-Button Constraint</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/overview.html#modularity">2. Modularity</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/overview.html#configuration-driven">3. Configuration-Driven</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/overview.html#asset-management">4. Asset Management</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/overview.html#container-ready">5. Container-Ready</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../architecture/overview.html#technology-stack">Technology Stack</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../architecture/overview.html#directory-structure">Directory Structure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../architecture/overview.html#data-flow">Data Flow</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../architecture/overview.html#security-considerations">Security Considerations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../architecture/overview.html#performance-characteristics">Performance Characteristics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../architecture/overview.html#extensibility">Extensibility</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../architecture/decisions.html">Architecture Decision Records (ADRs)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../architecture/decisions.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../architecture/decisions.html#adr-structure">ADR Structure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../architecture/decisions.html#decision-categories">Decision Categories</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/decisions.html#development-tools-standards">Development Tools &amp; Standards</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-001-dependency-management-with-uv">ADR-001: Dependency Management with uv</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-002-game-framework-selection-arcade">ADR-002: Game Framework Selection (Arcade)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-003-development-tools-ruff-pytest-mypy">ADR-003: Development Tools (Ruff, Pytest, MyPy)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-005-conventional-commits-with-git-cz">ADR-005: Conventional Commits with git-cz</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-006-type-checking-with-mypy">ADR-006: Type Checking with MyPy</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/decisions.html#game-design-architecture">Game Design &amp; Architecture</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-004-game-design-standards">ADR-004: Game Design Standards</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-008-fullscreen-display-standard">ADR-008: Fullscreen Display Standard</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-009-three-lives-system">ADR-009: Three Lives System</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-014-obstacle-spacing-algorithm">ADR-014: Obstacle Spacing Algorithm</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/decisions.html#configuration-data-management">Configuration &amp; Data Management</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-010-settings-system-with-toml">ADR-010: Settings System with TOML</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-011-internationalization-with-json">ADR-011: Internationalization with JSON</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-012-logging-system-with-loguru">ADR-012: Logging System with Loguru</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/decisions.html#asset-media-management">Asset &amp; Media Management</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-013-asset-management-system">ADR-013: Asset Management System</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-016-comprehensive-sound-system">ADR-016: Comprehensive Sound System</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/decisions.html#infrastructure-deployment">Infrastructure &amp; Deployment</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-017-containerization-with-docker-and-uv">ADR-017: Containerization with Docker and uv</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-018-http-server-architecture">ADR-018: HTTP Server Architecture</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-019-http-server-framework-selection">ADR-019: HTTP Server Framework Selection</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/decisions.html#documentation-quality">Documentation &amp; Quality</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-020-uml-documentation-with-plantuml">ADR-020: UML Documentation with PlantUML</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-021-developer-documentation-with-sphinx">ADR-021: Developer Documentation with Sphinx</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-022-changelog-standards-and-maintenance">ADR-022: Changelog Standards and Maintenance</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-023-documentation-hosting-platform">ADR-023: Documentation Hosting Platform</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../architecture/decisions.html#decision-making-process">Decision Making Process</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/decisions.html#when-to-create-an-adr">When to Create an ADR</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/decisions.html#adr-lifecycle">ADR Lifecycle</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/decisions.html#review-process">Review Process</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../architecture/decisions.html#benefits-of-adrs">Benefits of ADRs</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/decisions.html#for-current-development">For Current Development</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/decisions.html#for-future-maintenance">For Future Maintenance</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/decisions.html#for-project-management">For Project Management</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../architecture/decisions.html#related-resources">Related Resources</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../architecture/uml.html">UML Diagrams</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../architecture/uml.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../architecture/uml.html#available-diagrams">Available Diagrams</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#architecture-overview">1. Architecture Overview</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#class-hierarchy">2. Class Hierarchy</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#data-flow">3. Data Flow</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#deployment-diagram">4. Deployment Diagram</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#game-lifecycle">5. Game Lifecycle</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../architecture/uml.html#diagram-conventions">Diagram Conventions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#naming-standards">Naming Standards</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#visual-standards">Visual Standards</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#content-guidelines">Content Guidelines</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../architecture/uml.html#generating-diagrams">Generating Diagrams</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#prerequisites">Prerequisites</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#build-commands">Build Commands</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#makefile-targets">Makefile Targets</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../architecture/uml.html#diagram-maintenance">Diagram Maintenance</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#update-process">Update Process</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#version-control">Version Control</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#quality-checks">Quality Checks</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../architecture/uml.html#using-diagrams">Using Diagrams</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#in-documentation">In Documentation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#in-presentations">In Presentations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#in-development">In Development</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../architecture/uml.html#advanced-features">Advanced Features</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#custom-themes">Custom Themes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#include-files">Include Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#dynamic-content">Dynamic Content</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../architecture/uml.html#best-practices">Best Practices</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#design-principles">Design Principles</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#maintenance">Maintenance</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#collaboration">Collaboration</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../architecture/uml.html#related-resources">Related Resources</a></li>
-</ul>
-</li>
-</ul>
-
+</div>
         </div>
       </div>
     </nav>
@@ -1123,10 +570,7 @@ docker<span class="w"> </span>rmi<span class="w"> </span>unipress
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../index.html" class="btn btn-neutral float-left" title="Unipress Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="quick_start.html" class="btn btn-neutral float-right" title="Quick Start Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+          <footer>
 
   <hr/>
 
