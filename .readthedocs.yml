@@ -11,9 +11,6 @@ python:
       path: .
       extra_requirements:
         - dev
-    - method: pip
-      packages:
-        - uv
 
 sphinx:
   configuration: docs/sphinx/conf.py
