@@ -1,0 +1,95 @@
+@startuml DataFlow
+skinparam backgroundColor #FFFFFF
+skinparam activityFontSize 11
+skinparam activityFontName Arial
+
+title Unipress - Data Flow Diagram
+
+start
+
+:User Input;
+note right: CLI command or Python API call
+
+:HTTP Request;
+note right: POST /games/run with game and difficulty
+
+:Server Validation;
+if (Valid Request?) then (yes)
+    :Process Management;
+    note right: Spawn game subprocess
+    
+    :Game Initialization;
+    note right: Load settings, assets, sounds
+    
+    :Asset Loading;
+    fork
+        :Load Images;
+        note right: Sprites, backgrounds, UI
+        --> [Assets] : read
+    fork again
+        :Load Sounds;
+        note right: OGG audio files
+        --> [Assets] : read
+    fork again
+        :Load Settings;
+        note right: TOML configuration
+        --> [Settings] : read
+    end fork
+    
+    :Game Loop Start;
+    
+    repeat
+        :Input Processing;
+        note right: Mouse clicks, keyboard events
+        
+        :Game State Update;
+        note right: Physics, collisions, scoring
+        
+        :Audio Events;
+        note right: Play sound effects
+        
+        :Logging;
+        note right: Game events, player actions
+        --> [Logs] : write
+        
+        :Rendering;
+        note right: Draw to screen
+        
+        :Frame Complete;
+    repeat while (Game Running?) is (yes)
+    
+    :Game Completion;
+    note right: Score, high score check
+    --> [HighScores] : write
+    
+    :Cleanup;
+    note right: Release resources
+    
+    :Process Termination;
+    note right: Subprocess cleanup
+    
+    :Server Status Update;
+    note right: Update game status
+    
+    :HTTP Response;
+    note right: Success/failure response
+    
+else (no)
+    :Error Response;
+    note right: Invalid request details
+endif
+
+:User Feedback;
+note right: Display result to user
+
+stop
+
+note right
+  Data Stores:
+  • Settings: TOML files (global/game-specific)
+  • Assets: Images and sounds (organized by game)
+  • HighScores: JSON file (persistent storage)
+  • Logs: Structured logging (game events)
+end note
+
+@enduml

@@ -1,0 +1,120 @@
+@startuml DeploymentDiagram
+skinparam backgroundColor #FFFFFF
+skinparam nodeFontSize 11
+skinparam nodeFontName Arial
+
+title Unipress - Deployment Architecture
+
+node "Host System" {
+    node "User Terminal" {
+        [CLI Tool] as cli
+        [Python Client] as client
+    }
+    
+    node "X11 Display Server" {
+        [X11 Socket] as x11
+    }
+    
+    node "Audio System" {
+        [PipeWire] as pipewire
+        [Audio Socket] as audio_socket
+    }
+    
+    node "File System" {
+        [Project Files] as project_files
+        [High Scores] as high_scores
+        [Logs] as logs
+    }
+}
+
+node "Docker Container" {
+    node "Game Server" {
+        [Flask HTTP Server] as flask_server
+        [Process Manager] as proc_mgr
+        [Game Processes] as game_procs
+    }
+    
+    node "Game Framework" {
+        [Arcade Engine] as arcade
+        [BaseGame] as base_game
+        [JumperGame] as jumper_game
+        [DemoJumpGame] as demo_game
+    }
+    
+    node "Core Systems" {
+        [Sound Manager] as sound_mgr
+        [Settings Manager] as settings_mgr
+        [Logger] as logger
+        [Asset Manager] as asset_mgr
+    }
+    
+    node "Graphics & Audio" {
+        [OpenGL] as opengl
+        [ALSA/PulseAudio] as audio_driver
+    }
+}
+
+node "Network" {
+    [HTTP API] as http_api
+}
+
+' Relationships
+cli --> client : uses
+client --> http_api : REST calls
+http_api --> flask_server : serves
+
+flask_server --> proc_mgr : manages
+proc_mgr --> game_procs : spawns
+
+game_procs --> arcade : uses
+arcade --> base_game : extends
+base_game --> jumper_game : implements
+base_game --> demo_game : implements
+
+base_game --> sound_mgr : uses
+base_game --> settings_mgr : uses
+base_game --> logger : uses
+base_game --> asset_mgr : uses
+
+arcade --> opengl : renders
+sound_mgr --> audio_driver : plays
+
+opengl --> x11 : displays
+audio_driver --> audio_socket : outputs
+
+project_files --> asset_mgr : loads
+high_scores --> base_game : reads/writes
+logs --> logger : writes
+
+' Notes
+note right of flask_server
+  Runs on port 5000
+  Handles HTTP requests
+  Manages game lifecycle
+end note
+
+note right of proc_mgr
+  Spawns subprocesses
+  Monitors game status
+  Handles cleanup
+end note
+
+note right of arcade
+  Game engine
+  Handles rendering
+  Input processing
+end note
+
+note right of x11
+  Display forwarding
+  Window management
+  Input events
+end note
+
+note right of pipewire
+  Audio system
+  Sound output
+  Volume control
+end note
+
+@enduml

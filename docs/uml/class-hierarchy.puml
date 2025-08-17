@@ -1,0 +1,185 @@
+@startuml ClassHierarchy
+skinparam backgroundColor #FFFFFF
+skinparam classFontSize 11
+skinparam classFontName Arial
+
+title Unipress - Class Hierarchy
+
+abstract class "BaseGame" {
+    # difficulty: int
+    # lives: int
+    # score: int
+    # sound_manager: SoundManager
+    # settings: Settings
+    # game_started: bool
+    # game_over: bool
+    
+    + {abstract} setup_game()
+    + {abstract} update(delta_time: float)
+    + {abstract} draw()
+    + on_mouse_press(x: int, y: int, button: int, modifiers: int)
+    + lose_life()
+    + reset_game()
+    + play_sound_event(event: str)
+}
+
+class "JumperGame" {
+    - player: Player
+    - obstacles: List[Obstacle]
+    - background_layers: List[BackgroundLayer]
+    - jump_velocity: float
+    - gravity: float
+    - ground_y: int
+    - obstacle_speed: float
+    
+    + setup_game()
+    + update(delta_time: float)
+    + draw()
+    + spawn_obstacle()
+    + check_collisions()
+    + load_background_layers()
+}
+
+class "DemoJumpGame" {
+    - player_rect: Rectangle
+    - obstacles: List[Rectangle]
+    - jump_height: float
+    - obstacle_speed: float
+    - ground_y: int
+    
+    + setup_game()
+    + update(delta_time: float)
+    + draw()
+    + spawn_obstacle()
+    + check_collisions()
+}
+
+class "Player" {
+    - sprite: Sprite
+    - animations: Dict[str, Animation]
+    - current_animation: str
+    - y_velocity: float
+    - is_jumping: bool
+    
+    + set_animation(name: str)
+    + update(delta_time: float)
+    + jump(velocity: float)
+    + get_hitbox() -> Dict
+}
+
+class "Obstacle" {
+    - sprite: Sprite
+    - animations: Dict[str, Animation]
+    - cleared: bool
+    - speed: float
+    
+    + update(delta_time: float)
+    + is_off_screen() -> bool
+    + get_collision_rect() -> Dict
+}
+
+class "BackgroundLayer" {
+    - texture: Texture
+    - scroll_speed: float
+    - z_order: int
+    - x_offset: float
+    
+    + update(delta_time: float)
+    + draw(width: int, height: int)
+}
+
+class "SoundManager" {
+    - sounds: Dict[str, Sound]
+    - volumes: Dict[str, float]
+    - sound_timer: float
+    
+    + preload_sounds(events: List[str])
+    + play_sound_event(event: str)
+    + set_volume(event: str, volume: float)
+    + update_sound_timer(delta_time: float)
+}
+
+class "Settings" {
+    - global_settings: Dict
+    - game_settings: Dict
+    
+    + get_setting(path: str, default: Any) -> Any
+    + load_settings()
+    + get_game_settings(game_name: str) -> Dict
+}
+
+class "Logger" {
+    + log_game_event(event: str, **kwargs)
+    + log_player_action(action: str, **kwargs)
+    + log_error(error: Exception, message: str, **kwargs)
+    + get_logger(name: str) -> Logger
+}
+
+class "GameServer" {
+    - app: Flask
+    - current_game_process: Optional[Popen]
+    - current_game_thread: Optional[Thread]
+    
+    + run_game_in_thread(game_module: str, difficulty: int)
+    + health() -> Dict
+    + run_game() -> Dict
+    + stop_game() -> Dict
+    + game_status() -> Dict
+    + list_games() -> Dict
+}
+
+class "UnipressClient" {
+    - server_url: str
+    - session: Session
+    
+    + health_check() -> Dict
+    + list_games() -> Dict
+    + run_game(game: str, difficulty: int) -> Dict
+    + stop_game() -> Dict
+    + game_status() -> Dict
+    + wait_for_game_completion(timeout: int) -> bool
+}
+
+' Inheritance relationships
+JumperGame --|> BaseGame
+DemoJumpGame --|> BaseGame
+
+' Composition relationships
+BaseGame *-- SoundManager : uses
+BaseGame *-- Settings : uses
+BaseGame *-- Logger : uses
+
+JumperGame *-- Player : contains
+JumperGame *-- Obstacle : contains
+JumperGame *-- BackgroundLayer : contains
+
+DemoJumpGame *-- Rectangle : contains
+
+Player *-- Sprite : contains
+Player *-- Animation : contains
+
+Obstacle *-- Sprite : contains
+Obstacle *-- Animation : contains
+
+BackgroundLayer *-- Texture : contains
+
+' Association relationships
+GameServer --> ProcessManager : manages
+UnipressClient --> GameServer : communicates
+
+note right of BaseGame
+  Abstract base class providing
+  common game functionality
+end note
+
+note right of SoundManager
+  Manages all audio events
+  with volume control
+end note
+
+note right of GameServer
+  HTTP server managing
+  game processes
+end note
+
+@enduml

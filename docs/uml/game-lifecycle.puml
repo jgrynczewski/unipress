@@ -1,0 +1,93 @@
+@startuml GameLifecycle
+skinparam backgroundColor #FFFFFF
+skinparam sequenceFontSize 12
+skinparam sequenceFontName Arial
+
+title Game Lifecycle - From Launch to Completion
+
+actor "User" as user
+participant "CLI Tool" as cli
+participant "Python Client" as client
+participant "Game Server" as server
+participant "Process Manager" as proc_mgr
+participant "Game Process" as game
+participant "Arcade Window" as window
+participant "Sound Manager" as sound
+participant "Logger" as logger
+
+== Game Launch ==
+
+user -> cli: run jumper --difficulty 7
+cli -> client: run_game("jumper", 7)
+client -> server: POST /games/run
+activate server
+
+server -> server: validate_request()
+server -> proc_mgr: start_game("jumper", 7)
+activate proc_mgr
+
+proc_mgr -> game: spawn_process()
+activate game
+
+game -> game: initialize_arcade()
+game -> game: load_assets()
+game -> sound: preload_sounds()
+game -> logger: log_game_event("game_started")
+
+game -> window: create_window()
+activate window
+
+== Game Running ==
+
+loop Game Loop
+    game -> game: update(delta_time)
+    game -> game: handle_input()
+    game -> game: update_physics()
+    game -> game: check_collisions()
+    game -> sound: play_sound_event()
+    game -> logger: log_player_action()
+    game -> window: draw()
+end
+
+== Game Events ==
+
+alt Player Jump
+    user -> window: mouse_click
+    window -> game: on_mouse_press()
+    game -> sound: play_sound_event("jump")
+    game -> logger: log_player_action("jump")
+end
+
+alt Obstacle Collision
+    game -> sound: play_sound_event("collision")
+    game -> logger: log_game_event("collision")
+    game -> game: lose_life()
+end
+
+alt Game Over
+    game -> sound: play_sound_event("game_over")
+    game -> logger: log_game_event("game_over")
+    game -> game: show_end_screen()
+end
+
+== Game Completion ==
+
+user -> window: close_window
+window -> game: on_close()
+game -> logger: log_game_event("game_completed")
+game -> game: cleanup()
+deactivate game
+deactivate window
+
+proc_mgr -> proc_mgr: monitor_process()
+proc_mgr -> server: game_finished()
+deactivate proc_mgr
+
+server -> server: update_status()
+server -> client: response(success)
+deactivate server
+
+client -> cli: return_result()
+cli -> user: display_result()
+
+@enduml

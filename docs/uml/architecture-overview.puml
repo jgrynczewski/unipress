@@ -1,0 +1,114 @@
+@startuml ArchitectureOverview
+skinparam backgroundColor #FFFFFF
+skinparam classFontSize 12
+skinparam classFontName Arial
+
+title Unipress - Architecture Overview
+
+class PythonClient {
+    + health_check()
+    + list_games()
+    + run_game()
+    + stop_game()
+    + game_status()
+}
+
+class CLITool {
+    + main()
+    + parse_arguments()
+}
+
+class GameServer {
+    + Flask app
+    + current_game_process
+    + run_game_in_thread()
+}
+
+class HTTPAPI {
+    + GET /health
+    + GET /games/list
+    + POST /games/run
+    + POST /games/stop
+    + GET /games/status
+}
+
+class ProcessManager {
+    + start_game()
+    + stop_game()
+    + monitor_process()
+}
+
+class BaseGame {
+    + difficulty
+    + lives
+    + score
+    + sound_manager
+    + settings
+    + setup_game()
+    + update()
+    + draw()
+    + on_mouse_press()
+}
+
+class JumperGame {
+    + player
+    + obstacles
+    + background_layers
+    + jump_velocity
+    + gravity
+}
+
+class DemoJumpGame {
+    + player_rect
+    + obstacles
+    + jump_height
+}
+
+class SoundManager {
+    + sounds
+    + volumes
+    + play_sound_event()
+    + preload_sounds()
+}
+
+class Settings {
+    + global_settings
+    + game_settings
+    + get_setting()
+    + load_settings()
+}
+
+class Logger {
+    + log_game_event()
+    + log_error()
+    + log_player_action()
+}
+
+' Relationships
+PythonClient --> GameServer : HTTP API
+CLITool --> PythonClient : uses
+GameServer --> HTTPAPI : exposes
+GameServer --> ProcessManager : uses
+ProcessManager --> BaseGame : spawns
+JumperGame --|> BaseGame : extends
+DemoJumpGame --|> BaseGame : extends
+BaseGame --> SoundManager : uses
+BaseGame --> Settings : uses
+BaseGame --> Logger : uses
+
+note right of PythonClient
+  Communicates with server
+  via HTTP REST API
+end note
+
+note right of GameServer
+  Manages game processes
+  and provides API endpoints
+end note
+
+note right of BaseGame
+  Abstract base class
+  for all games
+end note
+
+@enduml
