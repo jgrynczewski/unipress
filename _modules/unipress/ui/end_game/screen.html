@@ -1,0 +1,770 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>unipress.ui.end_game.screen &mdash; Unipress 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../../_static/copybutton.js?v=30646c52"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            Unipress
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/installation.html">Installation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/installation.html#prerequisites">Prerequisites</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/installation.html#system-requirements">System Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/installation.html#required-software">Required Software</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/installation.html#installation-methods">Installation Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/installation.html#method-1-development-installation-recommended">Method 1: Development Installation (Recommended)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#clone-the-repository">1. Clone the Repository</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#install-uv-package-manager">2. Install uv Package Manager</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#install-dependencies">3. Install Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#verify-installation">4. Verify Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/installation.html#method-2-docker-installation">Method 2: Docker Installation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#id1">1. Clone the Repository</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#build-docker-image">2. Build Docker Image</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#run-with-docker-compose">3. Run with Docker Compose</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#run-individual-container">4. Run Individual Container</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/installation.html#platform-specific-instructions">Platform-Specific Instructions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/installation.html#linux-ubuntu-debian">Linux (Ubuntu/Debian)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#install-system-dependencies">Install System Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#audio-support-optional">Audio Support (Optional)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/installation.html#macos">macOS</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#id2">Install System Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#audio-support">Audio Support</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/installation.html#windows">Windows</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#id3">Install System Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#id4">Audio Support</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/installation.html#configuration">Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/installation.html#initial-setup">Initial Setup</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#create-configuration-file">1. Create Configuration File</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#customize-settings">2. Customize Settings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#set-up-logging">3. Set Up Logging</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/installation.html#environment-variables">Environment Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/installation.html#verification">Verification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/installation.html#test-installation">Test Installation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#run-demo-game">1. Run Demo Game</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#run-specific-game">2. Run Specific Game</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#check-audio">3. Check Audio</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#verify-dependencies">4. Verify Dependencies</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/installation.html#troubleshooting">Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/installation.html#common-issues">Common Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#python-version-issues">Python Version Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#audio-issues">Audio Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#display-issues">Display Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#permission-issues">Permission Issues</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/installation.html#getting-help">Getting Help</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#check-logs">Check Logs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#debug-mode">Debug Mode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#community-support">Community Support</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/installation.html#next-steps">Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/installation.html#uninstallation">Uninstallation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/installation.html#remove-installation">Remove Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/installation.html#remove-dependencies">Remove Dependencies</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/quick_start.html">Quick Start Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/quick_start.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/quick_start.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/quick_start.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/quick_start.html#your-first-game">Your First Game</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/quick_start.html#next-steps">Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/quick_start.html#troubleshooting">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/development_setup.html">Development Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/development_setup.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/development_setup.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/development_setup.html#development-installation">Development Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/development_setup.html#development-tools">Development Tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/development_setup.html#code-quality">Code Quality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/development_setup.html#commands">Commands</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/development_setup.html#project-structure">Project Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/development_setup.html#contributing">Contributing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/development_setup.html#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/first_game.html">Creating Your First Game</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/first_game.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/first_game.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/first_game.html#game-concept">Game Concept</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/first_game.html#implementation-steps">Implementation Steps</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/first_game.html#create-game-class">1. Create Game Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/first_game.html#implement-game-logic">2. Implement Game Logic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/first_game.html#add-rendering">3. Add Rendering</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/first_game.html#next-steps">Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/first_game.html#complete-example">Complete Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/base_game.html">BaseGame Class</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/base_game.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/base_game.html#class-definition">Class Definition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/base_game.html#inheritance">Inheritance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/base_game.html#core-features">Core Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#one-button-input-constraint">One-Button Input Constraint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#asset-management">Asset Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#sound-system">Sound System</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#settings-integration">Settings Integration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#logging">Logging</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/base_game.html#abstract-methods">Abstract Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#setup"><code class="docutils literal notranslate"><span class="pre">setup()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#update-delta-time-float"><code class="docutils literal notranslate"><span class="pre">update(delta_time:</span> <span class="pre">float)</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#on-draw"><code class="docutils literal notranslate"><span class="pre">on_draw()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/base_game.html#concrete-methods">Concrete Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#input-handling">Input Handling</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/base_game.html#on-key-press-key-int-modifiers-int"><code class="docutils literal notranslate"><span class="pre">on_key_press(key:</span> <span class="pre">int,</span> <span class="pre">modifiers:</span> <span class="pre">int)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/base_game.html#on-mouse-press-x-int-y-int-button-int-modifiers-int"><code class="docutils literal notranslate"><span class="pre">on_mouse_press(x:</span> <span class="pre">int,</span> <span class="pre">y:</span> <span class="pre">int,</span> <span class="pre">button:</span> <span class="pre">int,</span> <span class="pre">modifiers:</span> <span class="pre">int)</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#id1">Asset Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/base_game.html#load-assets"><code class="docutils literal notranslate"><span class="pre">load_assets()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/base_game.html#get-sprite-name-str-arcade-sprite"><code class="docutils literal notranslate"><span class="pre">get_sprite(name:</span> <span class="pre">str)</span> <span class="pre">-&gt;</span> <span class="pre">arcade.Sprite</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#sound-management">Sound Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/base_game.html#play-sound-category-str-name-str"><code class="docutils literal notranslate"><span class="pre">play_sound(category:</span> <span class="pre">str,</span> <span class="pre">name:</span> <span class="pre">str)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/base_game.html#set-volume-volume-float"><code class="docutils literal notranslate"><span class="pre">set_volume(volume:</span> <span class="pre">float)</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#settings-management">Settings Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/base_game.html#get-setting-section-str-key-str-default-none"><code class="docutils literal notranslate"><span class="pre">get_setting(section:</span> <span class="pre">str,</span> <span class="pre">key:</span> <span class="pre">str,</span> <span class="pre">default=None)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/base_game.html#set-setting-section-str-key-str-value-any"><code class="docutils literal notranslate"><span class="pre">set_setting(section:</span> <span class="pre">str,</span> <span class="pre">key:</span> <span class="pre">str,</span> <span class="pre">value:</span> <span class="pre">Any)</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#game-state-management">Game State Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/base_game.html#start-game"><code class="docutils literal notranslate"><span class="pre">start_game()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/base_game.html#end-game"><code class="docutils literal notranslate"><span class="pre">end_game()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/base_game.html#reset-game"><code class="docutils literal notranslate"><span class="pre">reset_game()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#ui-rendering">UI Rendering</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/base_game.html#draw-ui"><code class="docutils literal notranslate"><span class="pre">draw_ui()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/base_game.html#draw-text-text-str-x-int-y-int-color-arcade-color-size-int-20"><code class="docutils literal notranslate"><span class="pre">draw_text(text:</span> <span class="pre">str,</span> <span class="pre">x:</span> <span class="pre">int,</span> <span class="pre">y:</span> <span class="pre">int,</span> <span class="pre">color:</span> <span class="pre">arcade.Color,</span> <span class="pre">size:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">20)</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#id2">Logging</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/base_game.html#log-event-event-str-data-dict-none"><code class="docutils literal notranslate"><span class="pre">log_event(event:</span> <span class="pre">str,</span> <span class="pre">data:</span> <span class="pre">dict</span> <span class="pre">=</span> <span class="pre">None)</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/base_game.html#configuration">Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#settings-structure">Settings Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#asset-structure">Asset Structure</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/base_game.html#usage-example">Usage Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/base_game.html#best-practices">Best Practices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#implement-required-methods">1. Implement Required Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#use-asset-manager">2. Use Asset Manager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#follow-one-button-constraint">3. Follow One-Button Constraint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#use-settings-system">4. Use Settings System</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#log-important-events">5. Log Important Events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#handle-errors-gracefully">6. Handle Errors Gracefully</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/base_game.html#related-classes">Related Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../architecture/overview.html">System Architecture Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/overview.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/overview.html#high-level-architecture">High-Level Architecture</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/overview.html#core-framework">Core Framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/overview.html#game-layer">Game Layer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/overview.html#infrastructure">Infrastructure</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/overview.html#component-relationships">Component Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/overview.html#detailed-architecture">Detailed Architecture</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/overview.html#key-design-principles">Key Design Principles</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/overview.html#one-button-constraint">1. One-Button Constraint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/overview.html#modularity">2. Modularity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/overview.html#configuration-driven">3. Configuration-Driven</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/overview.html#asset-management">4. Asset Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/overview.html#container-ready">5. Container-Ready</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/overview.html#technology-stack">Technology Stack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/overview.html#directory-structure">Directory Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/overview.html#data-flow">Data Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/overview.html#security-considerations">Security Considerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/overview.html#performance-characteristics">Performance Characteristics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/overview.html#extensibility">Extensibility</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../architecture/decisions.html">Architecture Decision Records (ADRs)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/decisions.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/decisions.html#adr-structure">ADR Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/decisions.html#decision-categories">Decision Categories</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/decisions.html#development-tools-standards">Development Tools &amp; Standards</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-001-dependency-management-with-uv">ADR-001: Dependency Management with uv</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-002-game-framework-selection-arcade">ADR-002: Game Framework Selection (Arcade)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-003-development-tools-ruff-pytest-mypy">ADR-003: Development Tools (Ruff, Pytest, MyPy)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-005-conventional-commits-with-git-cz">ADR-005: Conventional Commits with git-cz</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-006-type-checking-with-mypy">ADR-006: Type Checking with MyPy</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/decisions.html#game-design-architecture">Game Design &amp; Architecture</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-004-game-design-standards">ADR-004: Game Design Standards</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-008-fullscreen-display-standard">ADR-008: Fullscreen Display Standard</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-009-three-lives-system">ADR-009: Three Lives System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-014-obstacle-spacing-algorithm">ADR-014: Obstacle Spacing Algorithm</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/decisions.html#configuration-data-management">Configuration &amp; Data Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-010-settings-system-with-toml">ADR-010: Settings System with TOML</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-011-internationalization-with-json">ADR-011: Internationalization with JSON</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-012-logging-system-with-loguru">ADR-012: Logging System with Loguru</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/decisions.html#asset-media-management">Asset &amp; Media Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-013-asset-management-system">ADR-013: Asset Management System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-016-comprehensive-sound-system">ADR-016: Comprehensive Sound System</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/decisions.html#infrastructure-deployment">Infrastructure &amp; Deployment</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-017-containerization-with-docker-and-uv">ADR-017: Containerization with Docker and uv</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-018-http-server-architecture">ADR-018: HTTP Server Architecture</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-019-http-server-framework-selection">ADR-019: HTTP Server Framework Selection</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/decisions.html#documentation-quality">Documentation &amp; Quality</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-020-uml-documentation-with-plantuml">ADR-020: UML Documentation with PlantUML</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-021-developer-documentation-with-sphinx">ADR-021: Developer Documentation with Sphinx</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-022-changelog-standards-and-maintenance">ADR-022: Changelog Standards and Maintenance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-023-documentation-hosting-platform">ADR-023: Documentation Hosting Platform</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/decisions.html#decision-making-process">Decision Making Process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/decisions.html#when-to-create-an-adr">When to Create an ADR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/decisions.html#adr-lifecycle">ADR Lifecycle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/decisions.html#review-process">Review Process</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/decisions.html#benefits-of-adrs">Benefits of ADRs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/decisions.html#for-current-development">For Current Development</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/decisions.html#for-future-maintenance">For Future Maintenance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/decisions.html#for-project-management">For Project Management</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/decisions.html#related-resources">Related Resources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../architecture/uml.html">UML Diagrams</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/uml.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/uml.html#available-diagrams">Available Diagrams</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#architecture-overview">1. Architecture Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#class-hierarchy">2. Class Hierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#data-flow">3. Data Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#deployment-diagram">4. Deployment Diagram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#game-lifecycle">5. Game Lifecycle</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/uml.html#diagram-conventions">Diagram Conventions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#naming-standards">Naming Standards</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#visual-standards">Visual Standards</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#content-guidelines">Content Guidelines</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/uml.html#generating-diagrams">Generating Diagrams</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#build-commands">Build Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#makefile-targets">Makefile Targets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/uml.html#diagram-maintenance">Diagram Maintenance</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#update-process">Update Process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#version-control">Version Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#quality-checks">Quality Checks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/uml.html#using-diagrams">Using Diagrams</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#in-documentation">In Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#in-presentations">In Presentations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#in-development">In Development</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/uml.html#advanced-features">Advanced Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#custom-themes">Custom Themes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#include-files">Include Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#dynamic-content">Dynamic Content</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/uml.html#best-practices">Best Practices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#design-principles">Design Principles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#maintenance">Maintenance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#collaboration">Collaboration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/uml.html#related-resources">Related Resources</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Unipress</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">unipress.ui.end_game.screen</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for unipress.ui.end_game.screen</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">End Game Screen UI Component</span>
+
+<span class="sd">Provides standardized end game screen with two cycling buttons:</span>
+<span class="sd">- Play Again: Restart the current game</span>
+<span class="sd">- Exit: Close the game</span>
+
+<span class="sd">Buttons cycle on each click, selected button is highlighted.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">arcade</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">unipress.core.high_scores</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_high_score</span><span class="p">,</span> <span class="n">is_new_high_score</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">unipress.core.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">log_game_event</span><span class="p">,</span> <span class="n">log_player_action</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">unipress.core.messages</span><span class="w"> </span><span class="kn">import</span> <span class="n">MessageLoader</span>
+
+
+<div class="viewcode-block" id="EndGameAction">
+<a class="viewcode-back" href="../../../../api/index.html#unipress.ui.end_game.screen.EndGameAction">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">EndGameAction</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Available actions on end game screen.&quot;&quot;&quot;</span>
+
+    <span class="n">PLAY_AGAIN</span> <span class="o">=</span> <span class="s2">&quot;play_again&quot;</span>
+    <span class="n">EXIT</span> <span class="o">=</span> <span class="s2">&quot;exit&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="EndGameScreen">
+<a class="viewcode-back" href="../../../../api/index.html#unipress.ui.end_game.screen.EndGameScreen">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">EndGameScreen</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Standardized end game screen with cycling buttons.</span>
+
+<span class="sd">    Features:</span>
+<span class="sd">    - Two buttons: Play Again / Exit</span>
+<span class="sd">    - Buttons cycle on each click</span>
+<span class="sd">    - Selected button is highlighted</span>
+<span class="sd">    - Shared across all games with override capability</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="EndGameScreen.__init__">
+<a class="viewcode-back" href="../../../../api/index.html#unipress.ui.end_game.screen.EndGameScreen.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">messages</span><span class="p">:</span> <span class="n">MessageLoader</span><span class="p">,</span>
+        <span class="n">final_score</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">cycle_time</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">,</span>
+        <span class="n">game_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">on_cycle</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[],</span> <span class="kc">None</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize end game screen.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            messages: Message loader for localized text</span>
+<span class="sd">            final_score: Player&#39;s final score to display</span>
+<span class="sd">            cycle_time: Time in seconds between automatic button cycling</span>
+<span class="sd">            game_name: Name of the game for high score lookup</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">messages</span> <span class="o">=</span> <span class="n">messages</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">final_score</span> <span class="o">=</span> <span class="n">final_score</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cycle_time</span> <span class="o">=</span> <span class="n">cycle_time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">game_name</span> <span class="o">=</span> <span class="n">game_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_cycle</span> <span class="o">=</span> <span class="n">on_cycle</span>
+
+        <span class="c1"># Button state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selected_button</span> <span class="o">=</span> <span class="n">EndGameAction</span><span class="o">.</span><span class="n">PLAY_AGAIN</span>  <span class="c1"># Default selection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_actions</span> <span class="o">=</span> <span class="p">[</span><span class="n">EndGameAction</span><span class="o">.</span><span class="n">PLAY_AGAIN</span><span class="p">,</span> <span class="n">EndGameAction</span><span class="o">.</span><span class="n">EXIT</span><span class="p">]</span>
+
+        <span class="c1"># Timing for automatic cycling</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_since_last_cycle</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="c1"># Colors</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">normal_color</span> <span class="o">=</span> <span class="n">arcade</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">LIGHT_GRAY</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selected_color</span> <span class="o">=</span> <span class="n">arcade</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">YELLOW</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text_color</span> <span class="o">=</span> <span class="n">arcade</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">BLACK</span>
+
+        <span class="n">log_game_event</span><span class="p">(</span><span class="s2">&quot;end_game_screen_shown&quot;</span><span class="p">,</span> <span class="n">final_score</span><span class="o">=</span><span class="n">final_score</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EndGameScreen.update">
+<a class="viewcode-back" href="../../../../api/index.html#unipress.ui.end_game.screen.EndGameScreen.update">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delta_time</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update the end game screen (handles automatic cycling).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            delta_time: Time elapsed since last update in seconds</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_since_last_cycle</span> <span class="o">+=</span> <span class="n">delta_time</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_since_last_cycle</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cycle_time</span><span class="p">:</span>
+            <span class="c1"># Cycle to next button</span>
+            <span class="n">current_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_actions</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selected_button</span><span class="p">)</span>
+            <span class="n">next_index</span> <span class="o">=</span> <span class="p">(</span><span class="n">current_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">button_actions</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">selected_button</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_actions</span><span class="p">[</span><span class="n">next_index</span><span class="p">]</span>
+
+            <span class="c1"># Reset timer</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">time_since_last_cycle</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+            <span class="n">log_player_action</span><span class="p">(</span><span class="s2">&quot;button_auto_cycle&quot;</span><span class="p">,</span> <span class="n">selected</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">selected_button</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+            <span class="c1"># Optional callback for audio/side-effects (e.g., ui/menu_cycle.ogg)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_cycle</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">on_cycle</span><span class="p">()</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="c1"># Keep UI robust even if callback fails</span>
+                    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="EndGameScreen.get_selected_action">
+<a class="viewcode-back" href="../../../../api/index.html#unipress.ui.end_game.screen.EndGameScreen.get_selected_action">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_selected_action</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EndGameAction</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get currently selected action without cycling.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_button</span></div>
+
+
+<div class="viewcode-block" id="EndGameScreen.draw">
+<a class="viewcode-back" href="../../../../api/index.html#unipress.ui.end_game.screen.EndGameScreen.draw">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window_width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">window_height</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Draw the end game screen.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            window_width: Width of the game window</span>
+<span class="sd">            window_height: Height of the game window</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">center_x</span> <span class="o">=</span> <span class="n">window_width</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">center_y</span> <span class="o">=</span> <span class="n">window_height</span> <span class="o">//</span> <span class="mi">2</span>
+
+        <span class="c1"># Draw semi-transparent overlay</span>
+        <span class="n">arcade</span><span class="o">.</span><span class="n">draw_lbwh_rectangle_filled</span><span class="p">(</span>
+            <span class="mi">0</span><span class="p">,</span>
+            <span class="mi">0</span><span class="p">,</span>
+            <span class="n">window_width</span><span class="p">,</span>
+            <span class="n">window_height</span><span class="p">,</span>
+            <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">180</span><span class="p">),</span>  <span class="c1"># Semi-transparent black (R, G, B, A)</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Draw game over title</span>
+        <span class="n">arcade</span><span class="o">.</span><span class="n">draw_text</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">get_message</span><span class="p">(</span><span class="s2">&quot;ui.game_over&quot;</span><span class="p">),</span>
+            <span class="n">center_x</span><span class="p">,</span>
+            <span class="n">center_y</span> <span class="o">+</span> <span class="mi">140</span><span class="p">,</span>
+            <span class="n">arcade</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">RED</span><span class="p">,</span>
+            <span class="mi">56</span><span class="p">,</span>  <span class="c1"># Larger title</span>
+            <span class="n">anchor_x</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+            <span class="n">font_name</span><span class="o">=</span><span class="s2">&quot;Arial&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Draw final score with high score comparison</span>
+        <span class="n">high_score</span> <span class="o">=</span> <span class="n">get_high_score</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">game_name</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_name</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="n">is_new_record</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">is_new_high_score</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">game_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">final_score</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_name</span>
+            <span class="k">else</span> <span class="kc">False</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">is_new_record</span><span class="p">:</span>
+            <span class="n">score_text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Nowy rekord: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">final_score</span><span class="si">}</span><span class="s2">!&quot;</span>
+            <span class="n">score_color</span> <span class="o">=</span> <span class="n">arcade</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">GOLD</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">score_text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Wynik: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">final_score</span><span class="si">}</span><span class="s2"> / Rekord: </span><span class="si">{</span><span class="n">high_score</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">score_color</span> <span class="o">=</span> <span class="n">arcade</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">WHITE</span>
+
+        <span class="n">arcade</span><span class="o">.</span><span class="n">draw_text</span><span class="p">(</span>
+            <span class="n">score_text</span><span class="p">,</span>
+            <span class="n">center_x</span><span class="p">,</span>
+            <span class="n">center_y</span> <span class="o">+</span> <span class="mi">80</span><span class="p">,</span>
+            <span class="n">score_color</span><span class="p">,</span>
+            <span class="mi">36</span><span class="p">,</span>  <span class="c1"># Larger score</span>
+            <span class="n">anchor_x</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+            <span class="n">font_name</span><span class="o">=</span><span class="s2">&quot;Arial&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Draw instruction (more spacing from buttons)</span>
+        <span class="n">arcade</span><span class="o">.</span><span class="n">draw_text</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">get_message</span><span class="p">(</span><span class="s2">&quot;ui.click_to_select&quot;</span><span class="p">),</span>
+            <span class="n">center_x</span><span class="p">,</span>
+            <span class="n">center_y</span> <span class="o">+</span> <span class="mi">20</span><span class="p">,</span>  <span class="c1"># More space above buttons</span>
+            <span class="n">arcade</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">LIGHT_GRAY</span><span class="p">,</span>
+            <span class="mi">20</span><span class="p">,</span>  <span class="c1"># Larger, softer color</span>
+            <span class="n">anchor_x</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+            <span class="n">font_name</span><span class="o">=</span><span class="s2">&quot;Arial&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Draw buttons (larger, more spaced out)</span>
+        <span class="n">button_y</span> <span class="o">=</span> <span class="n">center_y</span> <span class="o">-</span> <span class="mi">80</span>  <span class="c1"># Move buttons further down</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_draw_button</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">get_message</span><span class="p">(</span><span class="s2">&quot;ui.play_again&quot;</span><span class="p">),</span>
+            <span class="n">center_x</span> <span class="o">-</span> <span class="mi">150</span><span class="p">,</span>
+            <span class="n">button_y</span><span class="p">,</span>
+            <span class="mi">280</span><span class="p">,</span>
+            <span class="mi">70</span><span class="p">,</span>  <span class="c1"># Larger buttons</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">selected_button</span> <span class="o">==</span> <span class="n">EndGameAction</span><span class="o">.</span><span class="n">PLAY_AGAIN</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_draw_button</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">get_message</span><span class="p">(</span><span class="s2">&quot;ui.exit_game&quot;</span><span class="p">),</span>
+            <span class="n">center_x</span> <span class="o">+</span> <span class="mi">150</span><span class="p">,</span>
+            <span class="n">button_y</span><span class="p">,</span>
+            <span class="mi">280</span><span class="p">,</span>
+            <span class="mi">70</span><span class="p">,</span>  <span class="c1"># Larger buttons</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">selected_button</span> <span class="o">==</span> <span class="n">EndGameAction</span><span class="o">.</span><span class="n">EXIT</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EndGameScreen._draw_button">
+<a class="viewcode-back" href="../../../../api/index.html#unipress.ui.end_game.screen.EndGameScreen._draw_button">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_draw_button</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">center_x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">center_y</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">width</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">height</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">is_selected</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Draw a rounded button with optional selection highlighting.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            text: Button text</span>
+<span class="sd">            center_x: Button center X coordinate</span>
+<span class="sd">            center_y: Button center Y coordinate</span>
+<span class="sd">            width: Button width</span>
+<span class="sd">            height: Button height</span>
+<span class="sd">            is_selected: Whether button is currently selected</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Button colors</span>
+        <span class="k">if</span> <span class="n">is_selected</span><span class="p">:</span>
+            <span class="n">bg_color</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">215</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># Gold for selected</span>
+            <span class="n">text_color</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># Black text</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">bg_color</span> <span class="o">=</span> <span class="p">(</span><span class="mi">70</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">70</span><span class="p">)</span>  <span class="c1"># Dark gray for unselected</span>
+            <span class="n">text_color</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>  <span class="c1"># White text</span>
+
+        <span class="c1"># Draw rounded rectangle (simulate with multiple rectangles and circles)</span>
+        <span class="n">corner_radius</span> <span class="o">=</span> <span class="mi">15</span>
+        <span class="n">left</span> <span class="o">=</span> <span class="n">center_x</span> <span class="o">-</span> <span class="n">width</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">bottom</span> <span class="o">=</span> <span class="n">center_y</span> <span class="o">-</span> <span class="n">height</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">right</span> <span class="o">=</span> <span class="n">center_x</span> <span class="o">+</span> <span class="n">width</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">top</span> <span class="o">=</span> <span class="n">center_y</span> <span class="o">+</span> <span class="n">height</span> <span class="o">//</span> <span class="mi">2</span>
+
+        <span class="c1"># Main rectangle body</span>
+        <span class="n">arcade</span><span class="o">.</span><span class="n">draw_lbwh_rectangle_filled</span><span class="p">(</span>
+            <span class="n">left</span> <span class="o">+</span> <span class="n">corner_radius</span><span class="p">,</span> <span class="n">bottom</span><span class="p">,</span> <span class="n">width</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">corner_radius</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">bg_color</span>
+        <span class="p">)</span>
+        <span class="n">arcade</span><span class="o">.</span><span class="n">draw_lbwh_rectangle_filled</span><span class="p">(</span>
+            <span class="n">left</span><span class="p">,</span> <span class="n">bottom</span> <span class="o">+</span> <span class="n">corner_radius</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">corner_radius</span><span class="p">,</span> <span class="n">bg_color</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Corner circles</span>
+        <span class="n">arcade</span><span class="o">.</span><span class="n">draw_circle_filled</span><span class="p">(</span>
+            <span class="n">left</span> <span class="o">+</span> <span class="n">corner_radius</span><span class="p">,</span> <span class="n">bottom</span> <span class="o">+</span> <span class="n">corner_radius</span><span class="p">,</span> <span class="n">corner_radius</span><span class="p">,</span> <span class="n">bg_color</span>
+        <span class="p">)</span>
+        <span class="n">arcade</span><span class="o">.</span><span class="n">draw_circle_filled</span><span class="p">(</span>
+            <span class="n">right</span> <span class="o">-</span> <span class="n">corner_radius</span><span class="p">,</span> <span class="n">bottom</span> <span class="o">+</span> <span class="n">corner_radius</span><span class="p">,</span> <span class="n">corner_radius</span><span class="p">,</span> <span class="n">bg_color</span>
+        <span class="p">)</span>
+        <span class="n">arcade</span><span class="o">.</span><span class="n">draw_circle_filled</span><span class="p">(</span>
+            <span class="n">left</span> <span class="o">+</span> <span class="n">corner_radius</span><span class="p">,</span> <span class="n">top</span> <span class="o">-</span> <span class="n">corner_radius</span><span class="p">,</span> <span class="n">corner_radius</span><span class="p">,</span> <span class="n">bg_color</span>
+        <span class="p">)</span>
+        <span class="n">arcade</span><span class="o">.</span><span class="n">draw_circle_filled</span><span class="p">(</span>
+            <span class="n">right</span> <span class="o">-</span> <span class="n">corner_radius</span><span class="p">,</span> <span class="n">top</span> <span class="o">-</span> <span class="n">corner_radius</span><span class="p">,</span> <span class="n">corner_radius</span><span class="p">,</span> <span class="n">bg_color</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Button text (larger font)</span>
+        <span class="n">arcade</span><span class="o">.</span><span class="n">draw_text</span><span class="p">(</span>
+            <span class="n">text</span><span class="p">,</span>
+            <span class="n">center_x</span><span class="p">,</span>
+            <span class="n">center_y</span><span class="p">,</span>
+            <span class="n">text_color</span><span class="p">,</span>
+            <span class="mi">24</span><span class="p">,</span>  <span class="c1"># Larger font</span>
+            <span class="n">anchor_x</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+            <span class="n">anchor_y</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+            <span class="n">font_name</span><span class="o">=</span><span class="s2">&quot;Arial&quot;</span><span class="p">,</span>  <span class="c1"># Better font</span>
+        <span class="p">)</span></div>
+</div>
+
+
+
+<span class="c1"># Test runner for standalone execution</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">arcade</span>
+
+    <span class="kn">from</span><span class="w"> </span><span class="nn">unipress.core.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">init_logger</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">unipress.core.messages</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_messages</span>
+
+    <span class="k">class</span><span class="w"> </span><span class="nc">EndGameScreenTest</span><span class="p">(</span><span class="n">arcade</span><span class="o">.</span><span class="n">Window</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Test window for end game screen component.&quot;&quot;&quot;</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="mi">800</span><span class="p">,</span> <span class="mi">600</span><span class="p">,</span> <span class="s2">&quot;End Game Screen Test&quot;</span><span class="p">)</span>
+            <span class="n">init_logger</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">messages</span> <span class="o">=</span> <span class="n">load_messages</span><span class="p">(</span><span class="s2">&quot;pl_PL&quot;</span><span class="p">,</span> <span class="s2">&quot;demo_jump&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">end_game_screen</span> <span class="o">=</span> <span class="n">EndGameScreen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">messages</span><span class="p">,</span> <span class="n">final_score</span><span class="o">=</span><span class="mi">12345</span><span class="p">)</span>
+            <span class="n">arcade</span><span class="o">.</span><span class="n">set_background_color</span><span class="p">(</span><span class="n">arcade</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">DARK_BLUE</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;Buttons auto-cycle every 2s, click to execute selected action, &quot;</span>
+                <span class="s2">&quot;ESC to exit&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">on_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delta_time</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">end_game_screen</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">delta_time</span><span class="p">)</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">on_draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+            <span class="n">arcade</span><span class="o">.</span><span class="n">draw_text</span><span class="p">(</span>
+                <span class="s2">&quot;TEST BACKGROUND&quot;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">200</span><span class="p">,</span>
+                <span class="n">arcade</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">GRAY</span><span class="p">,</span>
+                <span class="mi">24</span><span class="p">,</span>
+                <span class="n">anchor_x</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">end_game_screen</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">on_mouse_press</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">button</span> <span class="o">==</span> <span class="n">arcade</span><span class="o">.</span><span class="n">MOUSE_BUTTON_LEFT</span><span class="p">:</span>
+                <span class="n">action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_game_screen</span><span class="o">.</span><span class="n">get_selected_action</span><span class="p">()</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Executed action: </span><span class="si">{</span><span class="n">action</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">action</span> <span class="o">==</span> <span class="n">EndGameAction</span><span class="o">.</span><span class="n">EXIT</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">on_key_press</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="n">arcade</span><span class="o">.</span><span class="n">key</span><span class="o">.</span><span class="n">ESCAPE</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;End Game Screen Test - Click to cycle, ESC to exit&quot;</span><span class="p">)</span>
+    <span class="n">EndGameScreenTest</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, jgrynczewski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -3,10 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>System Architecture Overview &mdash; Unipress 0.1.0 documentation</title>
+  <title>Overview: module code &mdash; Unipress 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -21,9 +20,7 @@
       <script src="../_static/copybutton.js?v=30646c52"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Architecture Decision Records (ADRs)" href="decisions.html" />
-    <link rel="prev" title="&lt;no title&gt;" href="../api/server.html" /> 
+    <link rel="search" title="Search" href="../search.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,7 +43,7 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../tutorials/installation.html">Installation Guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../tutorials/installation.html#prerequisites">Prerequisites</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../tutorials/installation.html#system-requirements">System Requirements</a></li>
@@ -243,141 +240,141 @@
 <li class="toctree-l2"><a class="reference internal" href="../api/base_game.html#related-classes">Related Classes</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">System Architecture Overview</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#high-level-architecture">High-Level Architecture</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#core-framework">Core Framework</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#game-layer">Game Layer</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#infrastructure">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture/overview.html">System Architecture Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/overview.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/overview.html#high-level-architecture">High-Level Architecture</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/overview.html#core-framework">Core Framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/overview.html#game-layer">Game Layer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/overview.html#infrastructure">Infrastructure</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#component-relationships">Component Relationships</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#detailed-architecture">Detailed Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/overview.html#component-relationships">Component Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/overview.html#detailed-architecture">Detailed Architecture</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#key-design-principles">Key Design Principles</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#one-button-constraint">1. One-Button Constraint</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#modularity">2. Modularity</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#configuration-driven">3. Configuration-Driven</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#asset-management">4. Asset Management</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#container-ready">5. Container-Ready</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/overview.html#key-design-principles">Key Design Principles</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/overview.html#one-button-constraint">1. One-Button Constraint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/overview.html#modularity">2. Modularity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/overview.html#configuration-driven">3. Configuration-Driven</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/overview.html#asset-management">4. Asset Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/overview.html#container-ready">5. Container-Ready</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#technology-stack">Technology Stack</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#directory-structure">Directory Structure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#data-flow">Data Flow</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#security-considerations">Security Considerations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#performance-characteristics">Performance Characteristics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#extensibility">Extensibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/overview.html#technology-stack">Technology Stack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/overview.html#directory-structure">Directory Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/overview.html#data-flow">Data Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/overview.html#security-considerations">Security Considerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/overview.html#performance-characteristics">Performance Characteristics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/overview.html#extensibility">Extensibility</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="decisions.html">Architecture Decision Records (ADRs)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="decisions.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="decisions.html#adr-structure">ADR Structure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="decisions.html#decision-categories">Decision Categories</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="decisions.html#development-tools-standards">Development Tools &amp; Standards</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="decisions.html#adr-001-dependency-management-with-uv">ADR-001: Dependency Management with uv</a></li>
-<li class="toctree-l4"><a class="reference internal" href="decisions.html#adr-002-game-framework-selection-arcade">ADR-002: Game Framework Selection (Arcade)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="decisions.html#adr-003-development-tools-ruff-pytest-mypy">ADR-003: Development Tools (Ruff, Pytest, MyPy)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="decisions.html#adr-005-conventional-commits-with-git-cz">ADR-005: Conventional Commits with git-cz</a></li>
-<li class="toctree-l4"><a class="reference internal" href="decisions.html#adr-006-type-checking-with-mypy">ADR-006: Type Checking with MyPy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture/decisions.html">Architecture Decision Records (ADRs)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/decisions.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/decisions.html#adr-structure">ADR Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/decisions.html#decision-categories">Decision Categories</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/decisions.html#development-tools-standards">Development Tools &amp; Standards</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-001-dependency-management-with-uv">ADR-001: Dependency Management with uv</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-002-game-framework-selection-arcade">ADR-002: Game Framework Selection (Arcade)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-003-development-tools-ruff-pytest-mypy">ADR-003: Development Tools (Ruff, Pytest, MyPy)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-005-conventional-commits-with-git-cz">ADR-005: Conventional Commits with git-cz</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-006-type-checking-with-mypy">ADR-006: Type Checking with MyPy</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="decisions.html#game-design-architecture">Game Design &amp; Architecture</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="decisions.html#adr-004-game-design-standards">ADR-004: Game Design Standards</a></li>
-<li class="toctree-l4"><a class="reference internal" href="decisions.html#adr-008-fullscreen-display-standard">ADR-008: Fullscreen Display Standard</a></li>
-<li class="toctree-l4"><a class="reference internal" href="decisions.html#adr-009-three-lives-system">ADR-009: Three Lives System</a></li>
-<li class="toctree-l4"><a class="reference internal" href="decisions.html#adr-014-obstacle-spacing-algorithm">ADR-014: Obstacle Spacing Algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/decisions.html#game-design-architecture">Game Design &amp; Architecture</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-004-game-design-standards">ADR-004: Game Design Standards</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-008-fullscreen-display-standard">ADR-008: Fullscreen Display Standard</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-009-three-lives-system">ADR-009: Three Lives System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-014-obstacle-spacing-algorithm">ADR-014: Obstacle Spacing Algorithm</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="decisions.html#configuration-data-management">Configuration &amp; Data Management</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="decisions.html#adr-010-settings-system-with-toml">ADR-010: Settings System with TOML</a></li>
-<li class="toctree-l4"><a class="reference internal" href="decisions.html#adr-011-internationalization-with-json">ADR-011: Internationalization with JSON</a></li>
-<li class="toctree-l4"><a class="reference internal" href="decisions.html#adr-012-logging-system-with-loguru">ADR-012: Logging System with Loguru</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/decisions.html#configuration-data-management">Configuration &amp; Data Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-010-settings-system-with-toml">ADR-010: Settings System with TOML</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-011-internationalization-with-json">ADR-011: Internationalization with JSON</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-012-logging-system-with-loguru">ADR-012: Logging System with Loguru</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="decisions.html#asset-media-management">Asset &amp; Media Management</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="decisions.html#adr-013-asset-management-system">ADR-013: Asset Management System</a></li>
-<li class="toctree-l4"><a class="reference internal" href="decisions.html#adr-016-comprehensive-sound-system">ADR-016: Comprehensive Sound System</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/decisions.html#asset-media-management">Asset &amp; Media Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-013-asset-management-system">ADR-013: Asset Management System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-016-comprehensive-sound-system">ADR-016: Comprehensive Sound System</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="decisions.html#infrastructure-deployment">Infrastructure &amp; Deployment</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="decisions.html#adr-017-containerization-with-docker-and-uv">ADR-017: Containerization with Docker and uv</a></li>
-<li class="toctree-l4"><a class="reference internal" href="decisions.html#adr-018-http-server-architecture">ADR-018: HTTP Server Architecture</a></li>
-<li class="toctree-l4"><a class="reference internal" href="decisions.html#adr-019-http-server-framework-selection">ADR-019: HTTP Server Framework Selection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/decisions.html#infrastructure-deployment">Infrastructure &amp; Deployment</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-017-containerization-with-docker-and-uv">ADR-017: Containerization with Docker and uv</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-018-http-server-architecture">ADR-018: HTTP Server Architecture</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-019-http-server-framework-selection">ADR-019: HTTP Server Framework Selection</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="decisions.html#documentation-quality">Documentation &amp; Quality</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="decisions.html#adr-020-uml-documentation-with-plantuml">ADR-020: UML Documentation with PlantUML</a></li>
-<li class="toctree-l4"><a class="reference internal" href="decisions.html#adr-021-developer-documentation-with-sphinx">ADR-021: Developer Documentation with Sphinx</a></li>
-<li class="toctree-l4"><a class="reference internal" href="decisions.html#adr-022-changelog-standards-and-maintenance">ADR-022: Changelog Standards and Maintenance</a></li>
-<li class="toctree-l4"><a class="reference internal" href="decisions.html#adr-023-documentation-hosting-platform">ADR-023: Documentation Hosting Platform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/decisions.html#documentation-quality">Documentation &amp; Quality</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-020-uml-documentation-with-plantuml">ADR-020: UML Documentation with PlantUML</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-021-developer-documentation-with-sphinx">ADR-021: Developer Documentation with Sphinx</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-022-changelog-standards-and-maintenance">ADR-022: Changelog Standards and Maintenance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../architecture/decisions.html#adr-023-documentation-hosting-platform">ADR-023: Documentation Hosting Platform</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="decisions.html#decision-making-process">Decision Making Process</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="decisions.html#when-to-create-an-adr">When to Create an ADR</a></li>
-<li class="toctree-l3"><a class="reference internal" href="decisions.html#adr-lifecycle">ADR Lifecycle</a></li>
-<li class="toctree-l3"><a class="reference internal" href="decisions.html#review-process">Review Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/decisions.html#decision-making-process">Decision Making Process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/decisions.html#when-to-create-an-adr">When to Create an ADR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/decisions.html#adr-lifecycle">ADR Lifecycle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/decisions.html#review-process">Review Process</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="decisions.html#benefits-of-adrs">Benefits of ADRs</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="decisions.html#for-current-development">For Current Development</a></li>
-<li class="toctree-l3"><a class="reference internal" href="decisions.html#for-future-maintenance">For Future Maintenance</a></li>
-<li class="toctree-l3"><a class="reference internal" href="decisions.html#for-project-management">For Project Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/decisions.html#benefits-of-adrs">Benefits of ADRs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/decisions.html#for-current-development">For Current Development</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/decisions.html#for-future-maintenance">For Future Maintenance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/decisions.html#for-project-management">For Project Management</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="decisions.html#related-resources">Related Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/decisions.html#related-resources">Related Resources</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="uml.html">UML Diagrams</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="uml.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="uml.html#available-diagrams">Available Diagrams</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="uml.html#architecture-overview">1. Architecture Overview</a></li>
-<li class="toctree-l3"><a class="reference internal" href="uml.html#class-hierarchy">2. Class Hierarchy</a></li>
-<li class="toctree-l3"><a class="reference internal" href="uml.html#data-flow">3. Data Flow</a></li>
-<li class="toctree-l3"><a class="reference internal" href="uml.html#deployment-diagram">4. Deployment Diagram</a></li>
-<li class="toctree-l3"><a class="reference internal" href="uml.html#game-lifecycle">5. Game Lifecycle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture/uml.html">UML Diagrams</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/uml.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/uml.html#available-diagrams">Available Diagrams</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#architecture-overview">1. Architecture Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#class-hierarchy">2. Class Hierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#data-flow">3. Data Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#deployment-diagram">4. Deployment Diagram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#game-lifecycle">5. Game Lifecycle</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="uml.html#diagram-conventions">Diagram Conventions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="uml.html#naming-standards">Naming Standards</a></li>
-<li class="toctree-l3"><a class="reference internal" href="uml.html#visual-standards">Visual Standards</a></li>
-<li class="toctree-l3"><a class="reference internal" href="uml.html#content-guidelines">Content Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/uml.html#diagram-conventions">Diagram Conventions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#naming-standards">Naming Standards</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#visual-standards">Visual Standards</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#content-guidelines">Content Guidelines</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="uml.html#generating-diagrams">Generating Diagrams</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="uml.html#prerequisites">Prerequisites</a></li>
-<li class="toctree-l3"><a class="reference internal" href="uml.html#build-commands">Build Commands</a></li>
-<li class="toctree-l3"><a class="reference internal" href="uml.html#makefile-targets">Makefile Targets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/uml.html#generating-diagrams">Generating Diagrams</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#build-commands">Build Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#makefile-targets">Makefile Targets</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="uml.html#diagram-maintenance">Diagram Maintenance</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="uml.html#update-process">Update Process</a></li>
-<li class="toctree-l3"><a class="reference internal" href="uml.html#version-control">Version Control</a></li>
-<li class="toctree-l3"><a class="reference internal" href="uml.html#quality-checks">Quality Checks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/uml.html#diagram-maintenance">Diagram Maintenance</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#update-process">Update Process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#version-control">Version Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#quality-checks">Quality Checks</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="uml.html#using-diagrams">Using Diagrams</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="uml.html#in-documentation">In Documentation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="uml.html#in-presentations">In Presentations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="uml.html#in-development">In Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/uml.html#using-diagrams">Using Diagrams</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#in-documentation">In Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#in-presentations">In Presentations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#in-development">In Development</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="uml.html#advanced-features">Advanced Features</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="uml.html#custom-themes">Custom Themes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="uml.html#include-files">Include Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="uml.html#dynamic-content">Dynamic Content</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/uml.html#advanced-features">Advanced Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#custom-themes">Custom Themes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#include-files">Include Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#dynamic-content">Dynamic Content</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="uml.html#best-practices">Best Practices</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="uml.html#design-principles">Design Principles</a></li>
-<li class="toctree-l3"><a class="reference internal" href="uml.html#maintenance">Maintenance</a></li>
-<li class="toctree-l3"><a class="reference internal" href="uml.html#collaboration">Collaboration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/uml.html#best-practices">Best Practices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#design-principles">Design Principles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#maintenance">Maintenance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/uml.html#collaboration">Collaboration</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="uml.html#related-resources">Related Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/uml.html#related-resources">Related Resources</a></li>
 </ul>
 </li>
 </ul>
@@ -396,9 +393,8 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">System Architecture Overview</li>
+      <li class="breadcrumb-item active">Overview: module code</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/architecture/overview.md.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -406,171 +402,24 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="system-architecture-overview">
-<h1>System Architecture Overview<a class="headerlink" href="#system-architecture-overview" title="Link to this heading"></a></h1>
-<section id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h2>
-<p>Unipress is designed as a modular, extensible framework for one-button games. The architecture follows modern Python development practices with clear separation of concerns, comprehensive configuration management, and robust asset handling.</p>
-</section>
-<section id="high-level-architecture">
-<h2>High-Level Architecture<a class="headerlink" href="#high-level-architecture" title="Link to this heading"></a></h2>
-<p>The system consists of several key components:</p>
-<section id="core-framework">
-<h3>Core Framework<a class="headerlink" href="#core-framework" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>BaseGame</strong>: Abstract base class providing common game functionality</p></li>
-<li><p><strong>AssetManager</strong>: Centralized resource management for sprites, sounds, and animations</p></li>
-<li><p><strong>SoundManager</strong>: Event-driven audio system with OGG format support</p></li>
-<li><p><strong>SettingsManager</strong>: Hierarchical TOML-based configuration system</p></li>
-<li><p><strong>Logger</strong>: Structured JSON logging with Loguru</p></li>
+  <h1>All modules for which code is available</h1>
+<ul><li><a href="unipress/client.html">unipress.client</a></li>
+<li><a href="unipress/core/assets.html">unipress.core.assets</a></li>
+<li><a href="unipress/core/base_game.html">unipress.core.base_game</a></li>
+<li><a href="unipress/core/game_server.html">unipress.core.game_server</a></li>
+<li><a href="unipress/core/high_scores.html">unipress.core.high_scores</a></li>
+<li><a href="unipress/core/logger.html">unipress.core.logger</a></li>
+<li><a href="unipress/core/messages.html">unipress.core.messages</a></li>
+<li><a href="unipress/core/settings.html">unipress.core.settings</a></li>
+<li><a href="unipress/core/sound.html">unipress.core.sound</a></li>
+<li><a href="unipress/games/demo_jump/game.html">unipress.games.demo_jump.game</a></li>
+<li><a href="unipress/games/jumper/game.html">unipress.games.jumper.game</a></li>
+<li><a href="unipress/ui/end_game/screen.html">unipress.ui.end_game.screen</a></li>
 </ul>
-</section>
-<section id="game-layer">
-<h3>Game Layer<a class="headerlink" href="#game-layer" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Game Implementations</strong>: Concrete game classes extending BaseGame</p></li>
-<li><p><strong>Game Server</strong>: HTTP API for game management within containers</p></li>
-<li><p><strong>High Scores</strong>: Persistent score tracking with JSON storage</p></li>
-</ul>
-</section>
-<section id="infrastructure">
-<h3>Infrastructure<a class="headerlink" href="#infrastructure" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Containerization</strong>: Docker with multi-stage builds and X11/audio passthrough</p></li>
-<li><p><strong>CI/CD</strong>: GitHub Actions for automated testing and deployment</p></li>
-<li><p><strong>Documentation</strong>: Sphinx with Read the Docs and GitHub Pages hosting</p></li>
-</ul>
-</section>
-</section>
-<section id="component-relationships">
-<h2>Component Relationships<a class="headerlink" href="#component-relationships" title="Link to this heading"></a></h2>
-<a href="../_static/ArchitectureOverview.png" target="_blank">
-<img src="../_static/ArchitectureOverview.png" alt="Architecture Overview" style="max-width: 100%; height: auto;">
-</a>
-*High-level system architecture showing component relationships - [Click to enlarge](../_static/ArchitectureOverview.png)*
-<section id="detailed-architecture">
-<h3>Detailed Architecture<a class="headerlink" href="#detailed-architecture" title="Link to this heading"></a></h3>
-<p>The system follows a layered architecture with clear separation of concerns:</p>
-<div class="highlight-mermaid notranslate"><div class="highlight"><pre><span></span>graph TB
-    A[Main Entry Point] --&gt; B[BaseGame]
-    B --&gt; C[AssetManager]
-    B --&gt; D[SoundManager]
-    B --&gt; E[SettingsManager]
-    B --&gt; F[Logger]
-    
-    G[Game Implementations] --&gt; B
-    H[Game Server] --&gt; B
-    
-    I[Container Runtime] --&gt; G
-    I --&gt; H
-    
-    J[CI/CD Pipeline] --&gt; K[Documentation]
-    J --&gt; L[Testing]
-</pre></div>
-</div>
-</section>
-</section>
-<section id="key-design-principles">
-<h2>Key Design Principles<a class="headerlink" href="#key-design-principles" title="Link to this heading"></a></h2>
-<section id="one-button-constraint">
-<h3>1. One-Button Constraint<a class="headerlink" href="#one-button-constraint" title="Link to this heading"></a></h3>
-<p>All games must work with single button input only. This constraint drives the entire architecture and ensures accessibility and simplicity.</p>
-</section>
-<section id="modularity">
-<h3>2. Modularity<a class="headerlink" href="#modularity" title="Link to this heading"></a></h3>
-<p>Each component is designed to be independent and replaceable. The BaseGame class provides a common interface while allowing for game-specific implementations.</p>
-</section>
-<section id="configuration-driven">
-<h3>3. Configuration-Driven<a class="headerlink" href="#configuration-driven" title="Link to this heading"></a></h3>
-<p>Settings are hierarchical and TOML-based, allowing for easy customization without code changes.</p>
-</section>
-<section id="asset-management">
-<h3>4. Asset Management<a class="headerlink" href="#asset-management" title="Link to this heading"></a></h3>
-<p>Centralized asset handling with JSON metadata for animations and structured organization by game and type.</p>
-</section>
-<section id="container-ready">
-<h3>5. Container-Ready<a class="headerlink" href="#container-ready" title="Link to this heading"></a></h3>
-<p>Full Docker support with proper audio and display passthrough for seamless deployment.</p>
-</section>
-</section>
-<section id="technology-stack">
-<h2>Technology Stack<a class="headerlink" href="#technology-stack" title="Link to this heading"></a></h2>
-<ul class="simple">
-<li><p><strong>Language</strong>: Python 3.12+</p></li>
-<li><p><strong>Game Framework</strong>: Arcade</p></li>
-<li><p><strong>Package Manager</strong>: uv</p></li>
-<li><p><strong>Configuration</strong>: TOML</p></li>
-<li><p><strong>Logging</strong>: Loguru (JSON format)</p></li>
-<li><p><strong>Audio</strong>: OGG format with event-driven system</p></li>
-<li><p><strong>Containerization</strong>: Docker with docker-compose</p></li>
-<li><p><strong>CI/CD</strong>: GitHub Actions</p></li>
-<li><p><strong>Documentation</strong>: Sphinx with Myst-Parser</p></li>
-<li><p><strong>Hosting</strong>: Read the Docs + GitHub Pages</p></li>
-</ul>
-</section>
-<section id="directory-structure">
-<h2>Directory Structure<a class="headerlink" href="#directory-structure" title="Link to this heading"></a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>unipress/
-├── core/           # Core framework components
-├── games/          # Game implementations
-├── assets/         # Centralized asset management
-├── locales/        # Internationalization
-├── ui/            # User interface components
-├── docs/          # Documentation and ADRs
-└── tests/         # Test suite
-</pre></div>
-</div>
-</section>
-<section id="data-flow">
-<h2>Data Flow<a class="headerlink" href="#data-flow" title="Link to this heading"></a></h2>
-<a href="../_static/DataFlow.png" target="_blank">
-<img src="../_static/DataFlow.png" alt="Data Flow" style="max-width: 100%; height: auto;">
-</a>
-*Data flow through the system components - [Click to enlarge](../_static/DataFlow.png)*
-<ol class="arabic simple">
-<li><p><strong>Initialization</strong>: Settings loaded, assets initialized, sound system started</p></li>
-<li><p><strong>Game Loop</strong>: Event handling, state updates, rendering, audio processing</p></li>
-<li><p><strong>State Management</strong>: Score tracking, lives system, game progression</p></li>
-<li><p><strong>Persistence</strong>: High scores saved, settings updated, logs written</p></li>
-</ol>
-</section>
-<section id="security-considerations">
-<h2>Security Considerations<a class="headerlink" href="#security-considerations" title="Link to this heading"></a></h2>
-<ul class="simple">
-<li><p>Container isolation for game execution</p></li>
-<li><p>Input validation and sanitization</p></li>
-<li><p>Secure configuration management</p></li>
-<li><p>Audit logging for debugging and monitoring</p></li>
-</ul>
-</section>
-<section id="performance-characteristics">
-<h2>Performance Characteristics<a class="headerlink" href="#performance-characteristics" title="Link to this heading"></a></h2>
-<ul class="simple">
-<li><p>60 FPS target for smooth gameplay</p></li>
-<li><p>Efficient asset loading and caching</p></li>
-<li><p>Minimal memory footprint</p></li>
-<li><p>Fast startup times for containerized deployment</p></li>
-</ul>
-</section>
-<section id="extensibility">
-<h2>Extensibility<a class="headerlink" href="#extensibility" title="Link to this heading"></a></h2>
-<p>The architecture is designed for easy extension:</p>
-<ul class="simple">
-<li><p><strong>New Games</strong>: Implement BaseGame interface</p></li>
-<li><p><strong>New Assets</strong>: Follow established naming conventions</p></li>
-<li><p><strong>New Features</strong>: Extend core components without breaking existing games</p></li>
-<li><p><strong>New Platforms</strong>: Container-based deployment supports multiple environments</p></li>
-</ul>
-</section>
-</section>
-
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../api/server.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="decisions.html" class="btn btn-neutral float-right" title="Architecture Decision Records (ADRs)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+          <footer>
 
   <hr/>
 

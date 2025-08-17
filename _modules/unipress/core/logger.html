@@ -1,0 +1,625 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>unipress.core.logger &mdash; Unipress 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=30646c52"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Unipress
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/installation.html">Installation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/installation.html#prerequisites">Prerequisites</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/installation.html#system-requirements">System Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/installation.html#required-software">Required Software</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/installation.html#installation-methods">Installation Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/installation.html#method-1-development-installation-recommended">Method 1: Development Installation (Recommended)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../tutorials/installation.html#clone-the-repository">1. Clone the Repository</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tutorials/installation.html#install-uv-package-manager">2. Install uv Package Manager</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tutorials/installation.html#install-dependencies">3. Install Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tutorials/installation.html#verify-installation">4. Verify Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/installation.html#method-2-docker-installation">Method 2: Docker Installation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../tutorials/installation.html#id1">1. Clone the Repository</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tutorials/installation.html#build-docker-image">2. Build Docker Image</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tutorials/installation.html#run-with-docker-compose">3. Run with Docker Compose</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tutorials/installation.html#run-individual-container">4. Run Individual Container</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/installation.html#platform-specific-instructions">Platform-Specific Instructions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/installation.html#linux-ubuntu-debian">Linux (Ubuntu/Debian)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../tutorials/installation.html#install-system-dependencies">Install System Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tutorials/installation.html#audio-support-optional">Audio Support (Optional)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/installation.html#macos">macOS</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../tutorials/installation.html#id2">Install System Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tutorials/installation.html#audio-support">Audio Support</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/installation.html#windows">Windows</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../tutorials/installation.html#id3">Install System Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tutorials/installation.html#id4">Audio Support</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/installation.html#configuration">Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/installation.html#initial-setup">Initial Setup</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../tutorials/installation.html#create-configuration-file">1. Create Configuration File</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tutorials/installation.html#customize-settings">2. Customize Settings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tutorials/installation.html#set-up-logging">3. Set Up Logging</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/installation.html#environment-variables">Environment Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/installation.html#verification">Verification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/installation.html#test-installation">Test Installation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../tutorials/installation.html#run-demo-game">1. Run Demo Game</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tutorials/installation.html#run-specific-game">2. Run Specific Game</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tutorials/installation.html#check-audio">3. Check Audio</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tutorials/installation.html#verify-dependencies">4. Verify Dependencies</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/installation.html#troubleshooting">Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/installation.html#common-issues">Common Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../tutorials/installation.html#python-version-issues">Python Version Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tutorials/installation.html#audio-issues">Audio Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tutorials/installation.html#display-issues">Display Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tutorials/installation.html#permission-issues">Permission Issues</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/installation.html#getting-help">Getting Help</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../tutorials/installation.html#check-logs">Check Logs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tutorials/installation.html#debug-mode">Debug Mode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tutorials/installation.html#community-support">Community Support</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/installation.html#next-steps">Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/installation.html#uninstallation">Uninstallation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/installation.html#remove-installation">Remove Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/installation.html#remove-dependencies">Remove Dependencies</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/quick_start.html">Quick Start Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/quick_start.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/quick_start.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/quick_start.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/quick_start.html#your-first-game">Your First Game</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/quick_start.html#next-steps">Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/quick_start.html#troubleshooting">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/development_setup.html">Development Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/development_setup.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/development_setup.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/development_setup.html#development-installation">Development Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/development_setup.html#development-tools">Development Tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/development_setup.html#code-quality">Code Quality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/development_setup.html#commands">Commands</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/development_setup.html#project-structure">Project Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/development_setup.html#contributing">Contributing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/development_setup.html#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/first_game.html">Creating Your First Game</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/first_game.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/first_game.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/first_game.html#game-concept">Game Concept</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/first_game.html#implementation-steps">Implementation Steps</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/first_game.html#create-game-class">1. Create Game Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/first_game.html#implement-game-logic">2. Implement Game Logic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/first_game.html#add-rendering">3. Add Rendering</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/first_game.html#next-steps">Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/first_game.html#complete-example">Complete Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/base_game.html">BaseGame Class</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/base_game.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/base_game.html#class-definition">Class Definition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/base_game.html#inheritance">Inheritance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/base_game.html#core-features">Core Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/base_game.html#one-button-input-constraint">One-Button Input Constraint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/base_game.html#asset-management">Asset Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/base_game.html#sound-system">Sound System</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/base_game.html#settings-integration">Settings Integration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/base_game.html#logging">Logging</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/base_game.html#abstract-methods">Abstract Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/base_game.html#setup"><code class="docutils literal notranslate"><span class="pre">setup()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/base_game.html#update-delta-time-float"><code class="docutils literal notranslate"><span class="pre">update(delta_time:</span> <span class="pre">float)</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/base_game.html#on-draw"><code class="docutils literal notranslate"><span class="pre">on_draw()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/base_game.html#concrete-methods">Concrete Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/base_game.html#input-handling">Input Handling</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/base_game.html#on-key-press-key-int-modifiers-int"><code class="docutils literal notranslate"><span class="pre">on_key_press(key:</span> <span class="pre">int,</span> <span class="pre">modifiers:</span> <span class="pre">int)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/base_game.html#on-mouse-press-x-int-y-int-button-int-modifiers-int"><code class="docutils literal notranslate"><span class="pre">on_mouse_press(x:</span> <span class="pre">int,</span> <span class="pre">y:</span> <span class="pre">int,</span> <span class="pre">button:</span> <span class="pre">int,</span> <span class="pre">modifiers:</span> <span class="pre">int)</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/base_game.html#id1">Asset Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/base_game.html#load-assets"><code class="docutils literal notranslate"><span class="pre">load_assets()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/base_game.html#get-sprite-name-str-arcade-sprite"><code class="docutils literal notranslate"><span class="pre">get_sprite(name:</span> <span class="pre">str)</span> <span class="pre">-&gt;</span> <span class="pre">arcade.Sprite</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/base_game.html#sound-management">Sound Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/base_game.html#play-sound-category-str-name-str"><code class="docutils literal notranslate"><span class="pre">play_sound(category:</span> <span class="pre">str,</span> <span class="pre">name:</span> <span class="pre">str)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/base_game.html#set-volume-volume-float"><code class="docutils literal notranslate"><span class="pre">set_volume(volume:</span> <span class="pre">float)</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/base_game.html#settings-management">Settings Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/base_game.html#get-setting-section-str-key-str-default-none"><code class="docutils literal notranslate"><span class="pre">get_setting(section:</span> <span class="pre">str,</span> <span class="pre">key:</span> <span class="pre">str,</span> <span class="pre">default=None)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/base_game.html#set-setting-section-str-key-str-value-any"><code class="docutils literal notranslate"><span class="pre">set_setting(section:</span> <span class="pre">str,</span> <span class="pre">key:</span> <span class="pre">str,</span> <span class="pre">value:</span> <span class="pre">Any)</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/base_game.html#game-state-management">Game State Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/base_game.html#start-game"><code class="docutils literal notranslate"><span class="pre">start_game()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/base_game.html#end-game"><code class="docutils literal notranslate"><span class="pre">end_game()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/base_game.html#reset-game"><code class="docutils literal notranslate"><span class="pre">reset_game()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/base_game.html#ui-rendering">UI Rendering</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/base_game.html#draw-ui"><code class="docutils literal notranslate"><span class="pre">draw_ui()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/base_game.html#draw-text-text-str-x-int-y-int-color-arcade-color-size-int-20"><code class="docutils literal notranslate"><span class="pre">draw_text(text:</span> <span class="pre">str,</span> <span class="pre">x:</span> <span class="pre">int,</span> <span class="pre">y:</span> <span class="pre">int,</span> <span class="pre">color:</span> <span class="pre">arcade.Color,</span> <span class="pre">size:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">20)</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/base_game.html#id2">Logging</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/base_game.html#log-event-event-str-data-dict-none"><code class="docutils literal notranslate"><span class="pre">log_event(event:</span> <span class="pre">str,</span> <span class="pre">data:</span> <span class="pre">dict</span> <span class="pre">=</span> <span class="pre">None)</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/base_game.html#configuration">Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/base_game.html#settings-structure">Settings Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/base_game.html#asset-structure">Asset Structure</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/base_game.html#usage-example">Usage Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/base_game.html#best-practices">Best Practices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/base_game.html#implement-required-methods">1. Implement Required Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/base_game.html#use-asset-manager">2. Use Asset Manager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/base_game.html#follow-one-button-constraint">3. Follow One-Button Constraint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/base_game.html#use-settings-system">4. Use Settings System</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/base_game.html#log-important-events">5. Log Important Events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/base_game.html#handle-errors-gracefully">6. Handle Errors Gracefully</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/base_game.html#related-classes">Related Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../architecture/overview.html">System Architecture Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../architecture/overview.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../architecture/overview.html#high-level-architecture">High-Level Architecture</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/overview.html#core-framework">Core Framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/overview.html#game-layer">Game Layer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/overview.html#infrastructure">Infrastructure</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../architecture/overview.html#component-relationships">Component Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/overview.html#detailed-architecture">Detailed Architecture</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../architecture/overview.html#key-design-principles">Key Design Principles</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/overview.html#one-button-constraint">1. One-Button Constraint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/overview.html#modularity">2. Modularity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/overview.html#configuration-driven">3. Configuration-Driven</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/overview.html#asset-management">4. Asset Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/overview.html#container-ready">5. Container-Ready</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../architecture/overview.html#technology-stack">Technology Stack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../architecture/overview.html#directory-structure">Directory Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../architecture/overview.html#data-flow">Data Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../architecture/overview.html#security-considerations">Security Considerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../architecture/overview.html#performance-characteristics">Performance Characteristics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../architecture/overview.html#extensibility">Extensibility</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../architecture/decisions.html">Architecture Decision Records (ADRs)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../architecture/decisions.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../architecture/decisions.html#adr-structure">ADR Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../architecture/decisions.html#decision-categories">Decision Categories</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/decisions.html#development-tools-standards">Development Tools &amp; Standards</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../architecture/decisions.html#adr-001-dependency-management-with-uv">ADR-001: Dependency Management with uv</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../architecture/decisions.html#adr-002-game-framework-selection-arcade">ADR-002: Game Framework Selection (Arcade)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../architecture/decisions.html#adr-003-development-tools-ruff-pytest-mypy">ADR-003: Development Tools (Ruff, Pytest, MyPy)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../architecture/decisions.html#adr-005-conventional-commits-with-git-cz">ADR-005: Conventional Commits with git-cz</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../architecture/decisions.html#adr-006-type-checking-with-mypy">ADR-006: Type Checking with MyPy</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/decisions.html#game-design-architecture">Game Design &amp; Architecture</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../architecture/decisions.html#adr-004-game-design-standards">ADR-004: Game Design Standards</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../architecture/decisions.html#adr-008-fullscreen-display-standard">ADR-008: Fullscreen Display Standard</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../architecture/decisions.html#adr-009-three-lives-system">ADR-009: Three Lives System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../architecture/decisions.html#adr-014-obstacle-spacing-algorithm">ADR-014: Obstacle Spacing Algorithm</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/decisions.html#configuration-data-management">Configuration &amp; Data Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../architecture/decisions.html#adr-010-settings-system-with-toml">ADR-010: Settings System with TOML</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../architecture/decisions.html#adr-011-internationalization-with-json">ADR-011: Internationalization with JSON</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../architecture/decisions.html#adr-012-logging-system-with-loguru">ADR-012: Logging System with Loguru</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/decisions.html#asset-media-management">Asset &amp; Media Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../architecture/decisions.html#adr-013-asset-management-system">ADR-013: Asset Management System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../architecture/decisions.html#adr-016-comprehensive-sound-system">ADR-016: Comprehensive Sound System</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/decisions.html#infrastructure-deployment">Infrastructure &amp; Deployment</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../architecture/decisions.html#adr-017-containerization-with-docker-and-uv">ADR-017: Containerization with Docker and uv</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../architecture/decisions.html#adr-018-http-server-architecture">ADR-018: HTTP Server Architecture</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../architecture/decisions.html#adr-019-http-server-framework-selection">ADR-019: HTTP Server Framework Selection</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/decisions.html#documentation-quality">Documentation &amp; Quality</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../architecture/decisions.html#adr-020-uml-documentation-with-plantuml">ADR-020: UML Documentation with PlantUML</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../architecture/decisions.html#adr-021-developer-documentation-with-sphinx">ADR-021: Developer Documentation with Sphinx</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../architecture/decisions.html#adr-022-changelog-standards-and-maintenance">ADR-022: Changelog Standards and Maintenance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../architecture/decisions.html#adr-023-documentation-hosting-platform">ADR-023: Documentation Hosting Platform</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../architecture/decisions.html#decision-making-process">Decision Making Process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/decisions.html#when-to-create-an-adr">When to Create an ADR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/decisions.html#adr-lifecycle">ADR Lifecycle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/decisions.html#review-process">Review Process</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../architecture/decisions.html#benefits-of-adrs">Benefits of ADRs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/decisions.html#for-current-development">For Current Development</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/decisions.html#for-future-maintenance">For Future Maintenance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/decisions.html#for-project-management">For Project Management</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../architecture/decisions.html#related-resources">Related Resources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../architecture/uml.html">UML Diagrams</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../architecture/uml.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../architecture/uml.html#available-diagrams">Available Diagrams</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/uml.html#architecture-overview">1. Architecture Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/uml.html#class-hierarchy">2. Class Hierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/uml.html#data-flow">3. Data Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/uml.html#deployment-diagram">4. Deployment Diagram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/uml.html#game-lifecycle">5. Game Lifecycle</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../architecture/uml.html#diagram-conventions">Diagram Conventions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/uml.html#naming-standards">Naming Standards</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/uml.html#visual-standards">Visual Standards</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/uml.html#content-guidelines">Content Guidelines</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../architecture/uml.html#generating-diagrams">Generating Diagrams</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/uml.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/uml.html#build-commands">Build Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/uml.html#makefile-targets">Makefile Targets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../architecture/uml.html#diagram-maintenance">Diagram Maintenance</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/uml.html#update-process">Update Process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/uml.html#version-control">Version Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/uml.html#quality-checks">Quality Checks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../architecture/uml.html#using-diagrams">Using Diagrams</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/uml.html#in-documentation">In Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/uml.html#in-presentations">In Presentations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/uml.html#in-development">In Development</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../architecture/uml.html#advanced-features">Advanced Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/uml.html#custom-themes">Custom Themes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/uml.html#include-files">Include Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/uml.html#dynamic-content">Dynamic Content</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../architecture/uml.html#best-practices">Best Practices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/uml.html#design-principles">Design Principles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/uml.html#maintenance">Maintenance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../architecture/uml.html#collaboration">Collaboration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../architecture/uml.html#related-resources">Related Resources</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Unipress</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">unipress.core.logger</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for unipress.core.logger</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Logger initialization and configuration for Unipress games.</span>
+<span class="sd">Provides centralized logging setup using Loguru with TOML configuration.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">loguru</span><span class="w"> </span><span class="kn">import</span> <span class="n">logger</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">unipress.core.settings</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_setting</span><span class="p">,</span> <span class="n">load_settings</span>
+
+
+<div class="viewcode-block" id="init_logger">
+<a class="viewcode-back" href="../../../api/index.html#unipress.core.logger.init_logger">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">init_logger</span><span class="p">(</span><span class="n">game_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">overrides</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Initialize the logger with settings from TOML configuration.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        game_name: Name of the game for per-game settings (optional)</span>
+<span class="sd">        **overrides: Direct setting overrides for logging configuration</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Load settings with game-specific overrides if provided</span>
+    <span class="k">if</span> <span class="n">game_name</span><span class="p">:</span>
+        <span class="n">settings</span> <span class="o">=</span> <span class="n">load_settings</span><span class="p">(</span><span class="n">game_name</span><span class="p">,</span> <span class="o">**</span><span class="n">overrides</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Load global settings for system-wide logging</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">unipress.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">settings</span> <span class="k">as</span> <span class="n">settings_module</span>
+
+        <span class="n">settings</span> <span class="o">=</span> <span class="n">settings_module</span><span class="o">.</span><span class="n">get_default_settings</span><span class="p">()</span>
+
+        <span class="c1"># Apply any direct overrides</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">overrides</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="s2">&quot;.&quot;</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
+                <span class="c1"># Handle nested keys like &quot;logging.level&quot;</span>
+                <span class="n">parts</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+                <span class="n">current</span> <span class="o">=</span> <span class="n">settings</span>
+                <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="k">if</span> <span class="n">part</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">current</span><span class="p">:</span>
+                        <span class="n">current</span><span class="p">[</span><span class="n">part</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+                    <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="p">[</span><span class="n">part</span><span class="p">]</span>
+                <span class="n">current</span><span class="p">[</span><span class="n">parts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">settings</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="c1"># Remove default handler to avoid duplicate logs</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
+
+    <span class="c1"># Get logging configuration</span>
+    <span class="n">log_level</span> <span class="o">=</span> <span class="n">get_setting</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s2">&quot;logging.level&quot;</span><span class="p">,</span> <span class="s2">&quot;INFO&quot;</span><span class="p">)</span>
+    <span class="n">console_enabled</span> <span class="o">=</span> <span class="n">get_setting</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s2">&quot;logging.console_enabled&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">file_enabled</span> <span class="o">=</span> <span class="n">get_setting</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s2">&quot;logging.file_enabled&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">file_path</span> <span class="o">=</span> <span class="n">get_setting</span><span class="p">(</span>
+        <span class="n">settings</span><span class="p">,</span> <span class="s2">&quot;logging.file_path&quot;</span><span class="p">,</span> <span class="s2">&quot;logs/unipress-{time:YYYY-MM-DD}.log&quot;</span>
+    <span class="p">)</span>
+    <span class="n">rotation</span> <span class="o">=</span> <span class="n">get_setting</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s2">&quot;logging.rotation&quot;</span><span class="p">,</span> <span class="s2">&quot;10 MB&quot;</span><span class="p">)</span>
+    <span class="n">retention</span> <span class="o">=</span> <span class="n">get_setting</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s2">&quot;logging.retention&quot;</span><span class="p">,</span> <span class="s2">&quot;30 days&quot;</span><span class="p">)</span>
+    <span class="n">compression</span> <span class="o">=</span> <span class="n">get_setting</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s2">&quot;logging.compression&quot;</span><span class="p">,</span> <span class="s2">&quot;gz&quot;</span><span class="p">)</span>
+    <span class="n">log_format</span> <span class="o">=</span> <span class="n">get_setting</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s2">&quot;logging.format&quot;</span><span class="p">,</span> <span class="s2">&quot;json&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Console handler (human-readable for development)</span>
+    <span class="k">if</span> <span class="n">console_enabled</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">log_format</span> <span class="o">==</span> <span class="s2">&quot;human&quot;</span><span class="p">:</span>
+            <span class="n">console_format</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="s2">&quot;&lt;green&gt;{time:YYYY-MM-DD HH:mm:ss}&lt;/green&gt; | &quot;</span>
+                <span class="s2">&quot;&lt;level&gt;</span><span class="si">{level: &lt;8}</span><span class="s2">&lt;/level&gt; | &quot;</span>
+                <span class="s2">&quot;&lt;cyan&gt;</span><span class="si">{name}</span><span class="s2">&lt;/cyan&gt;:&lt;cyan&gt;</span><span class="si">{function}</span><span class="s2">&lt;/cyan&gt;:&lt;cyan&gt;</span><span class="si">{line}</span><span class="s2">&lt;/cyan&gt; | &quot;</span>
+                <span class="s2">&quot;&lt;level&gt;</span><span class="si">{message}</span><span class="s2">&lt;/level&gt;&quot;</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Structured format for console too</span>
+            <span class="n">console_format</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="s1">&#39;{{&quot;timestamp&quot;: &quot;{time:YYYY-MM-DD HH:mm:ss.SSS}&quot;, &#39;</span>
+                <span class="s1">&#39;&quot;level&quot;: &quot;</span><span class="si">{level}</span><span class="s1">&quot;, &#39;</span>
+                <span class="s1">&#39;&quot;logger&quot;: &quot;</span><span class="si">{name}</span><span class="s1">&quot;, &#39;</span>
+                <span class="s1">&#39;&quot;function&quot;: &quot;</span><span class="si">{function}</span><span class="s1">&quot;, &#39;</span>
+                <span class="s1">&#39;&quot;line&quot;: </span><span class="si">{line}</span><span class="s1">, &#39;</span>
+                <span class="s1">&#39;&quot;message&quot;: &quot;</span><span class="si">{message}</span><span class="s1">&quot;}}&#39;</span>
+            <span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span>
+            <span class="nb">format</span><span class="o">=</span><span class="n">console_format</span><span class="p">,</span>
+            <span class="n">level</span><span class="o">=</span><span class="n">log_level</span><span class="p">,</span>
+            <span class="n">colorize</span><span class="o">=</span><span class="p">(</span><span class="n">log_format</span> <span class="o">==</span> <span class="s2">&quot;human&quot;</span><span class="p">),</span>
+        <span class="p">)</span>
+
+    <span class="c1"># File handler (always JSON for structured logging)</span>
+    <span class="k">if</span> <span class="n">file_enabled</span><span class="p">:</span>
+        <span class="c1"># Ensure logs directory exists</span>
+        <span class="n">log_file_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+        <span class="n">log_file_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">file_format</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s1">&#39;{{&quot;timestamp&quot;: &quot;{time:YYYY-MM-DD HH:mm:ss.SSS}&quot;, &#39;</span>
+            <span class="s1">&#39;&quot;level&quot;: &quot;</span><span class="si">{level}</span><span class="s1">&quot;, &#39;</span>
+            <span class="s1">&#39;&quot;logger&quot;: &quot;</span><span class="si">{name}</span><span class="s1">&quot;, &#39;</span>
+            <span class="s1">&#39;&quot;function&quot;: &quot;</span><span class="si">{function}</span><span class="s1">&quot;, &#39;</span>
+            <span class="s1">&#39;&quot;line&quot;: </span><span class="si">{line}</span><span class="s1">, &#39;</span>
+            <span class="s1">&#39;&quot;process&quot;: </span><span class="si">{process}</span><span class="s1">, &#39;</span>
+            <span class="s1">&#39;&quot;thread&quot;: </span><span class="si">{thread}</span><span class="s1">, &#39;</span>
+            <span class="s1">&#39;&quot;message&quot;: &quot;</span><span class="si">{message}</span><span class="s1">&quot;}}&#39;</span>
+        <span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+            <span class="n">file_path</span><span class="p">,</span>
+            <span class="nb">format</span><span class="o">=</span><span class="n">file_format</span><span class="p">,</span>
+            <span class="n">level</span><span class="o">=</span><span class="n">log_level</span><span class="p">,</span>
+            <span class="n">rotation</span><span class="o">=</span><span class="n">rotation</span><span class="p">,</span>
+            <span class="n">retention</span><span class="o">=</span><span class="n">retention</span><span class="p">,</span>
+            <span class="n">compression</span><span class="o">=</span><span class="n">compression</span><span class="p">,</span>
+            <span class="n">serialize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># We&#39;re already formatting as JSON</span>
+        <span class="p">)</span>
+
+    <span class="c1"># Log the initialization</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="s2">&quot;Logger initialized&quot;</span><span class="p">,</span>
+        <span class="n">extra</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;game_name&quot;</span><span class="p">:</span> <span class="n">game_name</span><span class="p">,</span>
+            <span class="s2">&quot;log_level&quot;</span><span class="p">:</span> <span class="n">log_level</span><span class="p">,</span>
+            <span class="s2">&quot;console_enabled&quot;</span><span class="p">:</span> <span class="n">console_enabled</span><span class="p">,</span>
+            <span class="s2">&quot;file_enabled&quot;</span><span class="p">:</span> <span class="n">file_enabled</span><span class="p">,</span>
+            <span class="s2">&quot;file_path&quot;</span><span class="p">:</span> <span class="n">file_path</span> <span class="k">if</span> <span class="n">file_enabled</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_logger">
+<a class="viewcode-back" href="../../../api/index.html#unipress.core.logger.get_logger">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_logger</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get a logger instance with optional name binding.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name: Optional name to bind to the logger (e.g., game name, module name)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Configured logger instance</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">name</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">logger</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">logger_name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">logger</span></div>
+
+
+
+<span class="c1"># Convenience functions for common logging patterns</span>
+<div class="viewcode-block" id="log_game_event">
+<a class="viewcode-back" href="../../../api/index.html#unipress.core.logger.log_game_event">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">log_game_event</span><span class="p">(</span><span class="n">event</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">context</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Log a game event with structured context.&quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Game event: </span><span class="si">{</span><span class="n">event</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="n">context</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="log_player_action">
+<a class="viewcode-back" href="../../../api/index.html#unipress.core.logger.log_player_action">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">log_player_action</span><span class="p">(</span><span class="n">action</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">context</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Log a player action with structured context.&quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Player action: </span><span class="si">{</span><span class="n">action</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="n">context</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="log_performance">
+<a class="viewcode-back" href="../../../api/index.html#unipress.core.logger.log_performance">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">log_performance</span><span class="p">(</span><span class="n">metric</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">unit</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">context</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Log a performance metric.&quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Performance: </span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">extra</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;metric&quot;</span><span class="p">:</span> <span class="n">metric</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">value</span><span class="p">,</span> <span class="s2">&quot;unit&quot;</span><span class="p">:</span> <span class="n">unit</span><span class="p">,</span> <span class="o">**</span><span class="n">context</span><span class="p">},</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="log_error">
+<a class="viewcode-back" href="../../../api/index.html#unipress.core.logger.log_error">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">log_error</span><span class="p">(</span><span class="n">error</span><span class="p">:</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">extra_context</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Log an error with full context and traceback.&quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Error: </span><span class="si">{</span><span class="n">context</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">extra</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;error_type&quot;</span><span class="p">:</span> <span class="nb">type</span><span class="p">(</span><span class="n">error</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+            <span class="s2">&quot;error_message&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">),</span>
+            <span class="o">**</span><span class="n">extra_context</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Full traceback:&quot;</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, jgrynczewski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

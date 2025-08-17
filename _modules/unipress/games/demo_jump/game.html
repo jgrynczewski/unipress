@@ -1,0 +1,782 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>unipress.games.demo_jump.game &mdash; Unipress 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../../_static/copybutton.js?v=30646c52"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            Unipress
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/installation.html">Installation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/installation.html#prerequisites">Prerequisites</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/installation.html#system-requirements">System Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/installation.html#required-software">Required Software</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/installation.html#installation-methods">Installation Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/installation.html#method-1-development-installation-recommended">Method 1: Development Installation (Recommended)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#clone-the-repository">1. Clone the Repository</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#install-uv-package-manager">2. Install uv Package Manager</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#install-dependencies">3. Install Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#verify-installation">4. Verify Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/installation.html#method-2-docker-installation">Method 2: Docker Installation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#id1">1. Clone the Repository</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#build-docker-image">2. Build Docker Image</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#run-with-docker-compose">3. Run with Docker Compose</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#run-individual-container">4. Run Individual Container</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/installation.html#platform-specific-instructions">Platform-Specific Instructions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/installation.html#linux-ubuntu-debian">Linux (Ubuntu/Debian)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#install-system-dependencies">Install System Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#audio-support-optional">Audio Support (Optional)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/installation.html#macos">macOS</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#id2">Install System Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#audio-support">Audio Support</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/installation.html#windows">Windows</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#id3">Install System Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#id4">Audio Support</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/installation.html#configuration">Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/installation.html#initial-setup">Initial Setup</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#create-configuration-file">1. Create Configuration File</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#customize-settings">2. Customize Settings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#set-up-logging">3. Set Up Logging</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/installation.html#environment-variables">Environment Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/installation.html#verification">Verification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/installation.html#test-installation">Test Installation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#run-demo-game">1. Run Demo Game</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#run-specific-game">2. Run Specific Game</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#check-audio">3. Check Audio</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#verify-dependencies">4. Verify Dependencies</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/installation.html#troubleshooting">Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/installation.html#common-issues">Common Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#python-version-issues">Python Version Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#audio-issues">Audio Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#display-issues">Display Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#permission-issues">Permission Issues</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/installation.html#getting-help">Getting Help</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#check-logs">Check Logs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#debug-mode">Debug Mode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/installation.html#community-support">Community Support</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/installation.html#next-steps">Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/installation.html#uninstallation">Uninstallation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/installation.html#remove-installation">Remove Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/installation.html#remove-dependencies">Remove Dependencies</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/quick_start.html">Quick Start Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/quick_start.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/quick_start.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/quick_start.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/quick_start.html#your-first-game">Your First Game</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/quick_start.html#next-steps">Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/quick_start.html#troubleshooting">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/development_setup.html">Development Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/development_setup.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/development_setup.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/development_setup.html#development-installation">Development Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/development_setup.html#development-tools">Development Tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/development_setup.html#code-quality">Code Quality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/development_setup.html#commands">Commands</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/development_setup.html#project-structure">Project Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/development_setup.html#contributing">Contributing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/development_setup.html#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/first_game.html">Creating Your First Game</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/first_game.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/first_game.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/first_game.html#game-concept">Game Concept</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/first_game.html#implementation-steps">Implementation Steps</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/first_game.html#create-game-class">1. Create Game Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/first_game.html#implement-game-logic">2. Implement Game Logic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/first_game.html#add-rendering">3. Add Rendering</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/first_game.html#next-steps">Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/first_game.html#complete-example">Complete Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/base_game.html">BaseGame Class</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/base_game.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/base_game.html#class-definition">Class Definition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/base_game.html#inheritance">Inheritance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/base_game.html#core-features">Core Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#one-button-input-constraint">One-Button Input Constraint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#asset-management">Asset Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#sound-system">Sound System</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#settings-integration">Settings Integration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#logging">Logging</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/base_game.html#abstract-methods">Abstract Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#setup"><code class="docutils literal notranslate"><span class="pre">setup()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#update-delta-time-float"><code class="docutils literal notranslate"><span class="pre">update(delta_time:</span> <span class="pre">float)</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#on-draw"><code class="docutils literal notranslate"><span class="pre">on_draw()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/base_game.html#concrete-methods">Concrete Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#input-handling">Input Handling</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/base_game.html#on-key-press-key-int-modifiers-int"><code class="docutils literal notranslate"><span class="pre">on_key_press(key:</span> <span class="pre">int,</span> <span class="pre">modifiers:</span> <span class="pre">int)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/base_game.html#on-mouse-press-x-int-y-int-button-int-modifiers-int"><code class="docutils literal notranslate"><span class="pre">on_mouse_press(x:</span> <span class="pre">int,</span> <span class="pre">y:</span> <span class="pre">int,</span> <span class="pre">button:</span> <span class="pre">int,</span> <span class="pre">modifiers:</span> <span class="pre">int)</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#id1">Asset Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/base_game.html#load-assets"><code class="docutils literal notranslate"><span class="pre">load_assets()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/base_game.html#get-sprite-name-str-arcade-sprite"><code class="docutils literal notranslate"><span class="pre">get_sprite(name:</span> <span class="pre">str)</span> <span class="pre">-&gt;</span> <span class="pre">arcade.Sprite</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#sound-management">Sound Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/base_game.html#play-sound-category-str-name-str"><code class="docutils literal notranslate"><span class="pre">play_sound(category:</span> <span class="pre">str,</span> <span class="pre">name:</span> <span class="pre">str)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/base_game.html#set-volume-volume-float"><code class="docutils literal notranslate"><span class="pre">set_volume(volume:</span> <span class="pre">float)</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#settings-management">Settings Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/base_game.html#get-setting-section-str-key-str-default-none"><code class="docutils literal notranslate"><span class="pre">get_setting(section:</span> <span class="pre">str,</span> <span class="pre">key:</span> <span class="pre">str,</span> <span class="pre">default=None)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/base_game.html#set-setting-section-str-key-str-value-any"><code class="docutils literal notranslate"><span class="pre">set_setting(section:</span> <span class="pre">str,</span> <span class="pre">key:</span> <span class="pre">str,</span> <span class="pre">value:</span> <span class="pre">Any)</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#game-state-management">Game State Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/base_game.html#start-game"><code class="docutils literal notranslate"><span class="pre">start_game()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/base_game.html#end-game"><code class="docutils literal notranslate"><span class="pre">end_game()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/base_game.html#reset-game"><code class="docutils literal notranslate"><span class="pre">reset_game()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#ui-rendering">UI Rendering</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/base_game.html#draw-ui"><code class="docutils literal notranslate"><span class="pre">draw_ui()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/base_game.html#draw-text-text-str-x-int-y-int-color-arcade-color-size-int-20"><code class="docutils literal notranslate"><span class="pre">draw_text(text:</span> <span class="pre">str,</span> <span class="pre">x:</span> <span class="pre">int,</span> <span class="pre">y:</span> <span class="pre">int,</span> <span class="pre">color:</span> <span class="pre">arcade.Color,</span> <span class="pre">size:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">20)</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#id2">Logging</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/base_game.html#log-event-event-str-data-dict-none"><code class="docutils literal notranslate"><span class="pre">log_event(event:</span> <span class="pre">str,</span> <span class="pre">data:</span> <span class="pre">dict</span> <span class="pre">=</span> <span class="pre">None)</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/base_game.html#configuration">Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#settings-structure">Settings Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#asset-structure">Asset Structure</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/base_game.html#usage-example">Usage Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/base_game.html#best-practices">Best Practices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#implement-required-methods">1. Implement Required Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#use-asset-manager">2. Use Asset Manager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#follow-one-button-constraint">3. Follow One-Button Constraint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#use-settings-system">4. Use Settings System</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#log-important-events">5. Log Important Events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/base_game.html#handle-errors-gracefully">6. Handle Errors Gracefully</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/base_game.html#related-classes">Related Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../architecture/overview.html">System Architecture Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/overview.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/overview.html#high-level-architecture">High-Level Architecture</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/overview.html#core-framework">Core Framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/overview.html#game-layer">Game Layer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/overview.html#infrastructure">Infrastructure</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/overview.html#component-relationships">Component Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/overview.html#detailed-architecture">Detailed Architecture</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/overview.html#key-design-principles">Key Design Principles</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/overview.html#one-button-constraint">1. One-Button Constraint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/overview.html#modularity">2. Modularity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/overview.html#configuration-driven">3. Configuration-Driven</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/overview.html#asset-management">4. Asset Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/overview.html#container-ready">5. Container-Ready</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/overview.html#technology-stack">Technology Stack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/overview.html#directory-structure">Directory Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/overview.html#data-flow">Data Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/overview.html#security-considerations">Security Considerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/overview.html#performance-characteristics">Performance Characteristics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/overview.html#extensibility">Extensibility</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../architecture/decisions.html">Architecture Decision Records (ADRs)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/decisions.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/decisions.html#adr-structure">ADR Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/decisions.html#decision-categories">Decision Categories</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/decisions.html#development-tools-standards">Development Tools &amp; Standards</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-001-dependency-management-with-uv">ADR-001: Dependency Management with uv</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-002-game-framework-selection-arcade">ADR-002: Game Framework Selection (Arcade)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-003-development-tools-ruff-pytest-mypy">ADR-003: Development Tools (Ruff, Pytest, MyPy)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-005-conventional-commits-with-git-cz">ADR-005: Conventional Commits with git-cz</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-006-type-checking-with-mypy">ADR-006: Type Checking with MyPy</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/decisions.html#game-design-architecture">Game Design &amp; Architecture</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-004-game-design-standards">ADR-004: Game Design Standards</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-008-fullscreen-display-standard">ADR-008: Fullscreen Display Standard</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-009-three-lives-system">ADR-009: Three Lives System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-014-obstacle-spacing-algorithm">ADR-014: Obstacle Spacing Algorithm</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/decisions.html#configuration-data-management">Configuration &amp; Data Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-010-settings-system-with-toml">ADR-010: Settings System with TOML</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-011-internationalization-with-json">ADR-011: Internationalization with JSON</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-012-logging-system-with-loguru">ADR-012: Logging System with Loguru</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/decisions.html#asset-media-management">Asset &amp; Media Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-013-asset-management-system">ADR-013: Asset Management System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-016-comprehensive-sound-system">ADR-016: Comprehensive Sound System</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/decisions.html#infrastructure-deployment">Infrastructure &amp; Deployment</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-017-containerization-with-docker-and-uv">ADR-017: Containerization with Docker and uv</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-018-http-server-architecture">ADR-018: HTTP Server Architecture</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-019-http-server-framework-selection">ADR-019: HTTP Server Framework Selection</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/decisions.html#documentation-quality">Documentation &amp; Quality</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-020-uml-documentation-with-plantuml">ADR-020: UML Documentation with PlantUML</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-021-developer-documentation-with-sphinx">ADR-021: Developer Documentation with Sphinx</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-022-changelog-standards-and-maintenance">ADR-022: Changelog Standards and Maintenance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture/decisions.html#adr-023-documentation-hosting-platform">ADR-023: Documentation Hosting Platform</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/decisions.html#decision-making-process">Decision Making Process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/decisions.html#when-to-create-an-adr">When to Create an ADR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/decisions.html#adr-lifecycle">ADR Lifecycle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/decisions.html#review-process">Review Process</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/decisions.html#benefits-of-adrs">Benefits of ADRs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/decisions.html#for-current-development">For Current Development</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/decisions.html#for-future-maintenance">For Future Maintenance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/decisions.html#for-project-management">For Project Management</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/decisions.html#related-resources">Related Resources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../architecture/uml.html">UML Diagrams</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/uml.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/uml.html#available-diagrams">Available Diagrams</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#architecture-overview">1. Architecture Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#class-hierarchy">2. Class Hierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#data-flow">3. Data Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#deployment-diagram">4. Deployment Diagram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#game-lifecycle">5. Game Lifecycle</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/uml.html#diagram-conventions">Diagram Conventions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#naming-standards">Naming Standards</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#visual-standards">Visual Standards</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#content-guidelines">Content Guidelines</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/uml.html#generating-diagrams">Generating Diagrams</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#build-commands">Build Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#makefile-targets">Makefile Targets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/uml.html#diagram-maintenance">Diagram Maintenance</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#update-process">Update Process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#version-control">Version Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#quality-checks">Quality Checks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/uml.html#using-diagrams">Using Diagrams</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#in-documentation">In Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#in-presentations">In Presentations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#in-development">In Development</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/uml.html#advanced-features">Advanced Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#custom-themes">Custom Themes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#include-files">Include Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#dynamic-content">Dynamic Content</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/uml.html#best-practices">Best Practices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#design-principles">Design Principles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#maintenance">Maintenance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../architecture/uml.html#collaboration">Collaboration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../architecture/uml.html#related-resources">Related Resources</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Unipress</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">unipress.games.demo_jump.game</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for unipress.games.demo_jump.game</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Demo Jump Game - Simple one-button jumping game.</span>
+
+<span class="sd">Click to make the player jump over incoming obstacles.</span>
+<span class="sd">Difficulty affects how much time you have to react to obstacles.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">arcade</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">unipress.core.base_game</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseGame</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">unipress.core.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">log_game_event</span>
+
+
+<div class="viewcode-block" id="Obstacle">
+<a class="viewcode-back" href="../../../../api/index.html#unipress.games.demo_jump.game.Obstacle">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Obstacle</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Simple obstacle that moves from right to left.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Obstacle.__init__">
+<a class="viewcode-back" href="../../../../api/index.html#unipress.games.demo_jump.game.Obstacle.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">width</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">50</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">height</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="mi">200</span>  <span class="c1"># pixels per second</span></div>
+
+
+<div class="viewcode-block" id="Obstacle.update">
+<a class="viewcode-back" href="../../../../api/index.html#unipress.games.demo_jump.game.Obstacle.update">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delta_time</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Move obstacle left.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">*</span> <span class="n">delta_time</span></div>
+
+
+<div class="viewcode-block" id="Obstacle.draw">
+<a class="viewcode-back" href="../../../../api/index.html#unipress.games.demo_jump.game.Obstacle.draw">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Draw obstacle as red rectangle.&quot;&quot;&quot;</span>
+        <span class="n">arcade</span><span class="o">.</span><span class="n">draw_lbwh_rectangle_filled</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="n">arcade</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">RED</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Obstacle.collides_with">
+<a class="viewcode-back" href="../../../../api/index.html#unipress.games.demo_jump.game.Obstacle.collides_with">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">collides_with</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">player_x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">player_y</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">player_size</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check collision with player.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">player_x</span> <span class="o">+</span> <span class="n">player_size</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
+            <span class="ow">and</span> <span class="n">player_x</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span>
+            <span class="ow">and</span> <span class="n">player_y</span> <span class="o">+</span> <span class="n">player_size</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
+            <span class="ow">and</span> <span class="n">player_y</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span>
+        <span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="DemoJumpGame">
+<a class="viewcode-back" href="../../../../api/index.html#unipress.games.demo_jump.game.DemoJumpGame">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DemoJumpGame</span><span class="p">(</span><span class="n">BaseGame</span><span class="p">):</span>  <span class="c1"># type: ignore[misc]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Simple jumping game demo.</span>
+
+<span class="sd">    - Click to jump</span>
+<span class="sd">    - Avoid red obstacles</span>
+<span class="sd">    - Score increases over time</span>
+<span class="sd">    - Difficulty affects obstacle spacing (reaction time)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="DemoJumpGame.__init__">
+<a class="viewcode-back" href="../../../../api/index.html#unipress.games.demo_jump.game.DemoJumpGame.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">difficulty</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">game_name</span><span class="o">=</span><span class="s2">&quot;demo_jump&quot;</span><span class="p">,</span>
+            <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>
+            <span class="n">height</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Demo Jump Game&quot;</span><span class="p">,</span>
+            <span class="n">difficulty</span><span class="o">=</span><span class="n">difficulty</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Update title to show actual difficulty from settings</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_caption</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">get_message</span><span class="p">(</span><span class="s1">&#39;game.title&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2"> (Difficulty: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">difficulty</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Player settings</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">player_x</span> <span class="o">=</span> <span class="mf">100.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">player_y</span> <span class="o">=</span> <span class="mf">100.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">player_size</span> <span class="o">=</span> <span class="mf">40.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">player_jump_speed</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">player_on_ground</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="c1"># Game settings based on difficulty</span>
+        <span class="n">settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_difficulty_settings</span><span class="p">()</span>
+
+        <span class="c1"># Obstacle spawn timing based on reaction time</span>
+        <span class="c1"># More difficult = less time between obstacles</span>
+        <span class="c1"># Base interval should be longer to allow recovery time</span>
+        <span class="n">base_interval</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s2">&quot;reaction_time&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">2.5</span>  <span class="c1"># Increased from 1.5</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">obstacle_spawn_time</span> <span class="o">=</span> <span class="n">base_interval</span> <span class="o">*</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span>
+            <span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.5</span>
+        <span class="p">)</span>  <span class="c1"># Add initial randomness</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_obstacle_time</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="c1"># Game objects</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">obstacles</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Obstacle</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_elapsed</span> <span class="o">=</span> <span class="mf">0.0</span></div>
+
+
+<div class="viewcode-block" id="DemoJumpGame.get_difficulty_settings">
+<a class="viewcode-back" href="../../../../api/index.html#unipress.games.demo_jump.game.DemoJumpGame.get_difficulty_settings">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_difficulty_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Override to add game-specific difficulty settings.&quot;&quot;&quot;</span>
+        <span class="n">base_settings</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_difficulty_settings</span><span class="p">()</span>
+
+        <span class="c1"># Add game-specific settings</span>
+        <span class="c1"># Jump height must be enough to clear 50px obstacles + safety margin</span>
+        <span class="c1"># Base jump height ensures obstacle clearance, difficulty adds extra height</span>
+        <span class="n">obstacle_height</span> <span class="o">=</span> <span class="mi">50</span>
+        <span class="n">base_jump_height</span> <span class="o">=</span> <span class="n">obstacle_height</span> <span class="o">+</span> <span class="mi">100</span>  <span class="c1"># 100px safety margin above obstacle</span>
+        <span class="n">difficulty_bonus</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="mi">11</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">difficulty</span>
+        <span class="p">)</span> <span class="o">*</span> <span class="mi">20</span>  <span class="c1"># More height on easier difficulties</span>
+
+        <span class="n">base_settings</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;obstacle_speed&quot;</span><span class="p">:</span> <span class="mi">100</span>
+                <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">difficulty</span> <span class="o">*</span> <span class="mi">15</span><span class="p">),</span>  <span class="c1"># Faster obstacles = harder</span>
+                <span class="s2">&quot;jump_height&quot;</span><span class="p">:</span> <span class="n">base_jump_height</span>
+                <span class="o">+</span> <span class="n">difficulty_bonus</span><span class="p">,</span>  <span class="c1"># Guaranteed clearance</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">base_settings</span></div>
+
+
+<div class="viewcode-block" id="DemoJumpGame.reset_game">
+<a class="viewcode-back" href="../../../../api/index.html#unipress.games.demo_jump.game.DemoJumpGame.reset_game">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reset_game</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset game state.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">player_y</span> <span class="o">=</span> <span class="mf">100.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">player_jump_speed</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">player_on_ground</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">obstacles</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_elapsed</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_obstacle_time</span> <span class="o">=</span> <span class="mf">0.0</span></div>
+
+
+<div class="viewcode-block" id="DemoJumpGame.on_action_press">
+<a class="viewcode-back" href="../../../../api/index.html#unipress.games.demo_jump.game.DemoJumpGame.on_action_press">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_action_press</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle main action (jump or start/restart game).&quot;&quot;&quot;</span>
+        <span class="c1"># Check if we&#39;re in life lost pause first</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle_life_lost_continue</span><span class="p">():</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_started</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">start_game</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_over</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">start_game</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">player_on_ground</span><span class="p">:</span>
+            <span class="c1"># Jump!</span>
+            <span class="n">settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_difficulty_settings</span><span class="p">()</span>
+            <span class="n">desired_jump_height</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s2">&quot;jump_height&quot;</span><span class="p">])</span>
+            <span class="n">gravity</span> <span class="o">=</span> <span class="mi">800</span>
+            <span class="c1"># Calculate initial velocity needed to reach desired height</span>
+            <span class="c1"># Using physics: max_height = (initial_velocity^2) / (2 * gravity)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">player_jump_speed</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">gravity</span> <span class="o">*</span> <span class="n">desired_jump_height</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">player_on_ground</span> <span class="o">=</span> <span class="kc">False</span>
+
+            <span class="c1"># Log jump action with physics details</span>
+            <span class="n">log_game_event</span><span class="p">(</span>
+                <span class="s2">&quot;player_jump&quot;</span><span class="p">,</span>
+                <span class="n">jump_height</span><span class="o">=</span><span class="n">desired_jump_height</span><span class="p">,</span>
+                <span class="n">jump_speed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">player_jump_speed</span><span class="p">,</span>
+                <span class="n">gravity</span><span class="o">=</span><span class="n">gravity</span><span class="p">,</span>
+                <span class="n">difficulty</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">difficulty</span><span class="p">,</span>
+            <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DemoJumpGame.on_update">
+<a class="viewcode-back" href="../../../../api/index.html#unipress.games.demo_jump.game.DemoJumpGame.on_update">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delta_time</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update game logic.&quot;&quot;&quot;</span>
+        <span class="c1"># Always update life lost effects for blinking</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_life_lost_effects</span><span class="p">(</span><span class="n">delta_time</span><span class="p">)</span>
+
+        <span class="c1"># Update end game screen for automatic cycling</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_end_screen</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_game_screen</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">end_game_screen</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">delta_time</span><span class="p">)</span>
+
+        <span class="c1"># Pause game logic during life lost pause</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_game_paused</span><span class="p">():</span>
+            <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_elapsed</span> <span class="o">+=</span> <span class="n">delta_time</span>
+
+        <span class="c1"># Update player physics</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">player_on_ground</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">player_jump_speed</span> <span class="o">-=</span> <span class="mi">800</span> <span class="o">*</span> <span class="n">delta_time</span>  <span class="c1"># Gravity</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">player_y</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">player_jump_speed</span> <span class="o">*</span> <span class="n">delta_time</span>
+
+            <span class="c1"># Land on ground</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">player_y</span> <span class="o">&lt;=</span> <span class="mi">100</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">player_y</span> <span class="o">=</span> <span class="mi">100</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">player_on_ground</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">player_jump_speed</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># Spawn obstacles</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_elapsed</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_obstacle_time</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">obstacle_spawn_time</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">obstacles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Obstacle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">+</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_obstacle_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_elapsed</span>
+
+            <span class="c1"># Adjust spawn timing with more variety and longer intervals</span>
+            <span class="n">base_interval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reaction_time</span> <span class="o">*</span> <span class="mf">2.5</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">obstacle_spawn_time</span> <span class="o">=</span> <span class="n">base_interval</span> <span class="o">*</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span>
+                <span class="mf">0.7</span><span class="p">,</span> <span class="mf">2.0</span>
+            <span class="p">)</span>  <span class="c1"># Much more variation</span>
+
+        <span class="c1"># Update obstacles</span>
+        <span class="k">for</span> <span class="n">obstacle</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">obstacles</span><span class="p">[:]:</span>
+            <span class="n">obstacle</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">delta_time</span><span class="p">)</span>
+
+            <span class="c1"># Remove obstacles that are off-screen</span>
+            <span class="k">if</span> <span class="n">obstacle</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">obstacle</span><span class="o">.</span><span class="n">width</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">obstacles</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">obstacle</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">score</span> <span class="o">+=</span> <span class="mi">10</span>
+                <span class="n">log_game_event</span><span class="p">(</span><span class="s2">&quot;obstacle_cleared&quot;</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="p">)</span>
+
+            <span class="c1"># Check collision</span>
+            <span class="k">if</span> <span class="n">obstacle</span><span class="o">.</span><span class="n">collides_with</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">player_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">player_y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">player_size</span><span class="p">):</span>
+                <span class="n">log_game_event</span><span class="p">(</span>
+                    <span class="s2">&quot;obstacle_collision&quot;</span><span class="p">,</span>
+                    <span class="n">player_x</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">player_x</span><span class="p">,</span>
+                    <span class="n">player_y</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">player_y</span><span class="p">,</span>
+                    <span class="n">obstacle_x</span><span class="o">=</span><span class="n">obstacle</span><span class="o">.</span><span class="n">x</span><span class="p">,</span>
+                    <span class="n">obstacle_y</span><span class="o">=</span><span class="n">obstacle</span><span class="o">.</span><span class="n">y</span><span class="p">,</span>
+                    <span class="n">score</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">lose_life</span><span class="p">()</span>
+
+        <span class="c1"># Increase score over time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">score</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">delta_time</span> <span class="o">*</span> <span class="mi">5</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DemoJumpGame.on_draw">
+<a class="viewcode-back" href="../../../../api/index.html#unipress.games.demo_jump.game.DemoJumpGame.on_draw">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_draw</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Draw the game.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_started</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_over</span><span class="p">:</span>
+            <span class="c1"># Draw ground line</span>
+            <span class="n">arcade</span><span class="o">.</span><span class="n">draw_line</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">arcade</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">WHITE</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+            <span class="c1"># Draw player (with blinking effect during life lost)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">should_draw_player</span><span class="p">():</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">life_lost_pause</span><span class="p">:</span>
+                    <span class="n">color</span> <span class="o">=</span> <span class="n">arcade</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">RED</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">color</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">arcade</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">BLUE</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">player_on_ground</span>
+                        <span class="k">else</span> <span class="n">arcade</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">LIGHT_BLUE</span>
+                    <span class="p">)</span>
+
+                <span class="n">arcade</span><span class="o">.</span><span class="n">draw_lbwh_rectangle_filled</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">player_x</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">player_y</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">player_size</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">player_size</span><span class="p">,</span>
+                    <span class="n">color</span><span class="p">,</span>
+                <span class="p">)</span>
+
+            <span class="c1"># Draw obstacles</span>
+            <span class="k">for</span> <span class="n">obstacle</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">obstacles</span><span class="p">:</span>
+                <span class="n">obstacle</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+
+            <span class="c1"># Draw jump window indicator</span>
+            <span class="c1"># Calculate the distance where jump is still possible</span>
+            <span class="c1"># This is based on obstacle speed and jump duration</span>
+            <span class="n">settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_difficulty_settings</span><span class="p">()</span>
+            <span class="n">obstacle_speed</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s2">&quot;obstacle_speed&quot;</span><span class="p">]</span>
+
+            <span class="c1"># Jump takes time to reach peak and come back down</span>
+            <span class="c1"># Total jump time = 2 * sqrt(2 * jump_height / gravity)</span>
+            <span class="n">jump_height</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s2">&quot;jump_height&quot;</span><span class="p">]</span>
+            <span class="n">gravity</span> <span class="o">=</span> <span class="mi">800</span>
+            <span class="n">jump_duration</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">jump_height</span> <span class="o">/</span> <span class="n">gravity</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span>
+
+            <span class="c1"># Distance an obstacle travels during jump</span>
+            <span class="n">jump_window_distance</span> <span class="o">=</span> <span class="n">obstacle_speed</span> <span class="o">*</span> <span class="n">jump_duration</span>
+
+            <span class="c1"># Draw the jump window as a green zone on screen</span>
+            <span class="n">jump_zone_start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">player_x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">player_size</span>
+            <span class="n">jump_zone_width</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">jump_window_distance</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>  <span class="c1"># Cap at 200px for display</span>
+
+            <span class="n">arcade</span><span class="o">.</span><span class="n">draw_lbwh_rectangle_filled</span><span class="p">(</span>
+                <span class="n">jump_zone_start</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="n">jump_zone_width</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">arcade</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">GREEN</span>
+            <span class="p">)</span>
+            <span class="n">arcade</span><span class="o">.</span><span class="n">draw_text</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">get_message</span><span class="p">(</span>
+                    <span class="s2">&quot;game.jump_window_info&quot;</span><span class="p">,</span>
+                    <span class="n">distance</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">jump_window_distance</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                    <span class="n">duration</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">jump_duration</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="mi">10</span><span class="p">,</span>
+                <span class="mi">20</span><span class="p">,</span>
+                <span class="n">arcade</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">WHITE</span><span class="p">,</span>
+                <span class="mi">12</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Draw UI</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">draw_ui</span><span class="p">()</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../../../api/index.html#unipress.games.demo_jump.game.main">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the demo game.&quot;&quot;&quot;</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">unipress.core.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">init_logger</span>
+
+    <span class="c1"># Initialize logging for standalone game execution</span>
+    <span class="n">init_logger</span><span class="p">(</span><span class="s2">&quot;demo_jump&quot;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># You can change difficulty here (1-10)</span>
+        <span class="n">DemoJumpGame</span><span class="p">(</span><span class="n">difficulty</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">unipress.core.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">log_error</span>
+
+        <span class="n">log_error</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="s2">&quot;Demo game crashed during standalone execution&quot;</span><span class="p">)</span>
+        <span class="k">raise</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, jgrynczewski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
