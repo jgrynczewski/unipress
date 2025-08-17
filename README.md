@@ -1,6 +1,7 @@
 # Unipress - One-Button Games
 
 [![Documentation Status](https://readthedocs.org/projects/unipress/badge/?version=latest)](https://unipress.readthedocs.io/en/latest/?badge=latest)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-blue?style=flat&logo=github)](https://jgrynczewski.github.io/unipress/)
 
 A collection of simple, engaging games controlled with just one button. Built with Python and Arcade.
 
