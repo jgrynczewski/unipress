@@ -39,6 +39,8 @@ Unipress is a professional-grade game development framework that focuses on **on
 
 ### Architecture
 - [System Overview](architecture/overview.md) - High-level architecture
+- [Architecture Decision Records](architecture/decisions.md) - ADR collection and rationale
+- [UML Diagrams](architecture/uml.md) - Visual architecture documentation
 - [Component Details](architecture/components.md) - Detailed component descriptions
 - [Data Flow](architecture/data_flow.md) - How data flows through the system
 - [Deployment](architecture/deployment.md) - Deployment strategies
