@@ -4,6 +4,37 @@ Welcome to the Unipress documentation! Unipress is a collection of one-button ga
 
 > **Note**: This documentation is also available on [Read the Docs](https://unipress.readthedocs.io/) and [GitHub Pages](https://jgrynczewski.github.io/unipress/).
 
+```{toctree}
+:maxdepth: 3
+:caption: Contents:
+
+tutorials/installation
+tutorials/quick_start
+tutorials/development_setup
+tutorials/first_game
+tutorials/game_design
+tutorials/assets
+tutorials/sound
+tutorials/performance
+tutorials/testing
+tutorials/i18n
+tutorials/docker
+tutorials/contributing
+
+api/base_game
+api/settings
+api/sound
+api/assets
+api/server
+
+architecture/overview
+architecture/decisions
+architecture/uml
+architecture/components
+architecture/data_flow
+architecture/deployment
+```
+
 ## 🎮 What is Unipress?
 
 Unipress is a professional-grade game development framework that focuses on **one-button games** - games where players can only send binary signals (click/press) without cursor positioning or element selection. All interactions use timing-based or automatic cycling mechanics.
