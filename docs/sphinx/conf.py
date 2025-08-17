@@ -190,8 +190,13 @@ autodoc_default_options = {
     'member-order': 'bysource',
     'special-members': '__init__',
     'undoc-members': True,
-    'exclude-members': '__weakref__'
+    'exclude-members': '__weakref__',
+    'show-inheritance': True,
+    'inherited-members': True,
 }
+
+# Viewcode configuration
+viewcode_follow_imports = True
 
 # Napoleon configuration for Google/NumPy docstrings
 napoleon_google_docstring = True
