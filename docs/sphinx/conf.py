@@ -229,6 +229,7 @@ myst_enable_extensions = [
     "smartquotes",
     "substitution",
     "tasklist",
+    "eval_rst",
 ]
 
 # Copy button configuration
