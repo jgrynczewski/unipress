@@ -1,5 +1,7 @@
 # Unipress - One-Button Games
 
+[![Documentation Status](https://readthedocs.org/projects/unipress/badge/?version=latest)](https://unipress.readthedocs.io/en/latest/?badge=latest)
+
 A collection of simple, engaging games controlled with just one button. Built with Python and Arcade.
 
 > **Note**: These are true one-button games - players can only send binary signals (click/press) without cursor positioning or element selection. All interactions use timing-based or automatic cycling mechanics.
