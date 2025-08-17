@@ -379,7 +379,10 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
             self.game_over = True
             self.show_end_screen = True
             self.end_game_screen = EndGameScreen(
-                self.messages, self.score, game_name=self.game_name
+                self.messages,
+                self.score,
+                game_name=self.game_name,
+                on_cycle=lambda: self.play_sound_event("ui_cycle"),            
             )
         else:
             # Enter life lost pause state

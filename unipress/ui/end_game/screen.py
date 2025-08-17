@@ -9,6 +9,7 @@ Buttons cycle on each click, selected button is highlighted.
 """
 
 from enum import Enum
+from typing import Callable, Optional
 
 import arcade
 
@@ -41,6 +42,7 @@ class EndGameScreen:
         final_score: int = 0,
         cycle_time: float = 2.0,
         game_name: str = "",
+        on_cycle: Optional[Callable[[], None]] = None,
     ):
         """
         Initialize end game screen.
@@ -55,6 +57,7 @@ class EndGameScreen:
         self.final_score = final_score
         self.cycle_time = cycle_time
         self.game_name = game_name
+        self.on_cycle = on_cycle
 
         # Button state
         self.selected_button = EndGameAction.PLAY_AGAIN  # Default selection
@@ -89,6 +92,14 @@ class EndGameScreen:
             self.time_since_last_cycle = 0.0
 
             log_player_action("button_auto_cycle", selected=self.selected_button.value)
+
+            # Optional callback for audio/side-effects (e.g., ui/menu_cycle.ogg)
+            if self.on_cycle is not None:
+                try:
+                    self.on_cycle()
+                except Exception:
+                    # Keep UI robust even if callback fails
+                    pass
 
     def get_selected_action(self) -> EndGameAction:
         """Get currently selected action without cycling."""
