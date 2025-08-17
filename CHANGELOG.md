@@ -32,31 +32,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Settings System**
   - TOML-based hierarchical configuration (global → game → constructor)
   - Configurable difficulty, lives, fullscreen, and audio settings
-  - ADR-010: TOML-based Settings System
 
 - **Internationalization**
   - JSON-based message system with Polish default, English fallback
   - Support for variable substitution in messages
-  - ADR-011: JSON-based Internationalization System
 
 - **Logging System**
   - Loguru-based structured logging with JSON format
   - Automatic log rotation and compression
   - Exception tracking with full tracebacks
-  - ADR-012: Logging System
 
 - **Sound System**
   - Comprehensive audio with OGG format support
   - Event-based architecture with 7 sound categories
   - Volume control hierarchy (master, sfx, music, ui)
   - Non-blocking audio with game startup synchronization
-  - ADR-016: Comprehensive Sound System
 
 - **Asset Management**
   - Sprite animation system with JSON metadata
   - Organized asset structure (global/game-specific)
   - Lazy loading with caching for performance
-  - ADR-013: Asset Management System
 
 - **High Score System**
   - JSON-based persistent high score storage
@@ -64,31 +59,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Per-game high score tracking
 
 - **Development Tools**
-  - uv for fast dependency management (ADR-001)
-  - arcade game framework (ADR-002)
-  - ruff for linting and formatting (ADR-003)
+  - uv for fast dependency management
+  - arcade game framework
+  - ruff for linting and formatting
   - pytest for testing framework
-  - mypy for type checking (ADR-006)
-  - Conventional commits with git-cz emojis (ADR-005)
+  - mypy for type checking
+  - Conventional commits with git-cz emojis
 
 - **CI/CD Pipeline**
   - GitHub Actions with automated testing
   - Linting, formatting, type checking, and test execution
   - Manual deployment workflow
-  - ADR-007: CI/CD Pipeline
 
 - **Containerization**
   - Docker multi-stage builds with audio/GPU support
   - Docker Compose for easy development
   - Non-root user and health checks
-  - ADR-017: Containerization with Docker and UV
 
 - **HTTP Server Architecture**
   - Flask-based game management API
   - REST endpoints for game control
   - Process management and status monitoring
-  - ADR-018: Game Server HTTP Architecture
-  - ADR-019: HTTP Server Framework Selection
 
 - **Games**
   - Demo Jump: Reference implementation with geometric sprites
@@ -102,21 +93,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Documentation**
   - Comprehensive README.md (434 lines)
-  - 21 Architecture Decision Records (ADRs)
+  - 22 Architecture Decision Records (ADRs)
   - 5 UML diagrams (Architecture, Class Hierarchy, Data Flow, Deployment, Game Lifecycle)
   - Professional project structure and standards
 
 ### Technical Features
-- **Performance**: Physics-based obstacle spacing algorithm (ADR-014)
+- **Performance**: Physics-based obstacle spacing algorithm
 - **Accessibility**: Standardized end game screen with cycling buttons
 - **Responsive**: Game objects scale with window size changes
 - **Professional**: Type hints, comprehensive error handling, structured logging
-
-### Development Standards
-- **Code Quality**: ruff linting, mypy type checking, pytest testing
-- **Documentation**: Comprehensive docstrings, ADRs, UML diagrams
-- **Version Control**: Conventional commits with git-cz emojis
-- **Architecture**: Clean separation of concerns, extensible design
 
 ## [Pre-0.1.0] - Development Phase
 
@@ -129,40 +114,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## Version History
 
-### Version Numbering
-- **Major.Minor.Patch** (e.g., 0.1.0)
-- **Major**: Breaking changes or major architectural changes
-- **Minor**: New features, backward compatible
-- **Patch**: Bug fixes and minor improvements
-
-### Release Schedule
-- **Development**: Continuous development with feature branches
-- **Releases**: Tagged releases for stable versions
-- **Documentation**: Updated with each significant change
-
-### Breaking Changes
-- None in current version (0.1.0 is initial release)
-
-### Deprecations
-- None currently
 
 ---
 
-## Contributing
 
-When adding entries to this changelog, please follow these guidelines:
-
-1. **Use present tense** ("Add feature" not "Added feature")
-2. **Use imperative mood** ("Move cursor to..." not "Moves cursor to...")
-3. **Reference issues and pull requests** when applicable
-4. **Group changes** by type (Added, Changed, Deprecated, Removed, Fixed, Security)
-5. **Keep unreleased section** at the top for ongoing development
 
 ## Links
 
 - [GitHub Repository](https://github.com/jgrynczewski/unipress)
-- [Architecture Decision Records](docs/adr/)
+- [Architecture Decision Records](docs/adr/) - Detailed technical decisions and rationale
 - [UML Documentation](docs/uml/)
 - [Developer Documentation](docs/sphinx/)
+
+## Architecture Decisions
+
+For detailed technical decisions and rationale behind the implementation choices, see the [Architecture Decision Records](docs/adr/):
+
+- **ADR-001**: Dependency Management with `uv`
+- **ADR-002**: Game Framework using `arcade`
+- **ADR-003**: Development Tools (ruff, pytest)
+- **ADR-004**: Game Design Standards
+- **ADR-005**: Conventional Commits with git-cz
+- **ADR-006**: Type Checking with mypy
+- **ADR-007**: CI/CD Pipeline with GitHub Actions
+- **ADR-010**: TOML-based Settings System
+- **ADR-011**: JSON-based Internationalization
+- **ADR-012**: Loguru-based Logging System
+- **ADR-013**: Asset Management System
+- **ADR-014**: Obstacle Spacing Algorithm
+- **ADR-016**: Comprehensive Sound System
+- **ADR-017**: Docker Containerization
+- **ADR-018**: HTTP Server Architecture
+- **ADR-019**: Flask Framework Selection
+- **ADR-020**: UML Documentation with PlantUML
+- **ADR-021**: Developer Documentation Tools
+- **ADR-022**: Changelog Standards and Maintenance
