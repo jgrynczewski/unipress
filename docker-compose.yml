@@ -8,23 +8,32 @@ services:
       args:
         PYTHON_VERSION: 3.12-slim
     image: unipress:latest
+    user: "1000:1000"  # Run as same UID as host user
     environment:
       - PYTHONUNBUFFERED=1
       - UNIPRESS_DIFFICULTY=5
       - DISPLAY=${DISPLAY}
+      # Audio environment variables for PipeWire/PulseAudio compatibility
+      - PULSE_SERVER=unix:${XDG_RUNTIME_DIR}/pulse/native
+      - PULSE_COOKIE=${HOME}/.config/pulse/cookie
       # Uncomment if DRI3 causes issues:
       # - LIBGL_DRI3_DISABLE=1
     network_mode: host
     volumes:
       - ./high_scores.json:/app/high_scores.json
       - /tmp/.X11-unix:/tmp/.X11-unix:ro
+      # Audio volumes for PipeWire/PulseAudio
+      - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse
+      - ${HOME}/.config/pulse:${HOME}/.config/pulse:ro
+      - /dev/snd:/dev/snd
     group_add:
-      - "audio"
+      - "29"      # audio group (numeric ID)
       - "44"      # video
       - "992"     # render
     devices:
       - "/dev/snd:/dev/snd"
       - "/dev/dri:/dev/dri"
+    command: ["python", "-m", "unipress.games.jumper.game", "5"]
 
   devtest:
     build:
@@ -35,6 +44,9 @@ services:
         PYTHON_VERSION: 3.12-slim
     image: unipress:dev
     command: ["bash", "-lc", "echo Dev image built with QA checks"]
+
+volumes:
+  uv_cache:
 
 
 

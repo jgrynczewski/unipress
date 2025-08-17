@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libgl1 libglu1-mesa libx11-6 libxcursor1 libxrandr2 libxinerama1 libxi6 libxxf86vm1 \
     libgl1-mesa-dri \
     libopenal1 libsndfile1 libasound2 \
+    libpulse0 libpulse-mainloop-glib0 \
     libfreetype6 libfontconfig1 fonts-dejavu-core \
     ffmpeg \
     && rm -rf /var/lib/apt/lists/*
@@ -61,6 +62,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libgl1 libglu1-mesa libx11-6 libxcursor1 libxrandr2 libxinerama1 libxi6 libxxf86vm1 \
     libgl1-mesa-dri \
     libopenal1 libsndfile1 libasound2 \
+    libpulse0 libpulse-mainloop-glib0 \
     libfreetype6 libfontconfig1 fonts-dejavu-core \
     ffmpeg \
     && rm -rf /var/lib/apt/lists/*
@@ -75,10 +77,7 @@ COPY unipress ./unipress
 COPY main.py README.md pyproject.toml uv.lock ./
 COPY high_scores.json ./high_scores.json
 
-# Non-root user
-RUN groupadd -g 10001 app && useradd -m -u 10001 -g app app && \
-    chown -R app:app /app
-USER app
+# Note: No user creation - container will run as UID 1000:1000 from docker-compose
 
 ENV PATH="/app/.venv/bin:${PATH}" \
     UV_PROJECT_ENVIRONMENT="/app/.venv"
@@ -86,9 +85,9 @@ ENV PATH="/app/.venv/bin:${PATH}" \
 # Basic healthcheck (validates arcade import)
 HEALTHCHECK --interval=30s --timeout=3s CMD python -c "import arcade; print('ok')" || exit 1
 
-# Default command runs the Jumper game via uv/module entry
+# Default command runs the Jumper game via Python module entry
 ENV UNIPRESS_DIFFICULTY=5
-ENTRYPOINT ["uv", "run", "python", "-m", "unipress.games.jumper.game"]
+ENTRYPOINT ["python", "-m", "unipress.games.jumper.game"]
 CMD []
 
 
