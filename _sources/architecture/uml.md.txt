@@ -16,6 +16,9 @@ Shows the high-level system architecture including:
 - Infrastructure components
 - External dependencies
 
+![Architecture Overview](../_static/ArchitectureOverview.png)
+*System architecture showing core components and relationships*
+
 ### 2. Class Hierarchy
 **File**: `docs/uml/class-hierarchy.puml`
 **Image**: `docs/uml/ClassHierarchy.png`
@@ -25,6 +28,9 @@ Displays the inheritance structure:
 - Concrete game implementations
 - Core system classes
 - Interface relationships
+
+![Class Hierarchy](../_static/ClassHierarchy.png)
+*Class inheritance and interface relationships*
 
 ### 3. Data Flow
 **File**: `docs/uml/data-flow.puml`
@@ -37,6 +43,9 @@ Illustrates how data moves through the system:
 - Score persistence
 - Logging and monitoring
 
+![Data Flow](../_static/DataFlow.png)
+*Data flow through the system components*
+
 ### 4. Deployment Diagram
 **File**: `docs/uml/deployment-diagram.puml`
 **Image**: `docs/uml/DeploymentDiagram.png`
@@ -47,6 +56,9 @@ Shows the deployment architecture:
 - External services
 - Resource allocation
 
+![Deployment Diagram](../_static/DeploymentDiagram.png)
+*Deployment architecture and container structure*
+
 ### 5. Game Lifecycle
 **File**: `docs/uml/game-lifecycle.puml`
 **Image**: `docs/uml/GameLifecycle.png`
@@ -56,6 +68,9 @@ Describes the game execution flow:
 - Main game loop
 - State transitions
 - Cleanup procedures
+
+![Game Lifecycle](../_static/GameLifecycle.png)
+*Game execution lifecycle and state transitions*
 
 ## Diagram Conventions
 

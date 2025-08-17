@@ -251,7 +251,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#infrastructure">Infrastructure</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#component-relationships">Component Relationships</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#component-relationships">Component Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#detailed-architecture">Detailed Architecture</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#key-design-principles">Key Design Principles</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#one-button-constraint">1. One-Button Constraint</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#modularity">2. Modularity</a></li>
@@ -441,6 +444,11 @@
 </section>
 <section id="component-relationships">
 <h2>Component Relationships<a class="headerlink" href="#component-relationships" title="Link to this heading"></a></h2>
+<p><img alt="Architecture Overview" src="../_images/ArchitectureOverview.png" />
+<em>High-level system architecture showing component relationships</em></p>
+<section id="detailed-architecture">
+<h3>Detailed Architecture<a class="headerlink" href="#detailed-architecture" title="Link to this heading"></a></h3>
+<p>The system follows a layered architecture with clear separation of concerns:</p>
 <div class="highlight-mermaid notranslate"><div class="highlight"><pre><span></span>graph TB
     A[Main Entry Point] --&gt; B[BaseGame]
     B --&gt; C[AssetManager]
@@ -458,6 +466,7 @@
     J --&gt; L[Testing]
 </pre></div>
 </div>
+</section>
 </section>
 <section id="key-design-principles">
 <h2>Key Design Principles<a class="headerlink" href="#key-design-principles" title="Link to this heading"></a></h2>
@@ -512,6 +521,8 @@
 </section>
 <section id="data-flow">
 <h2>Data Flow<a class="headerlink" href="#data-flow" title="Link to this heading"></a></h2>
+<p><img alt="Data Flow" src="../_images/DataFlow.png" />
+<em>Data flow through the system components</em></p>
 <ol class="arabic simple">
 <li><p><strong>Initialization</strong>: Settings loaded, assets initialized, sound system started</p></li>
 <li><p><strong>Game Loop</strong>: Event handling, state updates, rendering, audio processing</p></li>

@@ -27,6 +27,13 @@ The system consists of several key components:
 
 ## Component Relationships
 
+![Architecture Overview](../_static/ArchitectureOverview.png)
+*High-level system architecture showing component relationships*
+
+### Detailed Architecture
+
+The system follows a layered architecture with clear separation of concerns:
+
 ```mermaid
 graph TB
     A[Main Entry Point] --> B[BaseGame]
@@ -89,6 +96,9 @@ unipress/
 ```
 
 ## Data Flow
+
+![Data Flow](../_static/DataFlow.png)
+*Data flow through the system components*
 
 1. **Initialization**: Settings loaded, assets initialized, sound system started
 2. **Game Loop**: Event handling, state updates, rendering, audio processing
