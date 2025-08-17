@@ -136,7 +136,7 @@ docs/
 ```python
 # conf.py
 project = 'Unipress'
-copyright = '2024, jgrynczewski'
+copyright = '2025, jgrynczewski'
 author = 'jgrynczewski'
 
 extensions = [

@@ -17,7 +17,7 @@ sys.path.insert(0, os.path.abspath('../../'))
 # -- Project information -----------------------------------------------------
 
 project = 'Unipress'
-copyright = '2024, jgrynczewski'
+copyright = '2025, jgrynczewski'
 author = 'jgrynczewski'
 
 # The short X.Y version
