@@ -2,6 +2,8 @@
 
 Welcome to the Unipress documentation! Unipress is a collection of one-button games built with Python and the Arcade framework.
 
+> **Note**: This documentation is also available on [Read the Docs](https://unipress.readthedocs.io/) and [GitHub Pages](https://jgrynczewski.github.io/unipress/).
+
 ## 🎮 What is Unipress?
 
 Unipress is a professional-grade game development framework that focuses on **one-button games** - games where players can only send binary signals (click/press) without cursor positioning or element selection. All interactions use timing-based or automatic cycling mechanics.
