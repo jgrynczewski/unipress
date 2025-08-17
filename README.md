@@ -4,6 +4,31 @@ A collection of simple, engaging games controlled with just one button. Built wi
 
 > **Note**: These are true one-button games - players can only send binary signals (click/press) without cursor positioning or element selection. All interactions use timing-based or automatic cycling mechanics.
 
+## 📚 Documentation
+
+### Developer Documentation
+
+- **📚 Read the Docs**: [unipress.readthedocs.io](https://unipress.readthedocs.io/)
+- **🔧 API Reference**: [API Documentation](https://unipress.readthedocs.io/en/latest/api/)
+- **🏗️ Architecture**: [Architecture Guide](https://unipress.readthedocs.io/en/latest/architecture/)
+- **📖 Tutorials**: [Development Tutorials](https://unipress.readthedocs.io/en/latest/tutorials/)
+
+### Local Documentation
+
+To build documentation locally:
+
+```bash
+# Install documentation dependencies
+uv sync --group dev
+
+# Build documentation
+cd docs/sphinx
+uv run sphinx-build -b html . _build/html
+
+# View documentation
+open _build/html/index.html
+```
+
 ## 🎮 Available Games
 
 ### Demo Jump Game
