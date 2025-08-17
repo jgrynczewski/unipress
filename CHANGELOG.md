@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2025-08-17
+
 ### Added
 - Comprehensive Sphinx documentation infrastructure with Myst-Parser
 - Complete API documentation with autodoc for all modules and docstrings
@@ -30,7 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved documentation navigation and user experience
 - Replaced default GitHub Pages workflow with custom Sphinx build
 
-## [0.1.0] - 2024-08-17
+## [0.1.0] - 2025-08-09
 
 ### Added
 - **Core Game Framework**

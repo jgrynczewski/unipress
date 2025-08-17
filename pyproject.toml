@@ -1,6 +1,6 @@
 [project]
 name = "unipress"
-version = "0.1.0"
+version = "0.2.0"
 description = "One-button games collection built with Python and Arcade"
 readme = "README.md"
 requires-python = ">=3.12"
