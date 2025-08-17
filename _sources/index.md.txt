@@ -62,12 +62,12 @@ Unipress is a professional-grade game development framework that focuses on **on
 - [Sound System](tutorials/sound.md) - Adding audio to your games
 
 ### API Reference
-- [Complete API Reference](api/index.md) - Full API documentation with all modules
-- [BaseGame Class](api/base_game.md) - Core game framework class
-- [Settings System](api/settings.md) - Configuration management
-- [Sound Manager](api/sound.md) - Audio system reference
-- [Asset Manager](api/assets.md) - Resource management
-- [HTTP Server](api/server.md) - Game server API
+- [Complete API Reference](api/index.html) - Full API documentation with all modules
+- [BaseGame Class](api/base_game.html) - Core game framework class
+- [Settings System](api/settings.html) - Configuration management
+- [Sound Manager](api/sound.html) - Audio system reference
+- [Asset Manager](api/assets.html) - Resource management
+- [HTTP Server](api/server.html) - Game server API
 
 ### Architecture
 - [System Overview](architecture/overview.md) - High-level architecture
