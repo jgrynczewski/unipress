@@ -335,6 +335,64 @@ unipress/
 - **Input Abstraction**: Configurable input handling (default: left mouse click)
 - **High Score System**: JSON-based persistent high score tracking per game
 
+### System Documentation (UML Diagrams)
+
+The project includes comprehensive UML documentation using PlantUML to visualize system architecture:
+
+#### Available Diagrams
+- **Architecture Overview** (`docs/uml/ArchitectureOverview.png`) - High-level system architecture showing component relationships
+- **Game Lifecycle** (`docs/uml/GameLifecycle.png`) - Sequence diagram for game launch to completion
+- **Class Hierarchy** (`docs/uml/ClassHierarchy.png`) - Detailed class diagram with inheritance and composition
+- **Deployment Diagram** (`docs/uml/DeploymentDiagram.png`) - System deployment across containers and nodes
+- **Data Flow** (`docs/uml/DataFlow.png`) - Activity diagram showing data processing patterns
+
+#### Generating Diagrams
+```bash
+# Generate all diagrams (requires PlantUML and Java)
+plantuml -tpng docs/uml/*.puml
+
+# Generate specific diagram
+plantuml -tpng docs/uml/architecture-overview.puml
+
+# Generate SVG format
+plantuml -tsvg docs/uml/*.puml
+```
+
+#### Diagram Conventions
+- **Theme**: Plain theme for clean, professional appearance
+- **Background**: White background for consistency
+- **Font**: Arial, 11-12pt for readability
+- **Colors**: Minimal color usage, focus on clarity
+- **Naming**: PascalCase for classes, snake_case for methods/variables
+
+#### Maintenance
+- Diagrams are version-controlled as `.puml` text files
+- Update diagrams when adding new features or changing architecture
+- Generated images are included in documentation releases
+- All diagrams follow consistent styling and naming conventions
+
+### Architecture Decision Records (ADRs)
+The project maintains detailed Architecture Decision Records in [docs/adr/](docs/adr/) documenting key technical decisions:
+
+#### Key Decisions
+- **ADR-001**: Dependency Management with `uv` (fast, modern package manager)
+- **ADR-002**: Game Framework using `arcade` (clean API, modern Python)
+- **ADR-004**: Game Design Standards (one-button constraint, difficulty system)
+- **ADR-010**: TOML-based Settings System (hierarchical configuration)
+- **ADR-011**: JSON-based Internationalization (Polish default, English fallback)
+- **ADR-012**: Loguru-based Logging System (structured, professional)
+- **ADR-013**: Asset Management System (sprites, sounds, animations)
+- **ADR-016**: Comprehensive Sound System (OGG format, event-based)
+- **ADR-017**: Docker Containerization (multi-stage builds, audio support)
+- **ADR-018**: HTTP Server Architecture (Flask-based game management)
+
+#### ADR Benefits
+- **Transparency**: All major decisions documented with rationale
+- **Consistency**: Ensures architectural coherence across the project
+- **Onboarding**: New developers can understand design decisions quickly
+- **Maintenance**: Clear reasoning for technology choices and patterns
+- **Evolution**: Track how architecture decisions evolve over time
+
 ### Game Framework Features
 - Consistent difficulty scaling across all games
 - Standardized game lifecycle (start, update, draw, reset)
@@ -364,13 +422,6 @@ We use conventional commits with git-cz emojis:
 4. Ensure all checks pass (`ruff check && ruff format && pytest`)
 5. Use conventional commit messages
 6. Create pull request
-
-### Architecture Decision Records
-See [docs/adr/](docs/adr/) for detailed project decisions including:
-- Technology choices (uv, arcade, ruff)
-- Game design standards
-- Development tooling
-- Commit message format
 
 ## 📄 License
 
