@@ -1,7 +1,7 @@
 version: "3.9"
 
 services:
-  run:
+  game-server:
     build:
       context: .
       dockerfile: Dockerfile
@@ -11,7 +11,6 @@ services:
     user: "1000:1000"  # Run as same UID as host user
     environment:
       - PYTHONUNBUFFERED=1
-      - UNIPRESS_DIFFICULTY=5
       - DISPLAY=${DISPLAY}
       # Audio environment variables for PipeWire/PulseAudio compatibility
       - PULSE_SERVER=unix:${XDG_RUNTIME_DIR}/pulse/native
@@ -33,7 +32,8 @@ services:
     devices:
       - "/dev/snd:/dev/snd"
       - "/dev/dri:/dev/dri"
-    command: ["python", "-m", "unipress.games.jumper.game", "5"]
+    command: ["python", "-m", "unipress.core.game_server"]
+    restart: unless-stopped
 
   devtest:
     build:

@@ -8,6 +8,8 @@ dependencies = [
     "arcade>=3.3.2",
     "loguru>=0.7.3",
     "tomli>=2.2.1",
+    "flask>=3.0.0",
+    "requests>=2.31.0",
 ]
 
 [dependency-groups]

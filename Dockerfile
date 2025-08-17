@@ -85,9 +85,8 @@ ENV PATH="/app/.venv/bin:${PATH}" \
 # Basic healthcheck (validates arcade import)
 HEALTHCHECK --interval=30s --timeout=3s CMD python -c "import arcade; print('ok')" || exit 1
 
-# Default command runs the Jumper game via Python module entry
-ENV UNIPRESS_DIFFICULTY=5
-ENTRYPOINT ["python", "-m", "unipress.games.jumper.game"]
+# Default command runs the game server
+ENTRYPOINT ["python", "-m", "unipress.core.game_server"]
 CMD []
 
 
