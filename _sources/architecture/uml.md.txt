@@ -16,8 +16,10 @@ Shows the high-level system architecture including:
 - Infrastructure components
 - External dependencies
 
-![Architecture Overview](../_static/ArchitectureOverview.png)
-*System architecture showing core components and relationships*
+<a href="../_static/ArchitectureOverview.png" target="_blank">
+<img src="../_static/ArchitectureOverview.png" alt="Architecture Overview" style="max-width: 100%; height: auto;">
+</a>
+*System architecture showing core components and relationships - [Click to enlarge](../_static/ArchitectureOverview.png)*
 
 ### 2. Class Hierarchy
 **File**: `docs/uml/class-hierarchy.puml`
@@ -29,8 +31,10 @@ Displays the inheritance structure:
 - Core system classes
 - Interface relationships
 
-![Class Hierarchy](../_static/ClassHierarchy.png)
-*Class inheritance and interface relationships*
+<a href="../_static/ClassHierarchy.png" target="_blank">
+<img src="../_static/ClassHierarchy.png" alt="Class Hierarchy" style="max-width: 100%; height: auto;">
+</a>
+*Class inheritance and interface relationships - [Click to enlarge](../_static/ClassHierarchy.png)*
 
 ### 3. Data Flow
 **File**: `docs/uml/data-flow.puml`
@@ -43,8 +47,10 @@ Illustrates how data moves through the system:
 - Score persistence
 - Logging and monitoring
 
-![Data Flow](../_static/DataFlow.png)
-*Data flow through the system components*
+<a href="../_static/DataFlow.png" target="_blank">
+<img src="../_static/DataFlow.png" alt="Data Flow" style="max-width: 100%; height: auto;">
+</a>
+*Data flow through the system components - [Click to enlarge](../_static/DataFlow.png)*
 
 ### 4. Deployment Diagram
 **File**: `docs/uml/deployment-diagram.puml`
@@ -56,8 +62,10 @@ Shows the deployment architecture:
 - External services
 - Resource allocation
 
-![Deployment Diagram](../_static/DeploymentDiagram.png)
-*Deployment architecture and container structure*
+<a href="../_static/DeploymentDiagram.png" target="_blank">
+<img src="../_static/DeploymentDiagram.png" alt="Deployment Diagram" style="max-width: 100%; height: auto;">
+</a>
+*Deployment architecture and container structure - [Click to enlarge](../_static/DeploymentDiagram.png)*
 
 ### 5. Game Lifecycle
 **File**: `docs/uml/game-lifecycle.puml`
@@ -69,8 +77,10 @@ Describes the game execution flow:
 - State transitions
 - Cleanup procedures
 
-![Game Lifecycle](../_static/GameLifecycle.png)
-*Game execution lifecycle and state transitions*
+<a href="../_static/GameLifecycle.png" target="_blank">
+<img src="../_static/GameLifecycle.png" alt="Game Lifecycle" style="max-width: 100%; height: auto;">
+</a>
+*Game execution lifecycle and state transitions - [Click to enlarge](../_static/GameLifecycle.png)*
 
 ## Diagram Conventions
 
