@@ -27,8 +27,10 @@ The system consists of several key components:
 
 ## Component Relationships
 
-![Architecture Overview](../_static/ArchitectureOverview.png)
-*High-level system architecture showing component relationships*
+<a href="../_static/ArchitectureOverview.png" target="_blank">
+<img src="../_static/ArchitectureOverview.png" alt="Architecture Overview" style="max-width: 100%; height: auto;">
+</a>
+*High-level system architecture showing component relationships - [Click to enlarge](../_static/ArchitectureOverview.png)*
 
 ### Detailed Architecture
 
@@ -97,8 +99,10 @@ unipress/
 
 ## Data Flow
 
-![Data Flow](../_static/DataFlow.png)
-*Data flow through the system components*
+<a href="../_static/DataFlow.png" target="_blank">
+<img src="../_static/DataFlow.png" alt="Data Flow" style="max-width: 100%; height: auto;">
+</a>
+*Data flow through the system components - [Click to enlarge](../_static/DataFlow.png)*
 
 1. **Initialization**: Settings loaded, assets initialized, sound system started
 2. **Game Loop**: Event handling, state updates, rendering, audio processing
