@@ -1,0 +1,598 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Installation Guide &mdash; Unipress 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=30646c52"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Unipress
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Installation Guide</a><ul>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a><ul>
+<li><a class="reference internal" href="#system-requirements">System Requirements</a></li>
+<li><a class="reference internal" href="#required-software">Required Software</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#installation-methods">Installation Methods</a><ul>
+<li><a class="reference internal" href="#method-1-development-installation-recommended">Method 1: Development Installation (Recommended)</a><ul>
+<li><a class="reference internal" href="#clone-the-repository">1. Clone the Repository</a></li>
+<li><a class="reference internal" href="#install-uv-package-manager">2. Install uv Package Manager</a></li>
+<li><a class="reference internal" href="#install-dependencies">3. Install Dependencies</a></li>
+<li><a class="reference internal" href="#verify-installation">4. Verify Installation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#method-2-docker-installation">Method 2: Docker Installation</a><ul>
+<li><a class="reference internal" href="#id1">1. Clone the Repository</a></li>
+<li><a class="reference internal" href="#build-docker-image">2. Build Docker Image</a></li>
+<li><a class="reference internal" href="#run-with-docker-compose">3. Run with Docker Compose</a></li>
+<li><a class="reference internal" href="#run-individual-container">4. Run Individual Container</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#platform-specific-instructions">Platform-Specific Instructions</a><ul>
+<li><a class="reference internal" href="#linux-ubuntu-debian">Linux (Ubuntu/Debian)</a><ul>
+<li><a class="reference internal" href="#install-system-dependencies">Install System Dependencies</a></li>
+<li><a class="reference internal" href="#audio-support-optional">Audio Support (Optional)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#macos">macOS</a><ul>
+<li><a class="reference internal" href="#id2">Install System Dependencies</a></li>
+<li><a class="reference internal" href="#audio-support">Audio Support</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#windows">Windows</a><ul>
+<li><a class="reference internal" href="#id3">Install System Dependencies</a></li>
+<li><a class="reference internal" href="#id4">Audio Support</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#configuration">Configuration</a><ul>
+<li><a class="reference internal" href="#initial-setup">Initial Setup</a><ul>
+<li><a class="reference internal" href="#create-configuration-file">1. Create Configuration File</a></li>
+<li><a class="reference internal" href="#customize-settings">2. Customize Settings</a></li>
+<li><a class="reference internal" href="#set-up-logging">3. Set Up Logging</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#environment-variables">Environment Variables</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#verification">Verification</a><ul>
+<li><a class="reference internal" href="#test-installation">Test Installation</a><ul>
+<li><a class="reference internal" href="#run-demo-game">1. Run Demo Game</a></li>
+<li><a class="reference internal" href="#run-specific-game">2. Run Specific Game</a></li>
+<li><a class="reference internal" href="#check-audio">3. Check Audio</a></li>
+<li><a class="reference internal" href="#verify-dependencies">4. Verify Dependencies</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#troubleshooting">Troubleshooting</a><ul>
+<li><a class="reference internal" href="#common-issues">Common Issues</a><ul>
+<li><a class="reference internal" href="#python-version-issues">Python Version Issues</a></li>
+<li><a class="reference internal" href="#audio-issues">Audio Issues</a></li>
+<li><a class="reference internal" href="#display-issues">Display Issues</a></li>
+<li><a class="reference internal" href="#permission-issues">Permission Issues</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#getting-help">Getting Help</a><ul>
+<li><a class="reference internal" href="#check-logs">Check Logs</a></li>
+<li><a class="reference internal" href="#debug-mode">Debug Mode</a></li>
+<li><a class="reference internal" href="#community-support">Community Support</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#next-steps">Next Steps</a></li>
+<li><a class="reference internal" href="#uninstallation">Uninstallation</a><ul>
+<li><a class="reference internal" href="#remove-installation">Remove Installation</a></li>
+<li><a class="reference internal" href="#remove-dependencies">Remove Dependencies</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Unipress</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Installation Guide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/tutorials/installation.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="installation-guide">
+<h1>Installation Guide<a class="headerlink" href="#installation-guide" title="Link to this heading"></a></h1>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading"></a></h2>
+<p>Before installing Unipress, ensure you have the following prerequisites:</p>
+<section id="system-requirements">
+<h3>System Requirements<a class="headerlink" href="#system-requirements" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Operating System</strong>: Linux, macOS, or Windows</p></li>
+<li><p><strong>Python</strong>: 3.12 or higher</p></li>
+<li><p><strong>Memory</strong>: 4GB RAM minimum (8GB recommended)</p></li>
+<li><p><strong>Storage</strong>: 1GB free space</p></li>
+<li><p><strong>Graphics</strong>: OpenGL 3.3+ compatible graphics card</p></li>
+</ul>
+</section>
+<section id="required-software">
+<h3>Required Software<a class="headerlink" href="#required-software" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Python 3.12+</strong>: <a class="reference external" href="https://www.python.org/downloads/">Download from python.org</a></p></li>
+<li><p><strong>Git</strong>: <a class="reference external" href="https://git-scm.com/">Download from git-scm.com</a></p></li>
+<li><p><strong>Docker</strong> (optional): <a class="reference external" href="https://www.docker.com/">Download from docker.com</a></p></li>
+</ul>
+</section>
+</section>
+<section id="installation-methods">
+<h2>Installation Methods<a class="headerlink" href="#installation-methods" title="Link to this heading"></a></h2>
+<section id="method-1-development-installation-recommended">
+<h3>Method 1: Development Installation (Recommended)<a class="headerlink" href="#method-1-development-installation-recommended" title="Link to this heading"></a></h3>
+<section id="clone-the-repository">
+<h4>1. Clone the Repository<a class="headerlink" href="#clone-the-repository" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/jgrynczewski/unipress.git
+<span class="nb">cd</span><span class="w"> </span>unipress
+</pre></div>
+</div>
+</section>
+<section id="install-uv-package-manager">
+<h4>2. Install uv Package Manager<a class="headerlink" href="#install-uv-package-manager" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Linux/macOS</span>
+curl<span class="w"> </span>-LsSf<span class="w"> </span>https://astral.sh/uv/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
+
+<span class="c1"># Windows (PowerShell)</span>
+powershell<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;irm https://astral.sh/uv/install.ps1 | iex&quot;</span>
+
+<span class="c1"># Or using pip</span>
+pip<span class="w"> </span>install<span class="w"> </span>uv
+</pre></div>
+</div>
+</section>
+<section id="install-dependencies">
+<h4>3. Install Dependencies<a class="headerlink" href="#install-dependencies" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install all dependencies including development tools</span>
+uv<span class="w"> </span>sync<span class="w"> </span>--group<span class="w"> </span>dev
+
+<span class="c1"># Or install only runtime dependencies</span>
+uv<span class="w"> </span>sync
+</pre></div>
+</div>
+</section>
+<section id="verify-installation">
+<h4>4. Verify Installation<a class="headerlink" href="#verify-installation" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check Python version</span>
+python<span class="w"> </span>--version
+
+<span class="c1"># Check uv installation</span>
+uv<span class="w"> </span>--version
+
+<span class="c1"># Run a test game</span>
+uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>main.py
+</pre></div>
+</div>
+</section>
+</section>
+<section id="method-2-docker-installation">
+<h3>Method 2: Docker Installation<a class="headerlink" href="#method-2-docker-installation" title="Link to this heading"></a></h3>
+<section id="id1">
+<h4>1. Clone the Repository<a class="headerlink" href="#id1" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/jgrynczewski/unipress.git
+<span class="nb">cd</span><span class="w"> </span>unipress
+</pre></div>
+</div>
+</section>
+<section id="build-docker-image">
+<h4>2. Build Docker Image<a class="headerlink" href="#build-docker-image" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>unipress<span class="w"> </span>.
+</pre></div>
+</div>
+</section>
+<section id="run-with-docker-compose">
+<h4>3. Run with Docker Compose<a class="headerlink" href="#run-with-docker-compose" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Start the game with audio and display support</span>
+docker-compose<span class="w"> </span>up
+
+<span class="c1"># Or run specific game</span>
+docker-compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>unipress<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>unipress.games.jumper.game
+</pre></div>
+</div>
+</section>
+<section id="run-individual-container">
+<h4>4. Run Individual Container<a class="headerlink" href="#run-individual-container" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run with X11 forwarding (Linux/macOS)</span>
+docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span><span class="nv">DISPLAY</span><span class="o">=</span><span class="nv">$DISPLAY</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-v<span class="w"> </span>/tmp/.X11-unix:/tmp/.X11-unix<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/app<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>unipress
+
+<span class="c1"># Run with audio support</span>
+docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--device<span class="w"> </span>/dev/snd<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/app<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>unipress
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="platform-specific-instructions">
+<h2>Platform-Specific Instructions<a class="headerlink" href="#platform-specific-instructions" title="Link to this heading"></a></h2>
+<section id="linux-ubuntu-debian">
+<h3>Linux (Ubuntu/Debian)<a class="headerlink" href="#linux-ubuntu-debian" title="Link to this heading"></a></h3>
+<section id="install-system-dependencies">
+<h4>Install System Dependencies<a class="headerlink" href="#install-system-dependencies" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>update
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>python3.12<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>python3.12-venv<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>python3-pip<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>git<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>libgl1-mesa-glx<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>libglib2.0-0<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>libsm6<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>libxext6<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>libxrender-dev<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>libgomp1
+</pre></div>
+</div>
+</section>
+<section id="audio-support-optional">
+<h4>Audio Support (Optional)<a class="headerlink" href="#audio-support-optional" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install ALSA for audio</span>
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>alsa-utils
+
+<span class="c1"># Test audio</span>
+speaker-test<span class="w"> </span>-t<span class="w"> </span>wav<span class="w"> </span>-c<span class="w"> </span><span class="m">2</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="macos">
+<h3>macOS<a class="headerlink" href="#macos" title="Link to this heading"></a></h3>
+<section id="id2">
+<h4>Install System Dependencies<a class="headerlink" href="#id2" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install Homebrew if not already installed</span>
+/bin/bash<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span class="k">)</span><span class="s2">&quot;</span>
+
+<span class="c1"># Install Python and other dependencies</span>
+brew<span class="w"> </span>install<span class="w"> </span>python@3.12<span class="w"> </span>git
+</pre></div>
+</div>
+</section>
+<section id="audio-support">
+<h4>Audio Support<a class="headerlink" href="#audio-support" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># macOS has built-in audio support</span>
+<span class="c1"># No additional installation required</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="windows">
+<h3>Windows<a class="headerlink" href="#windows" title="Link to this heading"></a></h3>
+<section id="id3">
+<h4>Install System Dependencies<a class="headerlink" href="#id3" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install Chocolatey if not already installed</span>
+Set-ExecutionPolicy<span class="w"> </span>Bypass<span class="w"> </span>-Scope<span class="w"> </span>Process<span class="w"> </span>-Force<span class="p">;</span><span class="w"> </span><span class="o">[</span>System.Net.ServicePointManager<span class="o">]</span>::SecurityProtocol<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span>System.Net.ServicePointManager<span class="o">]</span>::SecurityProtocol<span class="w"> </span>-bor<span class="w"> </span><span class="m">3072</span><span class="p">;</span><span class="w"> </span>iex<span class="w"> </span><span class="o">((</span>New-Object<span class="w"> </span>System.Net.WebClient<span class="o">)</span>.DownloadString<span class="o">(</span><span class="s1">&#39;https://community.chocolatey.org/install.ps1&#39;</span><span class="o">))</span>
+
+<span class="c1"># Install Python and Git</span>
+choco<span class="w"> </span>install<span class="w"> </span>python<span class="w"> </span>git
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h4>Audio Support<a class="headerlink" href="#id4" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Windows has built-in audio support</span>
+<span class="c1"># No additional installation required</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading"></a></h2>
+<section id="initial-setup">
+<h3>Initial Setup<a class="headerlink" href="#initial-setup" title="Link to this heading"></a></h3>
+<section id="create-configuration-file">
+<h4>1. Create Configuration File<a class="headerlink" href="#create-configuration-file" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Copy default settings</span>
+cp<span class="w"> </span>unipress/settings.toml<span class="w"> </span>~/.config/unipress/settings.toml
+</pre></div>
+</div>
+</section>
+<section id="customize-settings">
+<h4>2. Customize Settings<a class="headerlink" href="#customize-settings" title="Link to this heading"></a></h4>
+<p>Edit <code class="docutils literal notranslate"><span class="pre">~/.config/unipress/settings.toml</span></code>:</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[display]</span>
+<span class="n">fullscreen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<span class="n">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1920</span>
+<span class="n">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1080</span>
+
+<span class="k">[audio]</span>
+<span class="n">enabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<span class="n">volume</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.8</span>
+
+<span class="k">[game]</span>
+<span class="n">difficulty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span>
+<span class="n">lives</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span>
+</pre></div>
+</div>
+</section>
+<section id="set-up-logging">
+<h4>3. Set Up Logging<a class="headerlink" href="#set-up-logging" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create log directory</span>
+mkdir<span class="w"> </span>-p<span class="w"> </span>~/.local/share/unipress/logs
+</pre></div>
+</div>
+</section>
+</section>
+<section id="environment-variables">
+<h3>Environment Variables<a class="headerlink" href="#environment-variables" title="Link to this heading"></a></h3>
+<p>Set these environment variables for customization:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Configuration directory</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">UNIPRESS_CONFIG_DIR</span><span class="o">=</span>~/.config/unipress
+
+<span class="c1"># Data directory</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">UNIPRESS_DATA_DIR</span><span class="o">=</span>~/.local/share/unipress
+
+<span class="c1"># Log level</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">UNIPRESS_LOG_LEVEL</span><span class="o">=</span>INFO
+
+<span class="c1"># Language</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">UNIPRESS_LANG</span><span class="o">=</span>pl_PL
+</pre></div>
+</div>
+</section>
+</section>
+<section id="verification">
+<h2>Verification<a class="headerlink" href="#verification" title="Link to this heading"></a></h2>
+<section id="test-installation">
+<h3>Test Installation<a class="headerlink" href="#test-installation" title="Link to this heading"></a></h3>
+<section id="run-demo-game">
+<h4>1. Run Demo Game<a class="headerlink" href="#run-demo-game" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>main.py
+</pre></div>
+</div>
+</section>
+<section id="run-specific-game">
+<h4>2. Run Specific Game<a class="headerlink" href="#run-specific-game" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run Jumper game with difficulty 5</span>
+uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>unipress.games.jumper.game<span class="w"> </span><span class="m">5</span>
+
+<span class="c1"># Run Demo Jump game</span>
+uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>unipress.games.demo_jump.game
+</pre></div>
+</div>
+</section>
+<section id="check-audio">
+<h4>3. Check Audio<a class="headerlink" href="#check-audio" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Test sound system</span>
+uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;from unipress.core.sound import SoundManager; sm = SoundManager(); sm.play(&#39;ui&#39;, &#39;button_click&#39;)&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="verify-dependencies">
+<h4>4. Verify Dependencies<a class="headerlink" href="#verify-dependencies" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check all dependencies are installed</span>
+uv<span class="w"> </span>pip<span class="w"> </span>list
+
+<span class="c1"># Run tests</span>
+uv<span class="w"> </span>run<span class="w"> </span>pytest<span class="w"> </span>tests/
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h2>
+<section id="common-issues">
+<h3>Common Issues<a class="headerlink" href="#common-issues" title="Link to this heading"></a></h3>
+<section id="python-version-issues">
+<h4>Python Version Issues<a class="headerlink" href="#python-version-issues" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check Python version</span>
+python<span class="w"> </span>--version
+
+<span class="c1"># If wrong version, use specific version</span>
+python3.12<span class="w"> </span>--version
+
+<span class="c1"># Update PATH if needed</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;/usr/local/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="audio-issues">
+<h4>Audio Issues<a class="headerlink" href="#audio-issues" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check audio devices</span>
+aplay<span class="w"> </span>-l
+
+<span class="c1"># Test audio system</span>
+speaker-test<span class="w"> </span>-t<span class="w"> </span>wav<span class="w"> </span>-c<span class="w"> </span><span class="m">2</span>
+
+<span class="c1"># Check ALSA configuration</span>
+cat<span class="w"> </span>/etc/asound.conf
+</pre></div>
+</div>
+</section>
+<section id="display-issues">
+<h4>Display Issues<a class="headerlink" href="#display-issues" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check OpenGL support</span>
+glxinfo<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;OpenGL version&quot;</span>
+
+<span class="c1"># Check X11 forwarding (for Docker)</span>
+<span class="nb">echo</span><span class="w"> </span><span class="nv">$DISPLAY</span>
+xhost<span class="w"> </span>+local:docker
+</pre></div>
+</div>
+</section>
+<section id="permission-issues">
+<h4>Permission Issues<a class="headerlink" href="#permission-issues" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fix ownership</span>
+sudo<span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span><span class="nv">$USER</span>:<span class="nv">$USER</span><span class="w"> </span>~/.config/unipress
+sudo<span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span><span class="nv">$USER</span>:<span class="nv">$USER</span><span class="w"> </span>~/.local/share/unipress
+
+<span class="c1"># Fix permissions</span>
+chmod<span class="w"> </span><span class="m">755</span><span class="w"> </span>~/.config/unipress
+chmod<span class="w"> </span><span class="m">755</span><span class="w"> </span>~/.local/share/unipress
+</pre></div>
+</div>
+</section>
+</section>
+<section id="getting-help">
+<h3>Getting Help<a class="headerlink" href="#getting-help" title="Link to this heading"></a></h3>
+<section id="check-logs">
+<h4>Check Logs<a class="headerlink" href="#check-logs" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># View application logs</span>
+tail<span class="w"> </span>-f<span class="w"> </span>~/.local/share/unipress/logs/unipress.log
+
+<span class="c1"># View system logs</span>
+journalctl<span class="w"> </span>-u<span class="w"> </span>unipress<span class="w"> </span>-f
+</pre></div>
+</div>
+</section>
+<section id="debug-mode">
+<h4>Debug Mode<a class="headerlink" href="#debug-mode" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run with debug logging</span>
+<span class="nv">UNIPRESS_LOG_LEVEL</span><span class="o">=</span>DEBUG<span class="w"> </span>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>main.py
+
+<span class="c1"># Run with verbose output</span>
+uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>main.py<span class="w"> </span>--verbose
+</pre></div>
+</div>
+</section>
+<section id="community-support">
+<h4>Community Support<a class="headerlink" href="#community-support" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>GitHub Issues</strong>: <a class="reference external" href="https://github.com/jgrynczewski/unipress/issues">Report bugs and request features</a></p></li>
+<li><p><strong>Documentation</strong>: <a class="reference external" href="https://unipress.readthedocs.io/">Read the Docs</a></p></li>
+<li><p><strong>Discussions</strong>: <a class="reference external" href="https://github.com/jgrynczewski/unipress/discussions">GitHub Discussions</a></p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading"></a></h2>
+<p>After successful installation:</p>
+<ol class="arabic simple">
+<li><p><strong>Read the Documentation</strong>: <a class="reference internal" href="#quick_start.md"><span class="xref myst">Getting Started Guide</span></a></p></li>
+<li><p><strong>Try the Games</strong>: Run different games and difficulty levels</p></li>
+<li><p><strong>Explore the Code</strong>: Review the source code structure</p></li>
+<li><p><strong>Contribute</strong>: Check the <a class="reference internal" href="#contributing.md"><span class="xref myst">Contributing Guide</span></a></p></li>
+<li><p><strong>Report Issues</strong>: Help improve Unipress by reporting bugs</p></li>
+</ol>
+</section>
+<section id="uninstallation">
+<h2>Uninstallation<a class="headerlink" href="#uninstallation" title="Link to this heading"></a></h2>
+<section id="remove-installation">
+<h3>Remove Installation<a class="headerlink" href="#remove-installation" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Remove source code</span>
+rm<span class="w"> </span>-rf<span class="w"> </span>~/unipress
+
+<span class="c1"># Remove configuration</span>
+rm<span class="w"> </span>-rf<span class="w"> </span>~/.config/unipress
+
+<span class="c1"># Remove data</span>
+rm<span class="w"> </span>-rf<span class="w"> </span>~/.local/share/unipress
+
+<span class="c1"># Remove uv cache (optional)</span>
+rm<span class="w"> </span>-rf<span class="w"> </span>~/.cache/uv
+</pre></div>
+</div>
+</section>
+<section id="remove-dependencies">
+<h3>Remove Dependencies<a class="headerlink" href="#remove-dependencies" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Remove uv</span>
+curl<span class="w"> </span>-LsSf<span class="w"> </span>https://astral.sh/uv/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh<span class="w"> </span>-s<span class="w"> </span>--<span class="w"> </span>--uninstall
+
+<span class="c1"># Remove Docker image</span>
+docker<span class="w"> </span>rmi<span class="w"> </span>unipress
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, jgrynczewski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

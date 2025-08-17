@@ -1,0 +1,273 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>System Architecture Overview &mdash; Unipress 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=30646c52"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Unipress
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">System Architecture Overview</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#high-level-architecture">High-Level Architecture</a><ul>
+<li><a class="reference internal" href="#core-framework">Core Framework</a></li>
+<li><a class="reference internal" href="#game-layer">Game Layer</a></li>
+<li><a class="reference internal" href="#infrastructure">Infrastructure</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#component-relationships">Component Relationships</a></li>
+<li><a class="reference internal" href="#key-design-principles">Key Design Principles</a><ul>
+<li><a class="reference internal" href="#one-button-constraint">1. One-Button Constraint</a></li>
+<li><a class="reference internal" href="#modularity">2. Modularity</a></li>
+<li><a class="reference internal" href="#configuration-driven">3. Configuration-Driven</a></li>
+<li><a class="reference internal" href="#asset-management">4. Asset Management</a></li>
+<li><a class="reference internal" href="#container-ready">5. Container-Ready</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#technology-stack">Technology Stack</a></li>
+<li><a class="reference internal" href="#directory-structure">Directory Structure</a></li>
+<li><a class="reference internal" href="#data-flow">Data Flow</a></li>
+<li><a class="reference internal" href="#security-considerations">Security Considerations</a></li>
+<li><a class="reference internal" href="#performance-characteristics">Performance Characteristics</a></li>
+<li><a class="reference internal" href="#extensibility">Extensibility</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Unipress</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">System Architecture Overview</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/architecture/overview.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="system-architecture-overview">
+<h1>System Architecture Overview<a class="headerlink" href="#system-architecture-overview" title="Link to this heading"></a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h2>
+<p>Unipress is designed as a modular, extensible framework for one-button games. The architecture follows modern Python development practices with clear separation of concerns, comprehensive configuration management, and robust asset handling.</p>
+</section>
+<section id="high-level-architecture">
+<h2>High-Level Architecture<a class="headerlink" href="#high-level-architecture" title="Link to this heading"></a></h2>
+<p>The system consists of several key components:</p>
+<section id="core-framework">
+<h3>Core Framework<a class="headerlink" href="#core-framework" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>BaseGame</strong>: Abstract base class providing common game functionality</p></li>
+<li><p><strong>AssetManager</strong>: Centralized resource management for sprites, sounds, and animations</p></li>
+<li><p><strong>SoundManager</strong>: Event-driven audio system with OGG format support</p></li>
+<li><p><strong>SettingsManager</strong>: Hierarchical TOML-based configuration system</p></li>
+<li><p><strong>Logger</strong>: Structured JSON logging with Loguru</p></li>
+</ul>
+</section>
+<section id="game-layer">
+<h3>Game Layer<a class="headerlink" href="#game-layer" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Game Implementations</strong>: Concrete game classes extending BaseGame</p></li>
+<li><p><strong>Game Server</strong>: HTTP API for game management within containers</p></li>
+<li><p><strong>High Scores</strong>: Persistent score tracking with JSON storage</p></li>
+</ul>
+</section>
+<section id="infrastructure">
+<h3>Infrastructure<a class="headerlink" href="#infrastructure" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Containerization</strong>: Docker with multi-stage builds and X11/audio passthrough</p></li>
+<li><p><strong>CI/CD</strong>: GitHub Actions for automated testing and deployment</p></li>
+<li><p><strong>Documentation</strong>: Sphinx with Read the Docs and GitHub Pages hosting</p></li>
+</ul>
+</section>
+</section>
+<section id="component-relationships">
+<h2>Component Relationships<a class="headerlink" href="#component-relationships" title="Link to this heading"></a></h2>
+<div class="highlight-mermaid notranslate"><div class="highlight"><pre><span></span>graph TB
+    A[Main Entry Point] --&gt; B[BaseGame]
+    B --&gt; C[AssetManager]
+    B --&gt; D[SoundManager]
+    B --&gt; E[SettingsManager]
+    B --&gt; F[Logger]
+    
+    G[Game Implementations] --&gt; B
+    H[Game Server] --&gt; B
+    
+    I[Container Runtime] --&gt; G
+    I --&gt; H
+    
+    J[CI/CD Pipeline] --&gt; K[Documentation]
+    J --&gt; L[Testing]
+</pre></div>
+</div>
+</section>
+<section id="key-design-principles">
+<h2>Key Design Principles<a class="headerlink" href="#key-design-principles" title="Link to this heading"></a></h2>
+<section id="one-button-constraint">
+<h3>1. One-Button Constraint<a class="headerlink" href="#one-button-constraint" title="Link to this heading"></a></h3>
+<p>All games must work with single button input only. This constraint drives the entire architecture and ensures accessibility and simplicity.</p>
+</section>
+<section id="modularity">
+<h3>2. Modularity<a class="headerlink" href="#modularity" title="Link to this heading"></a></h3>
+<p>Each component is designed to be independent and replaceable. The BaseGame class provides a common interface while allowing for game-specific implementations.</p>
+</section>
+<section id="configuration-driven">
+<h3>3. Configuration-Driven<a class="headerlink" href="#configuration-driven" title="Link to this heading"></a></h3>
+<p>Settings are hierarchical and TOML-based, allowing for easy customization without code changes.</p>
+</section>
+<section id="asset-management">
+<h3>4. Asset Management<a class="headerlink" href="#asset-management" title="Link to this heading"></a></h3>
+<p>Centralized asset handling with JSON metadata for animations and structured organization by game and type.</p>
+</section>
+<section id="container-ready">
+<h3>5. Container-Ready<a class="headerlink" href="#container-ready" title="Link to this heading"></a></h3>
+<p>Full Docker support with proper audio and display passthrough for seamless deployment.</p>
+</section>
+</section>
+<section id="technology-stack">
+<h2>Technology Stack<a class="headerlink" href="#technology-stack" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Language</strong>: Python 3.12+</p></li>
+<li><p><strong>Game Framework</strong>: Arcade</p></li>
+<li><p><strong>Package Manager</strong>: uv</p></li>
+<li><p><strong>Configuration</strong>: TOML</p></li>
+<li><p><strong>Logging</strong>: Loguru (JSON format)</p></li>
+<li><p><strong>Audio</strong>: OGG format with event-driven system</p></li>
+<li><p><strong>Containerization</strong>: Docker with docker-compose</p></li>
+<li><p><strong>CI/CD</strong>: GitHub Actions</p></li>
+<li><p><strong>Documentation</strong>: Sphinx with Myst-Parser</p></li>
+<li><p><strong>Hosting</strong>: Read the Docs + GitHub Pages</p></li>
+</ul>
+</section>
+<section id="directory-structure">
+<h2>Directory Structure<a class="headerlink" href="#directory-structure" title="Link to this heading"></a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>unipress/
+├── core/           # Core framework components
+├── games/          # Game implementations
+├── assets/         # Centralized asset management
+├── locales/        # Internationalization
+├── ui/            # User interface components
+├── docs/          # Documentation and ADRs
+└── tests/         # Test suite
+</pre></div>
+</div>
+</section>
+<section id="data-flow">
+<h2>Data Flow<a class="headerlink" href="#data-flow" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Initialization</strong>: Settings loaded, assets initialized, sound system started</p></li>
+<li><p><strong>Game Loop</strong>: Event handling, state updates, rendering, audio processing</p></li>
+<li><p><strong>State Management</strong>: Score tracking, lives system, game progression</p></li>
+<li><p><strong>Persistence</strong>: High scores saved, settings updated, logs written</p></li>
+</ol>
+</section>
+<section id="security-considerations">
+<h2>Security Considerations<a class="headerlink" href="#security-considerations" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Container isolation for game execution</p></li>
+<li><p>Input validation and sanitization</p></li>
+<li><p>Secure configuration management</p></li>
+<li><p>Audit logging for debugging and monitoring</p></li>
+</ul>
+</section>
+<section id="performance-characteristics">
+<h2>Performance Characteristics<a class="headerlink" href="#performance-characteristics" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>60 FPS target for smooth gameplay</p></li>
+<li><p>Efficient asset loading and caching</p></li>
+<li><p>Minimal memory footprint</p></li>
+<li><p>Fast startup times for containerized deployment</p></li>
+</ul>
+</section>
+<section id="extensibility">
+<h2>Extensibility<a class="headerlink" href="#extensibility" title="Link to this heading"></a></h2>
+<p>The architecture is designed for easy extension:</p>
+<ul class="simple">
+<li><p><strong>New Games</strong>: Implement BaseGame interface</p></li>
+<li><p><strong>New Assets</strong>: Follow established naming conventions</p></li>
+<li><p><strong>New Features</strong>: Extend core components without breaking existing games</p></li>
+<li><p><strong>New Platforms</strong>: Container-based deployment supports multiple environments</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, jgrynczewski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

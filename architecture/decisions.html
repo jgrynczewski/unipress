@@ -1,0 +1,439 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Architecture Decision Records (ADRs) &mdash; Unipress 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=30646c52"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Unipress
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Architecture Decision Records (ADRs)</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#adr-structure">ADR Structure</a></li>
+<li><a class="reference internal" href="#decision-categories">Decision Categories</a><ul>
+<li><a class="reference internal" href="#development-tools-standards">Development Tools &amp; Standards</a><ul>
+<li><a class="reference internal" href="#adr-001-dependency-management-with-uv">ADR-001: Dependency Management with uv</a></li>
+<li><a class="reference internal" href="#adr-002-game-framework-selection-arcade">ADR-002: Game Framework Selection (Arcade)</a></li>
+<li><a class="reference internal" href="#adr-003-development-tools-ruff-pytest-mypy">ADR-003: Development Tools (Ruff, Pytest, MyPy)</a></li>
+<li><a class="reference internal" href="#adr-005-conventional-commits-with-git-cz">ADR-005: Conventional Commits with git-cz</a></li>
+<li><a class="reference internal" href="#adr-006-type-checking-with-mypy">ADR-006: Type Checking with MyPy</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#game-design-architecture">Game Design &amp; Architecture</a><ul>
+<li><a class="reference internal" href="#adr-004-game-design-standards">ADR-004: Game Design Standards</a></li>
+<li><a class="reference internal" href="#adr-008-fullscreen-display-standard">ADR-008: Fullscreen Display Standard</a></li>
+<li><a class="reference internal" href="#adr-009-three-lives-system">ADR-009: Three Lives System</a></li>
+<li><a class="reference internal" href="#adr-014-obstacle-spacing-algorithm">ADR-014: Obstacle Spacing Algorithm</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#configuration-data-management">Configuration &amp; Data Management</a><ul>
+<li><a class="reference internal" href="#adr-010-settings-system-with-toml">ADR-010: Settings System with TOML</a></li>
+<li><a class="reference internal" href="#adr-011-internationalization-with-json">ADR-011: Internationalization with JSON</a></li>
+<li><a class="reference internal" href="#adr-012-logging-system-with-loguru">ADR-012: Logging System with Loguru</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#asset-media-management">Asset &amp; Media Management</a><ul>
+<li><a class="reference internal" href="#adr-013-asset-management-system">ADR-013: Asset Management System</a></li>
+<li><a class="reference internal" href="#adr-016-comprehensive-sound-system">ADR-016: Comprehensive Sound System</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#infrastructure-deployment">Infrastructure &amp; Deployment</a><ul>
+<li><a class="reference internal" href="#adr-017-containerization-with-docker-and-uv">ADR-017: Containerization with Docker and uv</a></li>
+<li><a class="reference internal" href="#adr-018-http-server-architecture">ADR-018: HTTP Server Architecture</a></li>
+<li><a class="reference internal" href="#adr-019-http-server-framework-selection">ADR-019: HTTP Server Framework Selection</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#documentation-quality">Documentation &amp; Quality</a><ul>
+<li><a class="reference internal" href="#adr-020-uml-documentation-with-plantuml">ADR-020: UML Documentation with PlantUML</a></li>
+<li><a class="reference internal" href="#adr-021-developer-documentation-with-sphinx">ADR-021: Developer Documentation with Sphinx</a></li>
+<li><a class="reference internal" href="#adr-022-changelog-standards-and-maintenance">ADR-022: Changelog Standards and Maintenance</a></li>
+<li><a class="reference internal" href="#adr-023-documentation-hosting-platform">ADR-023: Documentation Hosting Platform</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#decision-making-process">Decision Making Process</a><ul>
+<li><a class="reference internal" href="#when-to-create-an-adr">When to Create an ADR</a></li>
+<li><a class="reference internal" href="#adr-lifecycle">ADR Lifecycle</a></li>
+<li><a class="reference internal" href="#review-process">Review Process</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#benefits-of-adrs">Benefits of ADRs</a><ul>
+<li><a class="reference internal" href="#for-current-development">For Current Development</a></li>
+<li><a class="reference internal" href="#for-future-maintenance">For Future Maintenance</a></li>
+<li><a class="reference internal" href="#for-project-management">For Project Management</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#related-resources">Related Resources</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Unipress</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Architecture Decision Records (ADRs)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/architecture/decisions.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="architecture-decision-records-adrs">
+<h1>Architecture Decision Records (ADRs)<a class="headerlink" href="#architecture-decision-records-adrs" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>Architecture Decision Records (ADRs) are documents that capture important architectural decisions made during the development of Unipress. Each ADR provides context, decision rationale, and consequences to help future developers understand why certain choices were made.</p>
+</section>
+<section id="adr-structure">
+<h2>ADR Structure<a class="headerlink" href="#adr-structure" title="Link to this heading"></a></h2>
+<p>Each ADR follows a consistent format:</p>
+<ul class="simple">
+<li><p><strong>Title</strong>: Clear, descriptive title</p></li>
+<li><p><strong>Status</strong>: Accepted, Deprecated, Superseded, etc.</p></li>
+<li><p><strong>Context</strong>: Problem or situation requiring a decision</p></li>
+<li><p><strong>Decision</strong>: The architectural decision made</p></li>
+<li><p><strong>Consequences</strong>: Positive and negative outcomes</p></li>
+<li><p><strong>References</strong>: Related documents and resources</p></li>
+</ul>
+</section>
+<section id="decision-categories">
+<h2>Decision Categories<a class="headerlink" href="#decision-categories" title="Link to this heading"></a></h2>
+<section id="development-tools-standards">
+<h3>Development Tools &amp; Standards<a class="headerlink" href="#development-tools-standards" title="Link to this heading"></a></h3>
+<section id="adr-001-dependency-management-with-uv">
+<h4>ADR-001: Dependency Management with uv<a class="headerlink" href="#adr-001-dependency-management-with-uv" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>Decision</strong>: Use <code class="docutils literal notranslate"><span class="pre">uv</span></code> as the primary package manager</p></li>
+<li><p><strong>Rationale</strong>: Fast, modern Rust-based tool with excellent dependency resolution</p></li>
+<li><p><strong>Impact</strong>: Faster dependency installation, better lock file management</p></li>
+</ul>
+</section>
+<section id="adr-002-game-framework-selection-arcade">
+<h4>ADR-002: Game Framework Selection (Arcade)<a class="headerlink" href="#adr-002-game-framework-selection-arcade" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>Decision</strong>: Use Arcade framework for game development</p></li>
+<li><p><strong>Rationale</strong>: Modern Python game library with good performance and ease of use</p></li>
+<li><p><strong>Impact</strong>: Simplified game development, good documentation and community</p></li>
+</ul>
+</section>
+<section id="adr-003-development-tools-ruff-pytest-mypy">
+<h4>ADR-003: Development Tools (Ruff, Pytest, MyPy)<a class="headerlink" href="#adr-003-development-tools-ruff-pytest-mypy" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>Decision</strong>: Ruff for linting/formatting, Pytest for testing, MyPy for type checking</p></li>
+<li><p><strong>Rationale</strong>: Fast, modern tools that work well together</p></li>
+<li><p><strong>Impact</strong>: Consistent code quality, fast feedback loops</p></li>
+</ul>
+</section>
+<section id="adr-005-conventional-commits-with-git-cz">
+<h4>ADR-005: Conventional Commits with git-cz<a class="headerlink" href="#adr-005-conventional-commits-with-git-cz" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>Decision</strong>: Use conventional commits with git-cz for standardized commit messages</p></li>
+<li><p><strong>Rationale</strong>: Clear commit history, automated changelog generation</p></li>
+<li><p><strong>Impact</strong>: Better project history, easier releases</p></li>
+</ul>
+</section>
+<section id="adr-006-type-checking-with-mypy">
+<h4>ADR-006: Type Checking with MyPy<a class="headerlink" href="#adr-006-type-checking-with-mypy" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>Decision</strong>: Implement comprehensive type checking</p></li>
+<li><p><strong>Rationale</strong>: Catch errors early, improve code quality and documentation</p></li>
+<li><p><strong>Impact</strong>: Better IDE support, fewer runtime errors</p></li>
+</ul>
+</section>
+</section>
+<section id="game-design-architecture">
+<h3>Game Design &amp; Architecture<a class="headerlink" href="#game-design-architecture" title="Link to this heading"></a></h3>
+<section id="adr-004-game-design-standards">
+<h4>ADR-004: Game Design Standards<a class="headerlink" href="#adr-004-game-design-standards" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>Decision</strong>: Strict one-button input constraint for all games</p></li>
+<li><p><strong>Rationale</strong>: Ensures accessibility and simplicity across all games</p></li>
+<li><p><strong>Impact</strong>: Consistent user experience, easier game development</p></li>
+</ul>
+</section>
+<section id="adr-008-fullscreen-display-standard">
+<h4>ADR-008: Fullscreen Display Standard<a class="headerlink" href="#adr-008-fullscreen-display-standard" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>Decision</strong>: All games run in fullscreen mode by default</p></li>
+<li><p><strong>Rationale</strong>: Immersive gaming experience, consistent across platforms</p></li>
+<li><p><strong>Impact</strong>: Better user experience, simplified display management</p></li>
+</ul>
+</section>
+<section id="adr-009-three-lives-system">
+<h4>ADR-009: Three Lives System<a class="headerlink" href="#adr-009-three-lives-system" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>Decision</strong>: Standard three-lives system for all games</p></li>
+<li><p><strong>Rationale</strong>: Familiar gaming pattern, provides challenge without frustration</p></li>
+<li><p><strong>Impact</strong>: Consistent game mechanics, predictable difficulty curve</p></li>
+</ul>
+</section>
+<section id="adr-014-obstacle-spacing-algorithm">
+<h4>ADR-014: Obstacle Spacing Algorithm<a class="headerlink" href="#adr-014-obstacle-spacing-algorithm" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>Decision</strong>: Implement adaptive obstacle spacing based on difficulty</p></li>
+<li><p><strong>Rationale</strong>: Ensures fair and engaging gameplay progression</p></li>
+<li><p><strong>Impact</strong>: Better game balance, scalable difficulty</p></li>
+</ul>
+</section>
+</section>
+<section id="configuration-data-management">
+<h3>Configuration &amp; Data Management<a class="headerlink" href="#configuration-data-management" title="Link to this heading"></a></h3>
+<section id="adr-010-settings-system-with-toml">
+<h4>ADR-010: Settings System with TOML<a class="headerlink" href="#adr-010-settings-system-with-toml" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>Decision</strong>: Use TOML for hierarchical configuration</p></li>
+<li><p><strong>Rationale</strong>: Human-readable, supports complex nested structures</p></li>
+<li><p><strong>Impact</strong>: Easy configuration management, good developer experience</p></li>
+</ul>
+</section>
+<section id="adr-011-internationalization-with-json">
+<h4>ADR-011: Internationalization with JSON<a class="headerlink" href="#adr-011-internationalization-with-json" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>Decision</strong>: JSON-based i18n with Polish default, English fallback</p></li>
+<li><p><strong>Rationale</strong>: Simple, flexible localization system</p></li>
+<li><p><strong>Impact</strong>: Easy to add new languages, maintainable translations</p></li>
+</ul>
+</section>
+<section id="adr-012-logging-system-with-loguru">
+<h4>ADR-012: Logging System with Loguru<a class="headerlink" href="#adr-012-logging-system-with-loguru" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>Decision</strong>: Use Loguru for structured JSON logging</p></li>
+<li><p><strong>Rationale</strong>: Excellent performance, structured output, easy configuration</p></li>
+<li><p><strong>Impact</strong>: Better debugging, production monitoring capabilities</p></li>
+</ul>
+</section>
+</section>
+<section id="asset-media-management">
+<h3>Asset &amp; Media Management<a class="headerlink" href="#asset-media-management" title="Link to this heading"></a></h3>
+<section id="adr-013-asset-management-system">
+<h4>ADR-013: Asset Management System<a class="headerlink" href="#adr-013-asset-management-system" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>Decision</strong>: Centralized asset management with JSON metadata</p></li>
+<li><p><strong>Rationale</strong>: Organized resource management, easy to extend</p></li>
+<li><p><strong>Impact</strong>: Consistent asset handling, better performance</p></li>
+</ul>
+</section>
+<section id="adr-016-comprehensive-sound-system">
+<h4>ADR-016: Comprehensive Sound System<a class="headerlink" href="#adr-016-comprehensive-sound-system" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>Decision</strong>: Event-driven audio system with OGG format</p></li>
+<li><p><strong>Rationale</strong>: High-quality audio, efficient event handling</p></li>
+<li><p><strong>Impact</strong>: Rich audio experience, good performance</p></li>
+</ul>
+</section>
+</section>
+<section id="infrastructure-deployment">
+<h3>Infrastructure &amp; Deployment<a class="headerlink" href="#infrastructure-deployment" title="Link to this heading"></a></h3>
+<section id="adr-017-containerization-with-docker-and-uv">
+<h4>ADR-017: Containerization with Docker and uv<a class="headerlink" href="#adr-017-containerization-with-docker-and-uv" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>Decision</strong>: Docker-based deployment with uv package management</p></li>
+<li><p><strong>Rationale</strong>: Consistent environments, easy deployment</p></li>
+<li><p><strong>Impact</strong>: Reproducible builds, simplified deployment</p></li>
+</ul>
+</section>
+<section id="adr-018-http-server-architecture">
+<h4>ADR-018: HTTP Server Architecture<a class="headerlink" href="#adr-018-http-server-architecture" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>Decision</strong>: Flask-based HTTP server for game management</p></li>
+<li><p><strong>Rationale</strong>: Lightweight, Python-native, easy to extend</p></li>
+<li><p><strong>Impact</strong>: API-based game management, scalable architecture</p></li>
+</ul>
+</section>
+<section id="adr-019-http-server-framework-selection">
+<h4>ADR-019: HTTP Server Framework Selection<a class="headerlink" href="#adr-019-http-server-framework-selection" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>Decision</strong>: Flask over FastAPI for simplicity and maturity</p></li>
+<li><p><strong>Rationale</strong>: Simpler learning curve, sufficient features for current needs</p></li>
+<li><p><strong>Impact</strong>: Faster development, easier maintenance</p></li>
+</ul>
+</section>
+</section>
+<section id="documentation-quality">
+<h3>Documentation &amp; Quality<a class="headerlink" href="#documentation-quality" title="Link to this heading"></a></h3>
+<section id="adr-020-uml-documentation-with-plantuml">
+<h4>ADR-020: UML Documentation with PlantUML<a class="headerlink" href="#adr-020-uml-documentation-with-plantuml" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>Decision</strong>: Use PlantUML for generating UML diagrams</p></li>
+<li><p><strong>Rationale</strong>: Text-based diagrams, version control friendly</p></li>
+<li><p><strong>Impact</strong>: Maintainable documentation, clear architecture visualization</p></li>
+</ul>
+</section>
+<section id="adr-021-developer-documentation-with-sphinx">
+<h4>ADR-021: Developer Documentation with Sphinx<a class="headerlink" href="#adr-021-developer-documentation-with-sphinx" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>Decision</strong>: Sphinx with Myst-Parser for comprehensive documentation</p></li>
+<li><p><strong>Rationale</strong>: Excellent Python documentation tool, Markdown support</p></li>
+<li><p><strong>Impact</strong>: Professional documentation, good developer experience</p></li>
+</ul>
+</section>
+<section id="adr-022-changelog-standards-and-maintenance">
+<h4>ADR-022: Changelog Standards and Maintenance<a class="headerlink" href="#adr-022-changelog-standards-and-maintenance" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>Decision</strong>: Follow “Keep a Changelog” and Semantic Versioning</p></li>
+<li><p><strong>Rationale</strong>: Standardized change tracking, clear release history</p></li>
+<li><p><strong>Impact</strong>: Better project transparency, easier releases</p></li>
+</ul>
+</section>
+<section id="adr-023-documentation-hosting-platform">
+<h4>ADR-023: Documentation Hosting Platform<a class="headerlink" href="#adr-023-documentation-hosting-platform" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>Decision</strong>: Read the Docs primary, GitHub Pages backup</p></li>
+<li><p><strong>Rationale</strong>: Professional hosting, good integration with GitHub</p></li>
+<li><p><strong>Impact</strong>: Reliable documentation access, good SEO</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="decision-making-process">
+<h2>Decision Making Process<a class="headerlink" href="#decision-making-process" title="Link to this heading"></a></h2>
+<section id="when-to-create-an-adr">
+<h3>When to Create an ADR<a class="headerlink" href="#when-to-create-an-adr" title="Link to this heading"></a></h3>
+<p>Create an ADR when making decisions about:</p>
+<ul class="simple">
+<li><p><strong>Technology choices</strong>: Frameworks, libraries, tools</p></li>
+<li><p><strong>Architectural patterns</strong>: Design patterns, system structure</p></li>
+<li><p><strong>Standards</strong>: Coding standards, naming conventions</p></li>
+<li><p><strong>Infrastructure</strong>: Deployment, hosting, CI/CD</p></li>
+<li><p><strong>Process changes</strong>: Development workflow, release process</p></li>
+</ul>
+</section>
+<section id="adr-lifecycle">
+<h3>ADR Lifecycle<a class="headerlink" href="#adr-lifecycle" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p><strong>Proposed</strong>: Initial draft for review</p></li>
+<li><p><strong>Accepted</strong>: Decision approved and implemented</p></li>
+<li><p><strong>Deprecated</strong>: Decision no longer relevant</p></li>
+<li><p><strong>Superseded</strong>: Replaced by newer decision</p></li>
+</ol>
+</section>
+<section id="review-process">
+<h3>Review Process<a class="headerlink" href="#review-process" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>All ADRs are reviewed by the development team</p></li>
+<li><p>Decisions are documented before implementation</p></li>
+<li><p>Regular review of existing ADRs for relevance</p></li>
+<li><p>Updates made when circumstances change</p></li>
+</ul>
+</section>
+</section>
+<section id="benefits-of-adrs">
+<h2>Benefits of ADRs<a class="headerlink" href="#benefits-of-adrs" title="Link to this heading"></a></h2>
+<section id="for-current-development">
+<h3>For Current Development<a class="headerlink" href="#for-current-development" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Context preservation</strong>: Why decisions were made</p></li>
+<li><p><strong>Consistency</strong>: Standardized approach across the project</p></li>
+<li><p><strong>Onboarding</strong>: New developers understand project choices</p></li>
+</ul>
+</section>
+<section id="for-future-maintenance">
+<h3>For Future Maintenance<a class="headerlink" href="#for-future-maintenance" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Historical record</strong>: Evolution of the architecture</p></li>
+<li><p><strong>Change tracking</strong>: How and why systems evolved</p></li>
+<li><p><strong>Risk mitigation</strong>: Understanding consequences of changes</p></li>
+</ul>
+</section>
+<section id="for-project-management">
+<h3>For Project Management<a class="headerlink" href="#for-project-management" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Transparency</strong>: Clear decision-making process</p></li>
+<li><p><strong>Accountability</strong>: Documented rationale for choices</p></li>
+<li><p><strong>Communication</strong>: Shared understanding across team</p></li>
+</ul>
+</section>
+</section>
+<section id="related-resources">
+<h2>Related Resources<a class="headerlink" href="#related-resources" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="#../adr/"><span class="xref myst">ADR Directory</span></a> - Complete collection of ADRs</p></li>
+<li><p><a class="reference internal" href="uml.html"><span class="std std-doc">UML Diagrams</span></a> - Visual architecture documentation</p></li>
+<li><p><a class="reference internal" href="#../tutorials/development_standards.md"><span class="xref myst">Development Standards</span></a> - Coding and process guidelines</p></li>
+<li><p><a class="reference internal" href="#../tutorials/contributing.md"><span class="xref myst">Contributing Guide</span></a> - How to contribute to the project</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, jgrynczewski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

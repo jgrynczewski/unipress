@@ -1,0 +1,609 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BaseGame Class &mdash; Unipress 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=30646c52"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Unipress
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">BaseGame Class</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#class-definition">Class Definition</a></li>
+<li><a class="reference internal" href="#inheritance">Inheritance</a></li>
+<li><a class="reference internal" href="#core-features">Core Features</a><ul>
+<li><a class="reference internal" href="#one-button-input-constraint">One-Button Input Constraint</a></li>
+<li><a class="reference internal" href="#asset-management">Asset Management</a></li>
+<li><a class="reference internal" href="#sound-system">Sound System</a></li>
+<li><a class="reference internal" href="#settings-integration">Settings Integration</a></li>
+<li><a class="reference internal" href="#logging">Logging</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#abstract-methods">Abstract Methods</a><ul>
+<li><a class="reference internal" href="#setup"><code class="docutils literal notranslate"><span class="pre">setup()</span></code></a></li>
+<li><a class="reference internal" href="#update-delta-time-float"><code class="docutils literal notranslate"><span class="pre">update(delta_time:</span> <span class="pre">float)</span></code></a></li>
+<li><a class="reference internal" href="#on-draw"><code class="docutils literal notranslate"><span class="pre">on_draw()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#concrete-methods">Concrete Methods</a><ul>
+<li><a class="reference internal" href="#input-handling">Input Handling</a><ul>
+<li><a class="reference internal" href="#on-key-press-key-int-modifiers-int"><code class="docutils literal notranslate"><span class="pre">on_key_press(key:</span> <span class="pre">int,</span> <span class="pre">modifiers:</span> <span class="pre">int)</span></code></a></li>
+<li><a class="reference internal" href="#on-mouse-press-x-int-y-int-button-int-modifiers-int"><code class="docutils literal notranslate"><span class="pre">on_mouse_press(x:</span> <span class="pre">int,</span> <span class="pre">y:</span> <span class="pre">int,</span> <span class="pre">button:</span> <span class="pre">int,</span> <span class="pre">modifiers:</span> <span class="pre">int)</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id1">Asset Management</a><ul>
+<li><a class="reference internal" href="#load-assets"><code class="docutils literal notranslate"><span class="pre">load_assets()</span></code></a></li>
+<li><a class="reference internal" href="#get-sprite-name-str-arcade-sprite"><code class="docutils literal notranslate"><span class="pre">get_sprite(name:</span> <span class="pre">str)</span> <span class="pre">-&gt;</span> <span class="pre">arcade.Sprite</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sound-management">Sound Management</a><ul>
+<li><a class="reference internal" href="#play-sound-category-str-name-str"><code class="docutils literal notranslate"><span class="pre">play_sound(category:</span> <span class="pre">str,</span> <span class="pre">name:</span> <span class="pre">str)</span></code></a></li>
+<li><a class="reference internal" href="#set-volume-volume-float"><code class="docutils literal notranslate"><span class="pre">set_volume(volume:</span> <span class="pre">float)</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#settings-management">Settings Management</a><ul>
+<li><a class="reference internal" href="#get-setting-section-str-key-str-default-none"><code class="docutils literal notranslate"><span class="pre">get_setting(section:</span> <span class="pre">str,</span> <span class="pre">key:</span> <span class="pre">str,</span> <span class="pre">default=None)</span></code></a></li>
+<li><a class="reference internal" href="#set-setting-section-str-key-str-value-any"><code class="docutils literal notranslate"><span class="pre">set_setting(section:</span> <span class="pre">str,</span> <span class="pre">key:</span> <span class="pre">str,</span> <span class="pre">value:</span> <span class="pre">Any)</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#game-state-management">Game State Management</a><ul>
+<li><a class="reference internal" href="#start-game"><code class="docutils literal notranslate"><span class="pre">start_game()</span></code></a></li>
+<li><a class="reference internal" href="#end-game"><code class="docutils literal notranslate"><span class="pre">end_game()</span></code></a></li>
+<li><a class="reference internal" href="#reset-game"><code class="docutils literal notranslate"><span class="pre">reset_game()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ui-rendering">UI Rendering</a><ul>
+<li><a class="reference internal" href="#draw-ui"><code class="docutils literal notranslate"><span class="pre">draw_ui()</span></code></a></li>
+<li><a class="reference internal" href="#draw-text-text-str-x-int-y-int-color-arcade-color-size-int-20"><code class="docutils literal notranslate"><span class="pre">draw_text(text:</span> <span class="pre">str,</span> <span class="pre">x:</span> <span class="pre">int,</span> <span class="pre">y:</span> <span class="pre">int,</span> <span class="pre">color:</span> <span class="pre">arcade.Color,</span> <span class="pre">size:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">20)</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id2">Logging</a><ul>
+<li><a class="reference internal" href="#log-event-event-str-data-dict-none"><code class="docutils literal notranslate"><span class="pre">log_event(event:</span> <span class="pre">str,</span> <span class="pre">data:</span> <span class="pre">dict</span> <span class="pre">=</span> <span class="pre">None)</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#configuration">Configuration</a><ul>
+<li><a class="reference internal" href="#settings-structure">Settings Structure</a></li>
+<li><a class="reference internal" href="#asset-structure">Asset Structure</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#usage-example">Usage Example</a></li>
+<li><a class="reference internal" href="#best-practices">Best Practices</a><ul>
+<li><a class="reference internal" href="#implement-required-methods">1. Implement Required Methods</a></li>
+<li><a class="reference internal" href="#use-asset-manager">2. Use Asset Manager</a></li>
+<li><a class="reference internal" href="#follow-one-button-constraint">3. Follow One-Button Constraint</a></li>
+<li><a class="reference internal" href="#use-settings-system">4. Use Settings System</a></li>
+<li><a class="reference internal" href="#log-important-events">5. Log Important Events</a></li>
+<li><a class="reference internal" href="#handle-errors-gracefully">6. Handle Errors Gracefully</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#related-classes">Related Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Unipress</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">BaseGame Class</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/base_game.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="basegame-class">
+<h1>BaseGame Class<a class="headerlink" href="#basegame-class" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">BaseGame</span></code> class is the abstract base class that provides the foundation for all games in the Unipress framework. It implements the core game loop, input handling, asset management, and common functionality that all one-button games share.</p>
+</section>
+<section id="class-definition">
+<h2>Class Definition<a class="headerlink" href="#class-definition" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">BaseGame</span><span class="p">(</span><span class="n">arcade</span><span class="o">.</span><span class="n">Window</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Abstract base class for all Unipress games.&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="inheritance">
+<h2>Inheritance<a class="headerlink" href="#inheritance" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Parent Class</strong>: <code class="docutils literal notranslate"><span class="pre">arcade.Window</span></code></p></li>
+<li><p><strong>Abstract Methods</strong>: Must be implemented by subclasses</p></li>
+<li><p><strong>Concrete Methods</strong>: Common functionality provided by base class</p></li>
+</ul>
+</section>
+<section id="core-features">
+<h2>Core Features<a class="headerlink" href="#core-features" title="Link to this heading"></a></h2>
+<section id="one-button-input-constraint">
+<h3>One-Button Input Constraint<a class="headerlink" href="#one-button-input-constraint" title="Link to this heading"></a></h3>
+<p>All games inherit the strict one-button input constraint, ensuring accessibility and simplicity across the entire game collection.</p>
+</section>
+<section id="asset-management">
+<h3>Asset Management<a class="headerlink" href="#asset-management" title="Link to this heading"></a></h3>
+<p>Integrated asset loading and caching for sprites, sounds, and animations with JSON metadata support.</p>
+</section>
+<section id="sound-system">
+<h3>Sound System<a class="headerlink" href="#sound-system" title="Link to this heading"></a></h3>
+<p>Event-driven audio system with OGG format support and volume control.</p>
+</section>
+<section id="settings-integration">
+<h3>Settings Integration<a class="headerlink" href="#settings-integration" title="Link to this heading"></a></h3>
+<p>Hierarchical TOML-based configuration system with game-specific settings.</p>
+</section>
+<section id="logging">
+<h3>Logging<a class="headerlink" href="#logging" title="Link to this heading"></a></h3>
+<p>Structured JSON logging with Loguru for debugging and monitoring.</p>
+</section>
+</section>
+<section id="abstract-methods">
+<h2>Abstract Methods<a class="headerlink" href="#abstract-methods" title="Link to this heading"></a></h2>
+<section id="setup">
+<h3><code class="docutils literal notranslate"><span class="pre">setup()</span></code><a class="headerlink" href="#setup" title="Link to this heading"></a></h3>
+<p><strong>Signature</strong>: <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">setup(self)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p>
+<p><strong>Description</strong>: Initialize game-specific components and state.</p>
+<p><strong>Required Implementation</strong>: Yes</p>
+<p><strong>Example</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize game-specific components.&quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">player</span> <span class="o">=</span> <span class="n">arcade</span><span class="o">.</span><span class="n">Sprite</span><span class="p">(</span><span class="s2">&quot;:resources:images/player.png&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">obstacles</span> <span class="o">=</span> <span class="n">arcade</span><span class="o">.</span><span class="n">SpriteList</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">lives</span> <span class="o">=</span> <span class="mi">3</span>
+</pre></div>
+</div>
+</section>
+<section id="update-delta-time-float">
+<h3><code class="docutils literal notranslate"><span class="pre">update(delta_time:</span> <span class="pre">float)</span></code><a class="headerlink" href="#update-delta-time-float" title="Link to this heading"></a></h3>
+<p><strong>Signature</strong>: <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">update(self,</span> <span class="pre">delta_time:</span> <span class="pre">float)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p>
+<p><strong>Description</strong>: Update game logic and state.</p>
+<p><strong>Parameters</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">delta_time</span></code> (float): Time elapsed since last update in seconds</p></li>
+</ul>
+<p><strong>Required Implementation</strong>: Yes</p>
+<p><strong>Example</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delta_time</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Update game logic.&quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">player</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">obstacles</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+    
+    <span class="c1"># Check collisions</span>
+    <span class="k">if</span> <span class="n">arcade</span><span class="o">.</span><span class="n">check_for_collision_with_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">player</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">obstacles</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lives</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sound_manager</span><span class="o">.</span><span class="n">play</span><span class="p">(</span><span class="s2">&quot;player&quot;</span><span class="p">,</span> <span class="s2">&quot;collision&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="on-draw">
+<h3><code class="docutils literal notranslate"><span class="pre">on_draw()</span></code><a class="headerlink" href="#on-draw" title="Link to this heading"></a></h3>
+<p><strong>Signature</strong>: <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">on_draw(self)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p>
+<p><strong>Description</strong>: Render the game screen.</p>
+<p><strong>Required Implementation</strong>: Yes</p>
+<p><strong>Example</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">on_draw</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Render the game screen.&quot;&quot;&quot;</span>
+    <span class="n">arcade</span><span class="o">.</span><span class="n">start_render</span><span class="p">()</span>
+    
+    <span class="c1"># Draw background</span>
+    <span class="n">arcade</span><span class="o">.</span><span class="n">draw_lrwh_rectangle_textured</span><span class="p">(</span>
+        <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">background</span>
+    <span class="p">)</span>
+    
+    <span class="c1"># Draw game objects</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">player</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">obstacles</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+    
+    <span class="c1"># Draw UI</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">draw_ui</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="concrete-methods">
+<h2>Concrete Methods<a class="headerlink" href="#concrete-methods" title="Link to this heading"></a></h2>
+<section id="input-handling">
+<h3>Input Handling<a class="headerlink" href="#input-handling" title="Link to this heading"></a></h3>
+<section id="on-key-press-key-int-modifiers-int">
+<h4><code class="docutils literal notranslate"><span class="pre">on_key_press(key:</span> <span class="pre">int,</span> <span class="pre">modifiers:</span> <span class="pre">int)</span></code><a class="headerlink" href="#on-key-press-key-int-modifiers-int" title="Link to this heading"></a></h4>
+<p><strong>Signature</strong>: <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">on_key_press(self,</span> <span class="pre">key:</span> <span class="pre">int,</span> <span class="pre">modifiers:</span> <span class="pre">int)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p>
+<p><strong>Description</strong>: Handle key press events. Implements one-button constraint.</p>
+<p><strong>Parameters</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">key</span></code> (int): Key code</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">modifiers</span></code> (int): Modifier keys (Ctrl, Alt, etc.)</p></li>
+</ul>
+<p><strong>Implementation</strong>: Provided by base class</p>
+<p><strong>Behavior</strong>:</p>
+<ul class="simple">
+<li><p>Only responds to spacebar and mouse clicks</p></li>
+<li><p>Ignores all other input</p></li>
+<li><p>Logs input events for debugging</p></li>
+</ul>
+</section>
+<section id="on-mouse-press-x-int-y-int-button-int-modifiers-int">
+<h4><code class="docutils literal notranslate"><span class="pre">on_mouse_press(x:</span> <span class="pre">int,</span> <span class="pre">y:</span> <span class="pre">int,</span> <span class="pre">button:</span> <span class="pre">int,</span> <span class="pre">modifiers:</span> <span class="pre">int)</span></code><a class="headerlink" href="#on-mouse-press-x-int-y-int-button-int-modifiers-int" title="Link to this heading"></a></h4>
+<p><strong>Signature</strong>: <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">on_mouse_press(self,</span> <span class="pre">x:</span> <span class="pre">int,</span> <span class="pre">y:</span> <span class="pre">int,</span> <span class="pre">button:</span> <span class="pre">int,</span> <span class="pre">modifiers:</span> <span class="pre">int)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p>
+<p><strong>Description</strong>: Handle mouse press events.</p>
+<p><strong>Parameters</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code> (int): Mouse X coordinate</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code> (int): Mouse Y coordinate</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">button</span></code> (int): Mouse button</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">modifiers</span></code> (int): Modifier keys</p></li>
+</ul>
+<p><strong>Implementation</strong>: Provided by base class</p>
+</section>
+</section>
+<section id="id1">
+<h3>Asset Management<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<section id="load-assets">
+<h4><code class="docutils literal notranslate"><span class="pre">load_assets()</span></code><a class="headerlink" href="#load-assets" title="Link to this heading"></a></h4>
+<p><strong>Signature</strong>: <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">load_assets(self)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p>
+<p><strong>Description</strong>: Load game assets using the asset manager.</p>
+<p><strong>Implementation</strong>: Provided by base class</p>
+<p><strong>Features</strong>:</p>
+<ul class="simple">
+<li><p>Automatic asset discovery</p></li>
+<li><p>JSON metadata loading</p></li>
+<li><p>Caching for performance</p></li>
+<li><p>Error handling for missing assets</p></li>
+</ul>
+</section>
+<section id="get-sprite-name-str-arcade-sprite">
+<h4><code class="docutils literal notranslate"><span class="pre">get_sprite(name:</span> <span class="pre">str)</span> <span class="pre">-&gt;</span> <span class="pre">arcade.Sprite</span></code><a class="headerlink" href="#get-sprite-name-str-arcade-sprite" title="Link to this heading"></a></h4>
+<p><strong>Signature</strong>: <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">get_sprite(self,</span> <span class="pre">name:</span> <span class="pre">str)</span> <span class="pre">-&gt;</span> <span class="pre">arcade.Sprite</span></code></p>
+<p><strong>Description</strong>: Get a sprite from the asset manager.</p>
+<p><strong>Parameters</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code> (str): Asset name</p></li>
+</ul>
+<p><strong>Returns</strong>: <code class="docutils literal notranslate"><span class="pre">arcade.Sprite</span></code> - Loaded sprite</p>
+<p><strong>Example</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">player_sprite</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_sprite</span><span class="p">(</span><span class="s2">&quot;player_idle&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="sound-management">
+<h3>Sound Management<a class="headerlink" href="#sound-management" title="Link to this heading"></a></h3>
+<section id="play-sound-category-str-name-str">
+<h4><code class="docutils literal notranslate"><span class="pre">play_sound(category:</span> <span class="pre">str,</span> <span class="pre">name:</span> <span class="pre">str)</span></code><a class="headerlink" href="#play-sound-category-str-name-str" title="Link to this heading"></a></h4>
+<p><strong>Signature</strong>: <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">play_sound(self,</span> <span class="pre">category:</span> <span class="pre">str,</span> <span class="pre">name:</span> <span class="pre">str)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p>
+<p><strong>Description</strong>: Play a sound effect.</p>
+<p><strong>Parameters</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">category</span></code> (str): Sound category (e.g., “player”, “ui”)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code> (str): Sound name</p></li>
+</ul>
+<p><strong>Example</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">play_sound</span><span class="p">(</span><span class="s2">&quot;player&quot;</span><span class="p">,</span> <span class="s2">&quot;jump&quot;</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">play_sound</span><span class="p">(</span><span class="s2">&quot;ui&quot;</span><span class="p">,</span> <span class="s2">&quot;button_click&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="set-volume-volume-float">
+<h4><code class="docutils literal notranslate"><span class="pre">set_volume(volume:</span> <span class="pre">float)</span></code><a class="headerlink" href="#set-volume-volume-float" title="Link to this heading"></a></h4>
+<p><strong>Signature</strong>: <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">set_volume(self,</span> <span class="pre">volume:</span> <span class="pre">float)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p>
+<p><strong>Description</strong>: Set master volume (0.0 to 1.0).</p>
+<p><strong>Parameters</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">volume</span></code> (float): Volume level</p></li>
+</ul>
+</section>
+</section>
+<section id="settings-management">
+<h3>Settings Management<a class="headerlink" href="#settings-management" title="Link to this heading"></a></h3>
+<section id="get-setting-section-str-key-str-default-none">
+<h4><code class="docutils literal notranslate"><span class="pre">get_setting(section:</span> <span class="pre">str,</span> <span class="pre">key:</span> <span class="pre">str,</span> <span class="pre">default=None)</span></code><a class="headerlink" href="#get-setting-section-str-key-str-default-none" title="Link to this heading"></a></h4>
+<p><strong>Signature</strong>: <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">get_setting(self,</span> <span class="pre">section:</span> <span class="pre">str,</span> <span class="pre">key:</span> <span class="pre">str,</span> <span class="pre">default=None)</span> <span class="pre">-&gt;</span> <span class="pre">Any</span></code></p>
+<p><strong>Description</strong>: Get a setting value.</p>
+<p><strong>Parameters</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">section</span></code> (str): Settings section</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">key</span></code> (str): Setting key</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">default</span></code>: Default value if not found</p></li>
+</ul>
+<p><strong>Returns</strong>: Setting value</p>
+<p><strong>Example</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">difficulty</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s2">&quot;game&quot;</span><span class="p">,</span> <span class="s2">&quot;difficulty&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">volume</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s2">&quot;audio&quot;</span><span class="p">,</span> <span class="s2">&quot;volume&quot;</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="set-setting-section-str-key-str-value-any">
+<h4><code class="docutils literal notranslate"><span class="pre">set_setting(section:</span> <span class="pre">str,</span> <span class="pre">key:</span> <span class="pre">str,</span> <span class="pre">value:</span> <span class="pre">Any)</span></code><a class="headerlink" href="#set-setting-section-str-key-str-value-any" title="Link to this heading"></a></h4>
+<p><strong>Signature</strong>: <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">set_setting(self,</span> <span class="pre">section:</span> <span class="pre">str,</span> <span class="pre">key:</span> <span class="pre">str,</span> <span class="pre">value:</span> <span class="pre">Any)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p>
+<p><strong>Description</strong>: Set a setting value.</p>
+<p><strong>Parameters</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">section</span></code> (str): Settings section</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">key</span></code> (str): Setting key</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">value</span></code>: Setting value</p></li>
+</ul>
+</section>
+</section>
+<section id="game-state-management">
+<h3>Game State Management<a class="headerlink" href="#game-state-management" title="Link to this heading"></a></h3>
+<section id="start-game">
+<h4><code class="docutils literal notranslate"><span class="pre">start_game()</span></code><a class="headerlink" href="#start-game" title="Link to this heading"></a></h4>
+<p><strong>Signature</strong>: <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">start_game(self)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p>
+<p><strong>Description</strong>: Start the game.</p>
+<p><strong>Implementation</strong>: Provided by base class</p>
+<p><strong>Features</strong>:</p>
+<ul class="simple">
+<li><p>Initialize game state</p></li>
+<li><p>Start game loop</p></li>
+<li><p>Load assets</p></li>
+<li><p>Set up logging</p></li>
+</ul>
+</section>
+<section id="end-game">
+<h4><code class="docutils literal notranslate"><span class="pre">end_game()</span></code><a class="headerlink" href="#end-game" title="Link to this heading"></a></h4>
+<p><strong>Signature</strong>: <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">end_game(self)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p>
+<p><strong>Description</strong>: End the game.</p>
+<p><strong>Implementation</strong>: Provided by base class</p>
+<p><strong>Features</strong>:</p>
+<ul class="simple">
+<li><p>Save high scores</p></li>
+<li><p>Clean up resources</p></li>
+<li><p>Log game statistics</p></li>
+</ul>
+</section>
+<section id="reset-game">
+<h4><code class="docutils literal notranslate"><span class="pre">reset_game()</span></code><a class="headerlink" href="#reset-game" title="Link to this heading"></a></h4>
+<p><strong>Signature</strong>: <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">reset_game(self)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p>
+<p><strong>Description</strong>: Reset game state.</p>
+<p><strong>Implementation</strong>: Provided by base class</p>
+<p><strong>Features</strong>:</p>
+<ul class="simple">
+<li><p>Reset score and lives</p></li>
+<li><p>Clear game objects</p></li>
+<li><p>Restart game loop</p></li>
+</ul>
+</section>
+</section>
+<section id="ui-rendering">
+<h3>UI Rendering<a class="headerlink" href="#ui-rendering" title="Link to this heading"></a></h3>
+<section id="draw-ui">
+<h4><code class="docutils literal notranslate"><span class="pre">draw_ui()</span></code><a class="headerlink" href="#draw-ui" title="Link to this heading"></a></h4>
+<p><strong>Signature</strong>: <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">draw_ui(self)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p>
+<p><strong>Description</strong>: Draw user interface elements.</p>
+<p><strong>Implementation</strong>: Provided by base class</p>
+<p><strong>Features</strong>:</p>
+<ul class="simple">
+<li><p>Score display</p></li>
+<li><p>Lives counter</p></li>
+<li><p>Game status</p></li>
+<li><p>Consistent styling</p></li>
+</ul>
+</section>
+<section id="draw-text-text-str-x-int-y-int-color-arcade-color-size-int-20">
+<h4><code class="docutils literal notranslate"><span class="pre">draw_text(text:</span> <span class="pre">str,</span> <span class="pre">x:</span> <span class="pre">int,</span> <span class="pre">y:</span> <span class="pre">int,</span> <span class="pre">color:</span> <span class="pre">arcade.Color,</span> <span class="pre">size:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">20)</span></code><a class="headerlink" href="#draw-text-text-str-x-int-y-int-color-arcade-color-size-int-20" title="Link to this heading"></a></h4>
+<p><strong>Signature</strong>: <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">draw_text(self,</span> <span class="pre">text:</span> <span class="pre">str,</span> <span class="pre">x:</span> <span class="pre">int,</span> <span class="pre">y:</span> <span class="pre">int,</span> <span class="pre">color:</span> <span class="pre">arcade.Color,</span> <span class="pre">size:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">20)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p>
+<p><strong>Description</strong>: Draw text with consistent styling.</p>
+<p><strong>Parameters</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">text</span></code> (str): Text to draw</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code> (int): X coordinate</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code> (int): Y coordinate</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">color</span></code> (arcade.Color): Text color</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">size</span></code> (int): Font size</p></li>
+</ul>
+</section>
+</section>
+<section id="id2">
+<h3>Logging<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<section id="log-event-event-str-data-dict-none">
+<h4><code class="docutils literal notranslate"><span class="pre">log_event(event:</span> <span class="pre">str,</span> <span class="pre">data:</span> <span class="pre">dict</span> <span class="pre">=</span> <span class="pre">None)</span></code><a class="headerlink" href="#log-event-event-str-data-dict-none" title="Link to this heading"></a></h4>
+<p><strong>Signature</strong>: <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">log_event(self,</span> <span class="pre">event:</span> <span class="pre">str,</span> <span class="pre">data:</span> <span class="pre">dict</span> <span class="pre">=</span> <span class="pre">None)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p>
+<p><strong>Description</strong>: Log a game event.</p>
+<p><strong>Parameters</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">event</span></code> (str): Event name</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">data</span></code> (dict): Event data</p></li>
+</ul>
+<p><strong>Example</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">log_event</span><span class="p">(</span><span class="s2">&quot;player_jump&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="n">jump_height</span><span class="p">})</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">log_event</span><span class="p">(</span><span class="s2">&quot;obstacle_hit&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;obstacle_type&quot;</span><span class="p">:</span> <span class="s2">&quot;fire&quot;</span><span class="p">})</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading"></a></h2>
+<section id="settings-structure">
+<h3>Settings Structure<a class="headerlink" href="#settings-structure" title="Link to this heading"></a></h3>
+<p>The BaseGame class expects the following settings structure:</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[display]</span>
+<span class="n">fullscreen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<span class="n">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1920</span>
+<span class="n">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1080</span>
+
+<span class="k">[audio]</span>
+<span class="n">enabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<span class="n">volume</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.8</span>
+
+<span class="k">[game]</span>
+<span class="n">difficulty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span>
+<span class="n">lives</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span>
+
+<span class="k">[logging]</span>
+<span class="n">level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;INFO&quot;</span>
+<span class="n">format</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;json&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="asset-structure">
+<h3>Asset Structure<a class="headerlink" href="#asset-structure" title="Link to this heading"></a></h3>
+<p>Assets should be organized as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>assets/
+├── games/
+│   └── game_name/
+│       ├── sprites/
+│       ├── sounds/
+│       └── animations/
+└── global/
+    ├── ui/
+    └── system/
+</pre></div>
+</div>
+</section>
+</section>
+<section id="usage-example">
+<h2>Usage Example<a class="headerlink" href="#usage-example" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">unipress.core.base_game</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseGame</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">arcade</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MyGame</span><span class="p">(</span><span class="n">BaseGame</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize game components.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">player</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_sprite</span><span class="p">(</span><span class="s2">&quot;player&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">obstacles</span> <span class="o">=</span> <span class="n">arcade</span><span class="o">.</span><span class="n">SpriteList</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
+        
+    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delta_time</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update game logic.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">player</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">obstacles</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+        
+        <span class="c1"># Game logic here</span>
+        
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_draw</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Render the game.&quot;&quot;&quot;</span>
+        <span class="n">arcade</span><span class="o">.</span><span class="n">start_render</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">player</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">obstacles</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">draw_ui</span><span class="p">()</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the game.&quot;&quot;&quot;</span>
+    <span class="n">game</span> <span class="o">=</span> <span class="n">MyGame</span><span class="p">()</span>
+    <span class="n">game</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="best-practices">
+<h2>Best Practices<a class="headerlink" href="#best-practices" title="Link to this heading"></a></h2>
+<section id="implement-required-methods">
+<h3>1. Implement Required Methods<a class="headerlink" href="#implement-required-methods" title="Link to this heading"></a></h3>
+<p>Always implement <code class="docutils literal notranslate"><span class="pre">setup()</span></code>, <code class="docutils literal notranslate"><span class="pre">update()</span></code>, and <code class="docutils literal notranslate"><span class="pre">on_draw()</span></code> methods.</p>
+</section>
+<section id="use-asset-manager">
+<h3>2. Use Asset Manager<a class="headerlink" href="#use-asset-manager" title="Link to this heading"></a></h3>
+<p>Load assets through the asset manager for consistent handling.</p>
+</section>
+<section id="follow-one-button-constraint">
+<h3>3. Follow One-Button Constraint<a class="headerlink" href="#follow-one-button-constraint" title="Link to this heading"></a></h3>
+<p>Only respond to spacebar and mouse clicks.</p>
+</section>
+<section id="use-settings-system">
+<h3>4. Use Settings System<a class="headerlink" href="#use-settings-system" title="Link to this heading"></a></h3>
+<p>Access configuration through the settings system.</p>
+</section>
+<section id="log-important-events">
+<h3>5. Log Important Events<a class="headerlink" href="#log-important-events" title="Link to this heading"></a></h3>
+<p>Log game events for debugging and analytics.</p>
+</section>
+<section id="handle-errors-gracefully">
+<h3>6. Handle Errors Gracefully<a class="headerlink" href="#handle-errors-gracefully" title="Link to this heading"></a></h3>
+<p>Use try-catch blocks for asset loading and game logic.</p>
+</section>
+</section>
+<section id="related-classes">
+<h2>Related Classes<a class="headerlink" href="#related-classes" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="#assets.md"><span class="xref myst">AssetManager</span></a> - Asset loading and management</p></li>
+<li><p><a class="reference internal" href="#sound.md"><span class="xref myst">SoundManager</span></a> - Audio system</p></li>
+<li><p><a class="reference internal" href="#settings.md"><span class="xref myst">SettingsManager</span></a> - Configuration management</p></li>
+<li><p><a class="reference internal" href="#logger.md"><span class="xref myst">Logger</span></a> - Logging system</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, jgrynczewski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
