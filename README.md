@@ -70,6 +70,62 @@ uv run python -m unipress.games.jumper.game 5
 uv run python -m unipress.games.demo_jump.game 5
 ```
 
+## 🐳 Game Server Architecture
+
+The project supports a server-based architecture for faster game launching:
+
+### Architecture Overview
+
+```
+┌─────────────────┐    HTTP API    ┌──────────────────┐
+│   Python Client │ ──────────────► │  Docker Container │
+│   (on host)     │                │  (Game Server)   │
+└─────────────────┘                └──────────────────┘
+                                           │
+                                           ▼
+                                    ┌──────────────────┐
+                                    │   Arcade Games   │
+                                    │  (jumper, demo)  │
+                                    └──────────────────┘
+```
+
+### Quick Server Setup
+
+```bash
+# 1. Build the container
+docker build --target runtime -t unipress:latest .
+
+# 2. Start the server
+docker compose up game-server -d
+
+# 3. Check server health
+curl http://localhost:5000/health
+
+# 4. Run games via CLI
+uv run python unipress_cli.py list
+uv run python unipress_cli.py run jumper --difficulty 7
+uv run python unipress_cli.py status
+uv run python unipress_cli.py stop
+```
+
+### API Endpoints
+
+- `GET /health` - Server health check
+- `GET /games/list` - List available games
+- `POST /games/run` - Start a game
+- `POST /games/stop` - Stop current game
+- `GET /games/status` - Game status
+
+### Python Client
+
+```python
+from unipress.client import UnipressClient
+
+client = UnipressClient("http://localhost:5000")
+result = client.run_game("jumper", difficulty=8)
+completed = client.wait_for_game_completion(timeout=300)
+```
+
 ## 🐳 Containers (Docker)
 
 ### Prerequisites
@@ -83,24 +139,41 @@ xhost +si:localuser:$(whoami)
 
 ### Build image
 ```bash
-docker build -t unipress:latest .
+# Build runtime image (recommended for production)
+docker build --target runtime -t unipress:latest .
+
+# Build dev image (includes QA checks)
+docker build --target dev -t unipress:dev .
 ```
 
-### Run (recommended: Docker Compose)
+### Run Game Server (Recommended)
+
+The project now uses a server-based architecture for faster game launching:
+
 ```bash
-xhost +si:localuser:$(whoami)
+# Start the game server
+docker compose up game-server -d
+
+# Check server health
+curl http://localhost:5000/health
+
+# Run games via CLI
+uv run python unipress_cli.py list
+uv run python unipress_cli.py run jumper --difficulty 7
+```
+
+### Legacy Direct Game Running (Deprecated)
+
+For direct game execution without the server:
+
+```bash
+# Run with Docker Compose (legacy)
 docker compose up --build run
-```
-- Default game: Jumper via `uv run -m unipress.games.jumper.game`
-- Set difficulty (example: 7):
-```bash
+
+# Run specific difficulty
 docker compose run --rm run 7
-```
 
-### Run a different game (inside container)
-Override the module at the end of the docker run command:
-
-```bash
+# Run different game directly
 docker run --rm \
   -e DISPLAY=$DISPLAY \
   -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
@@ -112,41 +185,18 @@ docker run --rm \
   unipress:latest uv run python -m unipress.games.demo_jump.game 5
 ```
 
-### Direct Docker (without compose)
-```bash
-xhost +si:localuser:$(whoami)
-docker run --rm \
-  -e DISPLAY=$DISPLAY \
-  -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
-  -v "$(pwd)/high_scores.json:/app/high_scores.json" \
-  --device /dev/snd --device /dev/dri \
-  --group-add audio \
-  --group-add $(getent group video | cut -d: -f3) \
-  --group-add $(getent group render | cut -d: -f3) \
-  unipress:latest
-```
-- Difficulty override: append a number, e.g. `... unipress:latest 7`
-
-### Audio and GPU notes
-- Audio: container maps `/dev/snd` and adds `audio` group. ALSA warnings can appear without a usable device.
-- OGG decoding: enabled via ffmpeg in the image.
-- GPU: Mesa DRI drivers included; `/dev/dri` mapped via compose. On NVIDIA, use NVIDIA Container Toolkit and `--gpus all`.
-- Wayland: if you see DRI3 errors or choppy rendering, try an Xorg session or set `LIBGL_DRI3_DISABLE=1` in compose.
-
-### Dev/Test image (QA in-build)
-Build a dev stage image that runs QA checks (ruff, mypy, pytest) under headless X (xvfb):
-
-```bash
-docker build --target dev -t unipress:dev .
-```
+### Audio and GPU Support
+- **Audio**: Container maps `/dev/snd` and adds `audio` group. Full PipeWire support for game sound effects.
+- **OGG decoding**: Enabled via ffmpeg in the image.
+- **GPU**: Mesa DRI drivers included; `/dev/dri` mapped via compose. On NVIDIA, use NVIDIA Container Toolkit and `--gpus all`.
+- **Wayland**: If you see DRI3 errors or choppy rendering, try an Xorg session or set `LIBGL_DRI3_DISABLE=1` in compose.
 
 ### Troubleshooting
-- Black window / no UI: ensure `xhost +si:localuser:$(whoami)` and that `DISPLAY` and `/tmp/.X11-unix` are mounted.
-- “No decoders for .ogg”: ensure you use the provided Dockerfile (ffmpeg present).
-- “Permission denied: logs”: don’t override the container user in compose.
-- GLX/DRI errors or low FPS: ensure `/dev/dri` is mapped and host `video`/`render` GIDs are added; try Xorg session.
-
- 
+- **Black window / no UI**: Ensure `xhost +si:localuser:$(whoami)` and that `DISPLAY` and `/tmp/.X11-unix` are mounted.
+- **"No decoders for .ogg"**: Ensure you use the provided Dockerfile (ffmpeg present).
+- **"Permission denied: logs"**: Don't override the container user in compose.
+- **GLX/DRI errors or low FPS**: Ensure `/dev/dri` is mapped and host `video`/`render` GIDs are added; try Xorg session.
+- **Server not responding**: Check `docker compose logs game-server` and ensure the server is running with `docker compose ps`.
 
 ## ⚙️ Configuration
 
