@@ -57,11 +57,16 @@
   - [ ] User experience metrics
 
 ### Documentation Enhancements
+- [x] **Add Git Flow workflow** with detailed guidelines
+  - [x] GitHub Flow variant for small teams
+  - [x] Branch naming conventions (feat/, fix/, chore/, docs/)
+  - [x] Pull request templates and review process
+  - [x] Branch protection rules and squash merging
+  - [x] ADR-024: Git Flow Branching Strategy documentation
 - [ ] **Add CONTRIBUTING.md** with detailed guidelines
   - [ ] Development setup instructions
   - [ ] Code style guidelines
   - [ ] Testing requirements
-  - [ ] Pull request process
   - [ ] Release process
 - [x] **Add CHANGELOG.md** for version history
   - [x] Document all releases

@@ -69,6 +69,7 @@ Exceptions: None by default. Even read-only diagnostics should be proposed first
 14. **Responsive Positioning**: ✅ Game objects scale with window size changes (fullscreen toggle)
 15. **AI Development Tools**: ✅ Claude Code selected for development assistance (ADR-015)
 16. **Sound System**: ✅ Comprehensive audio with OGG format and event-based architecture (ADR-016)
+17. **Git Flow**: ✅ GitHub Flow variant with conventional branch naming and pull request workflow (ADR-024)
 
 ## Commit Standards (git-cz)
 **Format**: `type(scope): emoji subject` (space after emoji)
@@ -81,7 +82,8 @@ Exceptions: None by default. Even read-only diagnostics should be proposed first
 - `style: 💄 Code formatting`
 - `refactor: 💡 Code restructuring`
 - `test: 💍 Adding tests`
-- `perf: ⚡️ Performance improvements`
+- `perf: ⚡ Performance improvements`
+- `release: 🏹 Create a release commit`
 - `ci: 🎡 CI changes`
 
 **Example**: `feat: 🎸 add new jumping mechanics`
@@ -90,6 +92,44 @@ Exceptions: None by default. Even read-only diagnostics should be proposed first
 - **Separate commits for unrelated changes** - especially for different bug fixes
 - Each commit should address ONE logical change or fix
 - Never bundle unrelated fixes into a single commit
+
+## Git Flow Standards
+**Branch naming and workflow rules:**
+
+### Branch Types
+- **`master`** - Main production branch, always deployable
+- **`feat/*`** - Feature branches for new functionality
+- **`fix/*`** - Bug fix branches for critical issues
+- **`chore/*`** - Maintenance and tooling changes
+- **`docs/*`** - Documentation updates
+- **`release/*`** - Release preparation branches
+
+### Workflow Rules
+1. **Direct to master** - Features merge directly to master via pull requests
+2. **Pull request required** - All changes must go through review
+3. **Squash merging** - Use squash merge to keep history clean
+4. **Branch protection** - Master branch is protected with required reviews and CI checks
+
+### Quick Commands
+```bash
+# Start new feature
+git checkout master
+git pull origin master
+git checkout -b feat/new-feature
+
+# Make changes and commit
+git add .
+git commit -m "feat: 🎸 add new game feature"
+
+# Push and create PR
+git push origin feat/new-feature
+# Then create PR on GitHub
+
+# After merge, clean up
+git checkout master
+git pull origin master
+git branch -d feat/new-feature
+```
 
 Reference: https://www.npmjs.com/package/git-cz#custom-config
 

@@ -1,0 +1,135 @@
+name: Git Flow Validation
+
+on:
+  pull_request:
+    branches: [ master, main ]
+  push:
+    branches: [ master, main ]
+
+jobs:
+  validate-branch-naming:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+    - name: Check branch naming convention
+      run: |
+        BRANCH_NAME="${{ github.head_ref }}"
+        
+        # Check if branch follows naming convention
+        if [[ ! $BRANCH_NAME =~ ^(feat|fix|chore|docs|release)/.+ ]]; then
+          echo "❌ Branch name '$BRANCH_NAME' does not follow convention"
+          echo "Expected format: type/description (e.g., feat/new-game, fix/collision-bug)"
+          echo "Valid types: feat, fix, chore, docs, release"
+          exit 1
+        fi
+        
+        echo "✅ Branch name '$BRANCH_NAME' follows convention"
+
+  validate-commit-messages:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: Check commit message format
+      run: |
+        # Get commits in this PR
+        COMMITS=$(git log --oneline origin/master..HEAD)
+        
+        # Check each commit
+        while IFS= read -r commit; do
+          HASH=$(echo "$commit" | cut -d' ' -f1)
+          MESSAGE=$(echo "$commit" | cut -d' ' -f2-)
+          
+          # Check if commit follows conventional format
+          if [[ ! $MESSAGE =~ ^(feat|fix|docs|chore|refactor|test|style|perf|release|ci): ]]; then
+            echo "❌ Commit $HASH does not follow conventional commit format"
+            echo "Message: $MESSAGE"
+            echo "Expected format: type: description (e.g., feat: add new game)"
+            exit 1
+          fi
+        done <<< "$COMMITS"
+        
+        echo "✅ All commits follow conventional format"
+
+  check-pr-template:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+    - name: Check PR template usage
+      run: |
+        PR_BODY="${{ github.event.pull_request.body }}"
+        
+        # Check if PR has description
+        if [[ -z "$PR_BODY" ]]; then
+          echo "❌ Pull request has no description"
+          echo "Please use the PR template to describe your changes"
+          exit 1
+        fi
+        
+        # Check if PR mentions type of change
+        if [[ ! "$PR_BODY" =~ "Type of Change" ]]; then
+          echo "❌ Pull request does not specify type of change"
+          echo "Please use the PR template and check the appropriate type"
+          exit 1
+        fi
+        
+        echo "✅ Pull request uses template correctly"
+
+  validate-changes:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install uv
+      uses: astral-sh/setup-uv@v4
+      with:
+        version: "latest"
+    
+    - name: Set up Python
+      run: uv python install 3.12
+    
+    - name: Install dependencies
+      run: uv sync
+    
+    - name: Check for unrelated changes
+      run: |
+        # Get list of changed files
+        CHANGED_FILES=$(git diff --name-only origin/master..HEAD)
+        
+        # Check if changes span multiple unrelated areas
+        FEATURES=0
+        FIXES=0
+        DOCS=0
+        CHORES=0
+        
+        while IFS= read -r file; do
+          if [[ "$file" =~ \.py$ ]] && [[ ! "$file" =~ test ]]; then
+            FEATURES=$((FEATURES + 1))
+          elif [[ "$file" =~ \.md$ ]] || [[ "$file" =~ docs/ ]]; then
+            DOCS=$((DOCS + 1))
+          elif [[ "$file" =~ pyproject\.toml$ ]] || [[ "$file" =~ \.yml$ ]]; then
+            CHORES=$((CHORES + 1))
+          fi
+        done <<< "$CHANGED_FILES"
+        
+        # If multiple types of changes, warn
+        CHANGE_TYPES=0
+        [[ $FEATURES -gt 0 ]] && CHANGE_TYPES=$((CHANGE_TYPES + 1))
+        [[ $DOCS -gt 0 ]] && CHANGE_TYPES=$((CHANGE_TYPES + 1))
+        [[ $CHORES -gt 0 ]] && CHANGE_TYPES=$((CHANGE_TYPES + 1))
+        
+        if [[ $CHANGE_TYPES -gt 1 ]]; then
+          echo "⚠️  Warning: PR contains multiple types of changes"
+          echo "Consider splitting into separate PRs for better review"
+          echo "Features: $FEATURES, Docs: $DOCS, Chores: $CHORES"
+        else
+          echo "✅ PR contains focused changes"
+        fi
