@@ -150,6 +150,13 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#project-structure">Project Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#development-planning">Development Planning</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#when-to-create-plans">When to Create Plans</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#plan-management-workflow">Plan Management Workflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#claude-code-development-tools">Claude Code Development Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#git-flow-requirements">Git Flow Requirements</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#contributing">Contributing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#next-steps">Next Steps</a></li>
 </ul>
@@ -776,14 +783,71 @@ uv<span class="w"> </span>run<span class="w"> </span>pytest<span class="w"> </sp
 </pre></div>
 </div>
 </section>
+<section id="development-planning">
+<h2>Development Planning<a class="headerlink" href="#development-planning" title="Link to this heading"></a></h2>
+<section id="when-to-create-plans">
+<h3>When to Create Plans<a class="headerlink" href="#when-to-create-plans" title="Link to this heading"></a></h3>
+<p>Create formal development plans for:</p>
+<ul class="simple">
+<li><p><strong>Major Features</strong>: New games, system enhancements</p></li>
+<li><p><strong>Architecture Changes</strong>: Core system modifications</p></li>
+<li><p><strong>Tool Adoption</strong>: New development tools or frameworks</p></li>
+<li><p><strong>Process Changes</strong>: Workflow or quality standard updates</p></li>
+</ul>
+</section>
+<section id="plan-management-workflow">
+<h3>Plan Management Workflow<a class="headerlink" href="#plan-management-workflow" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Create plan document</span>
+touch<span class="w"> </span>docs/plans/YYYY-MM-DD-plan-name.md
+
+<span class="c1"># 2. Write plan following template in docs/plans/README.md</span>
+<span class="c1"># Include: Executive Summary, Phases, Metrics, Risks, Resources</span>
+
+<span class="c1"># 3. Update plan status in docs/plans/README.md</span>
+<span class="c1"># Status: Draft → Approved → In Progress → Completed/Cancelled</span>
+
+<span class="c1"># 4. Reference plan in related ADRs and TODO.md updates</span>
+</pre></div>
+</div>
+</section>
+<section id="claude-code-development-tools">
+<h3>Claude Code Development Tools<a class="headerlink" href="#claude-code-development-tools" title="Link to this heading"></a></h3>
+<p>Essential slash commands for Unipress development:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Start new feature with proper Git Flow</span>
+/git-start<span class="w"> </span>feat<span class="w"> </span>new-feature-name
+
+<span class="c1"># Run complete quality assurance pipeline  </span>
+/qa
+
+<span class="c1"># Generate test coverage report and identify gaps</span>
+/test-coverage
+
+<span class="c1"># Scaffold new game with proper structure</span>
+/new-game<span class="w"> </span>puzzle_challenge
+</pre></div>
+</div>
+</section>
+<section id="git-flow-requirements">
+<h3>Git Flow Requirements<a class="headerlink" href="#git-flow-requirements" title="Link to this heading"></a></h3>
+<p>All development work must follow Git Flow standards:</p>
+<ol class="arabic simple">
+<li><p><strong>Start from master</strong>: Always create branches from updated master</p></li>
+<li><p><strong>Proper naming</strong>: Use <code class="docutils literal notranslate"><span class="pre">feat/</span></code>, <code class="docutils literal notranslate"><span class="pre">fix/</span></code>, <code class="docutils literal notranslate"><span class="pre">docs/</span></code>, <code class="docutils literal notranslate"><span class="pre">chore/</span></code> prefixes</p></li>
+<li><p><strong>Conventional commits</strong>: Use git-cz format with emojis</p></li>
+<li><p><strong>Quality checks</strong>: All commits must pass <code class="docutils literal notranslate"><span class="pre">/qa</span></code> pipeline</p></li>
+<li><p><strong>Pull requests</strong>: All changes require PR review before merge</p></li>
+</ol>
+</section>
+</section>
 <section id="contributing">
 <h2>Contributing<a class="headerlink" href="#contributing" title="Link to this heading"></a></h2>
 <ol class="arabic simple">
 <li><p>Fork the repository</p></li>
-<li><p>Create a feature branch</p></li>
-<li><p>Make your changes</p></li>
-<li><p>Run tests and linting</p></li>
-<li><p>Submit a pull request</p></li>
+<li><p>Follow Git Flow: create properly named feature branch</p></li>
+<li><p>Create development plan if needed (major changes)</p></li>
+<li><p>Make your changes following coding standards</p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">/qa</span></code> command to validate quality</p></li>
+<li><p>Submit a pull request with plan reference (if applicable)</p></li>
 </ol>
 </section>
 <section id="next-steps">
