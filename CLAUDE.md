@@ -37,6 +37,76 @@ ALL game mechanics and UI must work with timing-based or automatic cycling inter
 - **Assistant responds in English only**
 - **All code, comments, and documentation in English**
 
+## 🔴 GIT FLOW CHECKLIST (MANDATORY BEFORE ANY FILE CHANGES)
+**CRITICAL**: Before making ANY file changes, commits, or structural modifications, the assistant MUST follow this Git Flow process:
+
+### Pre-Work Validation
+1. **Check current branch**: `git branch --show-current`
+   - If not on appropriate feature branch, STOP and follow Git Flow
+   - Never work directly on `master` branch
+2. **Verify branch naming** follows conventions:
+   - `feat/feature-name` - New features or enhancements
+   - `fix/bug-description` - Bug fixes and corrections  
+   - `docs/topic-name` - Documentation updates
+   - `chore/task-description` - Maintenance, tooling, refactoring
+   - `release/version-number` - Release preparation
+
+### Git Flow Startup Process
+When starting new work, ALWAYS execute these steps in order:
+```bash
+# 1. Check current status
+git status
+
+# 2. Switch to master and get latest
+git checkout master
+git pull origin master
+
+# 3. Create appropriately named feature branch
+git checkout -b [type]/[descriptive-name]
+
+# 4. Verify clean start
+git status
+```
+
+### Branch Type Guidelines
+- **feat/**: New games, features, major enhancements
+- **fix/**: Bug fixes, error corrections, issue resolutions
+- **docs/**: Documentation updates, ADRs, README changes
+- **chore/**: Build system, dependencies, tooling, refactoring
+
+### Commit Message Standards (MANDATORY)
+When committing changes, ALWAYS follow the established git-cz format:
+```bash
+# Format: type(scope): emoji subject
+# Examples:
+git commit -m "feat: 🎸 add new jumping mechanics"
+git commit -m "fix: 🐛 resolve collision detection bug"
+git commit -m "docs: ✏️ update planning standards ADR"
+git commit -m "chore: 🤖 update dependency versions"
+```
+
+**Required commit types with emojis:**
+- `feat: 🎸` - New features and enhancements
+- `fix: 🐛` - Bug fixes and corrections
+- `docs: ✏️` - Documentation updates
+- `chore: 🤖` - Build/tool changes, maintenance
+- `style: 💄` - Code formatting (no logic changes)
+- `refactor: 💡` - Code restructuring (no behavior changes)
+- `test: 💍` - Adding or updating tests
+- `perf: ⚡` - Performance improvements
+- `ci: 🎡` - CI/CD pipeline changes
+
+**Critical commit rules:**
+- **Separate commits for unrelated changes** - never bundle different fixes
+- **One logical change per commit** - atomic, focused commits
+- **Descriptive subjects** - explain WHAT changed, not just files modified
+
+### Exceptions
+- **NEVER bypass this process** even for "small" changes
+- **ALWAYS create PR** when work is complete  
+- **ALWAYS use conventional commits** with proper git-cz format
+- **Each commit MUST pass quality checks** before pushing
+
 ### Assistant Action Approval Policy (MANDATORY)
 To ensure full user control and transparency, the assistant MUST follow this approval policy for EVERY action (including read-only tool calls, code edits, commands, and configuration changes):
 
@@ -280,6 +350,35 @@ uv run ruff check && uv run ruff format && uv run mypy unipress && uv run pytest
 6. **Single author** - Commits should only show user as author, NEVER add co-author lines or Claude attribution
 
 **Example**: If fixing 2 unrelated bugs, create 2 separate commits and push both immediately.
+
+## Development Planning Standards
+**Professional planning process for major initiatives** (ADR-025):
+
+### When Plans Required
+- **Major Features**: New games, system enhancements, architectural changes
+- **Tool Adoption**: Development tools, frameworks, significant dependencies
+- **Process Changes**: Workflow modifications, quality standards updates
+- **Architecture Decisions**: Major structural or design pattern changes
+
+### Plan Storage and Management
+- **Location**: `/docs/plans/` directory with version control
+- **Naming**: `YYYY-MM-DD-plan-name.md` format for chronological organization
+- **Status Tracking**: README.md index with current status of all plans
+- **Lifecycle**: Draft → Approved → In Progress → Completed/Cancelled
+
+### Plan Integration
+- **TODO.md**: Active plans drive priority task lists
+- **ADRs**: Architecture decisions reference plan outcomes
+- **CHANGELOG.md**: Plan implementations recorded in version history
+- **Quality Gates**: Plans must pass review before implementation
+
+### Available Development Tools
+- **Slash Commands**: `/git-start [type] [name]`, `/qa`, `/test-coverage`, `/new-game [name]`
+- **Planning Templates**: Standardized format with phases, metrics, risks
+- **Git Flow Automation**: Automated branch creation and quality checks
+- **Documentation Integration**: Plans connect to existing project documentation
+
+**Current Active Plan**: [Claude Code Enhancement Plan](docs/plans/2025-08-23-claude-code-enhancement-plan.md) - Phase 1 Complete, Phase 2 Starting
 
 ## Available Games
 
