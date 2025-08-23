@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Git Flow branching strategy with GitHub Flow variant
+- ADR-024: Git Flow Branching Strategy documentation
+- Pull request templates with conventional commit types
+- Issue templates for bug reports and feature requests
+- Branch protection rules for master branch
+- Squash merging as default merge strategy
+- Git Flow setup guide with configuration instructions
+
 ## [0.2.0] - 2025-08-17
 
 ### Added

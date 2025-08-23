@@ -439,20 +439,73 @@ The project maintains detailed Architecture Decision Records in [docs/adr/](docs
 
 ## 🤝 Contributing
 
+## 🔄 Git Flow
+
+### Branching Strategy
+We use a **GitHub Flow** variant optimized for small teams:
+
+#### Branch Types
+- **`master`** - Main production branch, always deployable
+- **`feat/*`** - Feature branches for new functionality
+- **`fix/*`** - Bug fix branches for critical issues
+- **`chore/*`** - Maintenance and tooling changes
+- **`docs/*`** - Documentation updates
+- **`release/*`** - Release preparation branches
+
+#### Workflow Rules
+1. **Direct to master** - Features merge directly to master via pull requests
+2. **Pull request required** - All changes must go through review
+3. **Squash merging** - Use squash merge to keep history clean
+4. **Branch protection** - Master branch is protected with required reviews and CI checks
+
 ### Commit Standards
 We use conventional commits with git-cz emojis:
 - `feat: 🎸` - New features
 - `fix: 🐛` - Bug fixes
 - `docs: ✏️` - Documentation
 - `chore: 🤖` - Build/tool changes
+- `refactor: 💡` - Code refactoring
+- `test: 💍` - Adding or updating tests
+- `style: 💄` - Code style changes (formatting, etc.)
+- `perf: ⚡` - Performance improvements
+- `release: 🏹` - Create a release commit
+- `ci: 🎡` - CI/CD changes
 
 ### Development Workflow
-1. Create feature branch
-2. Follow game design standards
-3. Add tests for new functionality
-4. Ensure all checks pass (`ruff check && ruff format && pytest`)
-5. Use conventional commit messages
-6. Create pull request
+1. **Create feature branch** from master: `git checkout -b feat/new-feature`
+2. **Make changes** with conventional commits: `git commit -m "feat: 🎸 add new game feature"`
+3. **Push branch** and create pull request
+4. **Address review feedback** if needed
+5. **Merge via squash merge** to keep history clean
+6. **Delete feature branch** after merge
+
+### Branch Protection
+- ✅ Require pull request reviews
+- ✅ Require status checks to pass (CI pipeline)
+- ✅ Require up-to-date branches before merging
+- ✅ Restrict direct pushes to master
+- ✅ Enable squash merging as default
+
+### Quick Commands
+```bash
+# Start new feature
+git checkout master
+git pull origin master
+git checkout -b feat/new-feature
+
+# Make changes and commit
+git add .
+git commit -m "feat: 🎸 add new game feature"
+
+# Push and create PR
+git push origin feat/new-feature
+# Then create PR on GitHub
+
+# After merge, clean up
+git checkout master
+git pull origin master
+git branch -d feat/new-feature
+```
 
 ## 📄 License
 
