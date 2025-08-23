@@ -38,7 +38,7 @@ jobs:
     - name: Check commit message format
       run: |
         # Get commits in this PR
-        COMMITS=$(git log --oneline origin/master..HEAD)
+        COMMITS=$(git log --oneline origin/${{ github.base_ref }}..HEAD)
         
         # Check each commit
         while IFS= read -r commit; do
@@ -102,7 +102,7 @@ jobs:
     - name: Check for unrelated changes
       run: |
         # Get list of changed files
-        CHANGED_FILES=$(git diff --name-only origin/master..HEAD)
+        CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }}..HEAD)
         
         # Check if changes span multiple unrelated areas
         FEATURES=0
