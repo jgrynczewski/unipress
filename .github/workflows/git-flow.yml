@@ -68,6 +68,14 @@ jobs:
     - name: Check PR template usage
       run: |
         PR_BODY="${{ github.event.pull_request.body }}"
+        BRANCH_NAME="${{ github.head_ref }}"
+        
+        # Exception for setup/bootstrap PRs
+        if [[ "$BRANCH_NAME" =~ ^(chore/.*setup|chore/.*init|chore/.*bootstrap) ]]; then
+          echo "ℹ️  Skipping template validation for setup PR: $BRANCH_NAME"
+          echo "✅ Setup PR template validation bypassed"
+          exit 0
+        fi
         
         # Check if PR has description
         if [[ -z "$PR_BODY" ]]; then
