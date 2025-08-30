@@ -71,6 +71,9 @@ Enhanced sprite-based jumping game with animated characters and fire obstacles.
   - Level 1: 2.0 seconds reaction time (trivial)
   - Level 10: 0.2 seconds reaction time (challenging)
 - **Display Mode**: Games start in fullscreen by default (no system bars/menus)
+- **Cursor Positioning**: Automatic periodic repositioning to bottom-right corner (prevents cursor drift)
+  - Repositions every 3 seconds by default (configurable)
+  - Positions at 98% width, 2% height with 2% margin from edges
 - **Settings**: Configurable via TOML files (global and per-game)
 
 ## 🚀 Quick Start
@@ -244,6 +247,9 @@ Example game-specific settings:
 [game]
 difficulty = 3  # Override global difficulty
 lives = 5       # Override global lives count
+
+[ui]
+cursor_reposition_interval = 3.0  # Cursor repositioning frequency (seconds)
 
 [audio]
 master_volume = 1.0  # Global volume control

@@ -31,6 +31,7 @@ ALL game mechanics and UI must work with timing-based or automatic cycling inter
 - ✅ Comprehensive sound system with professional audio events
 - ✅ Parallax scrolling backgrounds with responsive positioning
 - ✅ UI styling with clean black text on light backgrounds
+- ✅ Periodic cursor positioning system to prevent cursor drift
 
 ## Communication Protocol
 - **User writes in Polish or English** 
@@ -221,6 +222,11 @@ Reference: https://www.npmjs.com/package/git-cz#custom-config
 ### Display Standard
 - **Fullscreen**: Games start in fullscreen mode by default (no system bars/menus)
 - **Escape Key**: ESC toggles fullscreen mode for development/testing
+- **Cursor Positioning**: Automatic periodic repositioning to prevent cursor drift
+  - Repositions cursor every 3 seconds by default (configurable via `ui.cursor_reposition_interval`)
+  - Positions at 98% width, 2% height (bottom-right with 2% margin from edges)
+  - Uses arcade's `set_mouse_position()` method for cross-platform compatibility
+  - Graceful error handling to prevent game crashes if positioning fails
 - **Implementation**: Built into BaseGame class
 
 ### Lives System
