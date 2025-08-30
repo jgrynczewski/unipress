@@ -316,6 +316,7 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#unipress.core.base_game.BaseGame"><code class="docutils literal notranslate"><span class="pre">BaseGame</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#unipress.core.base_game.BaseGame.__init__"><code class="docutils literal notranslate"><span class="pre">BaseGame.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#unipress.core.base_game.BaseGame._position_cursor_bottom_right"><code class="docutils literal notranslate"><span class="pre">BaseGame._position_cursor_bottom_right()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#unipress.core.base_game.BaseGame.get_difficulty_settings"><code class="docutils literal notranslate"><span class="pre">BaseGame.get_difficulty_settings()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#unipress.core.base_game.BaseGame.get_message"><code class="docutils literal notranslate"><span class="pre">BaseGame.get_message()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#unipress.core.base_game.BaseGame.play_sound_event"><code class="docutils literal notranslate"><span class="pre">BaseGame.play_sound_event()</span></code></a></li>
@@ -325,6 +326,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#unipress.core.base_game.BaseGame.complete_game_start"><code class="docutils literal notranslate"><span class="pre">BaseGame.complete_game_start()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#unipress.core.base_game.BaseGame.check_and_play_high_score_sound"><code class="docutils literal notranslate"><span class="pre">BaseGame.check_and_play_high_score_sound()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#unipress.core.base_game.BaseGame._complete_life_lost_continue"><code class="docutils literal notranslate"><span class="pre">BaseGame._complete_life_lost_continue()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#unipress.core.base_game.BaseGame.update_cursor_positioning"><code class="docutils literal notranslate"><span class="pre">BaseGame.update_cursor_positioning()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#unipress.core.base_game.BaseGame.update_life_lost_effects"><code class="docutils literal notranslate"><span class="pre">BaseGame.update_life_lost_effects()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#unipress.core.base_game.BaseGame.should_draw_player"><code class="docutils literal notranslate"><span class="pre">BaseGame.should_draw_player()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#unipress.core.base_game.BaseGame.is_game_paused"><code class="docutils literal notranslate"><span class="pre">BaseGame.is_game_paused()</span></code></a></li>
@@ -812,6 +814,12 @@ Provides standardized difficulty system and input handling.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="unipress.core.base_game.BaseGame._position_cursor_bottom_right">
+<span class="sig-name descname"><span class="pre">_position_cursor_bottom_right</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/unipress/core/base_game.html#BaseGame._position_cursor_bottom_right"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unipress.core.base_game.BaseGame._position_cursor_bottom_right" title="Link to this definition"></a></dt>
+<dd><p>Position cursor to bottom-right corner with 2% shift toward center.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="unipress.core.base_game.BaseGame.get_difficulty_settings">
 <span class="sig-name descname"><span class="pre">get_difficulty_settings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/unipress/core/base_game.html#BaseGame.get_difficulty_settings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unipress.core.base_game.BaseGame.get_difficulty_settings" title="Link to this definition"></a></dt>
 <dd><p>Get difficulty-specific settings for the game.
@@ -891,6 +899,12 @@ Override this method to customize difficulty scaling.</p>
 <dt class="sig sig-object py" id="unipress.core.base_game.BaseGame._complete_life_lost_continue">
 <span class="sig-name descname"><span class="pre">_complete_life_lost_continue</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/unipress/core/base_game.html#BaseGame._complete_life_lost_continue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unipress.core.base_game.BaseGame._complete_life_lost_continue" title="Link to this definition"></a></dt>
 <dd><p>Complete the life lost continuation sequence.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="unipress.core.base_game.BaseGame.update_cursor_positioning">
+<span class="sig-name descname"><span class="pre">update_cursor_positioning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delta_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/unipress/core/base_game.html#BaseGame.update_cursor_positioning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unipress.core.base_game.BaseGame.update_cursor_positioning" title="Link to this definition"></a></dt>
+<dd><p>Update periodic cursor positioning timer.</p>
 </dd></dl>
 
 <dl class="py method">

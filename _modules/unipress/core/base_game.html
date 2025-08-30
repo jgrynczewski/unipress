@@ -313,6 +313,7 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/base_game.html#unipress.core.base_game.BaseGame"><code class="docutils literal notranslate"><span class="pre">BaseGame</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/base_game.html#unipress.core.base_game.BaseGame.__init__"><code class="docutils literal notranslate"><span class="pre">BaseGame.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/base_game.html#unipress.core.base_game.BaseGame._position_cursor_bottom_right"><code class="docutils literal notranslate"><span class="pre">BaseGame._position_cursor_bottom_right()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/base_game.html#unipress.core.base_game.BaseGame.get_difficulty_settings"><code class="docutils literal notranslate"><span class="pre">BaseGame.get_difficulty_settings()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/base_game.html#unipress.core.base_game.BaseGame.get_message"><code class="docutils literal notranslate"><span class="pre">BaseGame.get_message()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/base_game.html#unipress.core.base_game.BaseGame.play_sound_event"><code class="docutils literal notranslate"><span class="pre">BaseGame.play_sound_event()</span></code></a></li>
@@ -322,6 +323,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../api/base_game.html#unipress.core.base_game.BaseGame.complete_game_start"><code class="docutils literal notranslate"><span class="pre">BaseGame.complete_game_start()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/base_game.html#unipress.core.base_game.BaseGame.check_and_play_high_score_sound"><code class="docutils literal notranslate"><span class="pre">BaseGame.check_and_play_high_score_sound()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/base_game.html#unipress.core.base_game.BaseGame._complete_life_lost_continue"><code class="docutils literal notranslate"><span class="pre">BaseGame._complete_life_lost_continue()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/base_game.html#unipress.core.base_game.BaseGame.update_cursor_positioning"><code class="docutils literal notranslate"><span class="pre">BaseGame.update_cursor_positioning()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/base_game.html#unipress.core.base_game.BaseGame.update_life_lost_effects"><code class="docutils literal notranslate"><span class="pre">BaseGame.update_life_lost_effects()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/base_game.html#unipress.core.base_game.BaseGame.should_draw_player"><code class="docutils literal notranslate"><span class="pre">BaseGame.should_draw_player()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/base_game.html#unipress.core.base_game.BaseGame.is_game_paused"><code class="docutils literal notranslate"><span class="pre">BaseGame.is_game_paused()</span></code></a></li>
@@ -847,7 +849,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">blink_duration</span> <span class="o">=</span> <span class="n">get_setting</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">,</span> <span class="s2">&quot;ui.blink_duration&quot;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">show_player</span> <span class="o">=</span> <span class="kc">True</span>
 
+        <span class="c1"># Cursor positioning settings</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cursor_reposition_interval</span> <span class="o">=</span> <span class="n">get_setting</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">,</span> <span class="s2">&quot;ui.cursor_reposition_interval&quot;</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cursor_timer</span> <span class="o">=</span> <span class="mf">0.0</span>
+
         <span class="n">arcade</span><span class="o">.</span><span class="n">set_background_color</span><span class="p">(</span><span class="n">arcade</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">BLACK</span><span class="p">)</span>
+
+        <span class="c1"># Position cursor to bottom-right corner with 2% shift toward center after fullscreen initialization</span>
+        <span class="k">if</span> <span class="n">final_fullscreen</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_position_cursor_bottom_right</span><span class="p">()</span>
 
         <span class="c1"># Log game initialization</span>
         <span class="n">log_game_event</span><span class="p">(</span>
@@ -858,6 +868,24 @@
             <span class="n">fullscreen</span><span class="o">=</span><span class="n">final_fullscreen</span><span class="p">,</span>
             <span class="n">language</span><span class="o">=</span><span class="n">final_language</span><span class="p">,</span>
         <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BaseGame._position_cursor_bottom_right">
+<a class="viewcode-back" href="../../../api/index.html#unipress.core.base_game.BaseGame._position_cursor_bottom_right">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_position_cursor_bottom_right</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Position cursor to bottom-right corner with 2% shift toward center.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Calculate position: bottom-right minus 2% of screen dimensions  </span>
+            <span class="n">cursor_x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">*</span> <span class="mf">0.98</span><span class="p">)</span>
+            <span class="n">cursor_y</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">*</span> <span class="mf">0.02</span><span class="p">)</span>  <span class="c1"># 2% from bottom (arcade uses bottom-left origin)</span>
+            
+            <span class="c1"># Use arcade&#39;s built-in method to position cursor</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_mouse_position</span><span class="p">(</span><span class="n">cursor_x</span><span class="p">,</span> <span class="n">cursor_y</span><span class="p">)</span>
+            <span class="n">log_game_event</span><span class="p">(</span><span class="s2">&quot;cursor_positioned&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">cursor_x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">cursor_y</span><span class="p">)</span>
+            
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="c1"># Don&#39;t fail the game if cursor positioning fails</span>
+            <span class="n">log_error</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="s2">&quot;Failed to position cursor&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="BaseGame.get_difficulty_settings">
@@ -991,6 +1019,16 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Complete the life lost continuation sequence.&quot;&quot;&quot;</span>
         <span class="c1"># Visual reset already done, just ensure game can continue</span>
         <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="BaseGame.update_cursor_positioning">
+<a class="viewcode-back" href="../../../api/index.html#unipress.core.base_game.BaseGame.update_cursor_positioning">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_cursor_positioning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delta_time</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update periodic cursor positioning timer.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cursor_timer</span> <span class="o">+=</span> <span class="n">delta_time</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_timer</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_reposition_interval</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_position_cursor_bottom_right</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cursor_timer</span> <span class="o">=</span> <span class="mf">0.0</span></div>
 
 
 <div class="viewcode-block" id="BaseGame.update_life_lost_effects">

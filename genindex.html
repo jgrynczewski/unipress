@@ -313,6 +313,7 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="api/base_game.html#unipress.core.base_game.BaseGame"><code class="docutils literal notranslate"><span class="pre">BaseGame</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="api/base_game.html#unipress.core.base_game.BaseGame.__init__"><code class="docutils literal notranslate"><span class="pre">BaseGame.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/base_game.html#unipress.core.base_game.BaseGame._position_cursor_bottom_right"><code class="docutils literal notranslate"><span class="pre">BaseGame._position_cursor_bottom_right()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/base_game.html#unipress.core.base_game.BaseGame.get_difficulty_settings"><code class="docutils literal notranslate"><span class="pre">BaseGame.get_difficulty_settings()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/base_game.html#unipress.core.base_game.BaseGame.get_message"><code class="docutils literal notranslate"><span class="pre">BaseGame.get_message()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/base_game.html#unipress.core.base_game.BaseGame.play_sound_event"><code class="docutils literal notranslate"><span class="pre">BaseGame.play_sound_event()</span></code></a></li>
@@ -322,6 +323,7 @@
 <li class="toctree-l4"><a class="reference internal" href="api/base_game.html#unipress.core.base_game.BaseGame.complete_game_start"><code class="docutils literal notranslate"><span class="pre">BaseGame.complete_game_start()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/base_game.html#unipress.core.base_game.BaseGame.check_and_play_high_score_sound"><code class="docutils literal notranslate"><span class="pre">BaseGame.check_and_play_high_score_sound()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/base_game.html#unipress.core.base_game.BaseGame._complete_life_lost_continue"><code class="docutils literal notranslate"><span class="pre">BaseGame._complete_life_lost_continue()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/base_game.html#unipress.core.base_game.BaseGame.update_cursor_positioning"><code class="docutils literal notranslate"><span class="pre">BaseGame.update_cursor_positioning()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/base_game.html#unipress.core.base_game.BaseGame.update_life_lost_effects"><code class="docutils literal notranslate"><span class="pre">BaseGame.update_life_lost_effects()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/base_game.html#unipress.core.base_game.BaseGame.should_draw_player"><code class="docutils literal notranslate"><span class="pre">BaseGame.should_draw_player()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/base_game.html#unipress.core.base_game.BaseGame.is_game_paused"><code class="docutils literal notranslate"><span class="pre">BaseGame.is_game_paused()</span></code></a></li>
@@ -828,8 +830,6 @@
         <li><a href="api/index.html#unipress.games.jumper.game.JumperGame._create">(unipress.games.jumper.game.JumperGame method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/base_game.html#unipress.core.base_game.BaseGame._create_cursor_from_image">_create_cursor_from_image() (unipress.core.base_game.BaseGame method)</a>, <a href="api/index.html#unipress.core.base_game.BaseGame._create_cursor_from_image">[1]</a>
 
       <ul>
@@ -838,6 +838,8 @@
         <li><a href="api/index.html#unipress.games.jumper.game.JumperGame._create_cursor_from_image">(unipress.games.jumper.game.JumperGame method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/base_game.html#unipress.core.base_game.BaseGame._dispatch_frame">_dispatch_frame() (unipress.core.base_game.BaseGame method)</a>, <a href="api/index.html#unipress.core.base_game.BaseGame._dispatch_frame">[1]</a>
 
       <ul>
@@ -890,6 +892,14 @@
         <li><a href="api/index.html#unipress.games.demo_jump.game.DemoJumpGame._on_resize">(unipress.games.demo_jump.game.DemoJumpGame method)</a>
 </li>
         <li><a href="api/index.html#unipress.games.jumper.game.JumperGame._on_resize">(unipress.games.jumper.game.JumperGame method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/base_game.html#unipress.core.base_game.BaseGame._position_cursor_bottom_right">_position_cursor_bottom_right() (unipress.core.base_game.BaseGame method)</a>, <a href="api/index.html#unipress.core.base_game.BaseGame._position_cursor_bottom_right">[1]</a>
+
+      <ul>
+        <li><a href="api/index.html#unipress.games.demo_jump.game.DemoJumpGame._position_cursor_bottom_right">(unipress.games.demo_jump.game.DemoJumpGame method)</a>
+</li>
+        <li><a href="api/index.html#unipress.games.jumper.game.JumperGame._position_cursor_bottom_right">(unipress.games.jumper.game.JumperGame method)</a>
 </li>
       </ul></li>
       <li><a href="api/base_game.html#unipress.core.base_game.BaseGame._remove_handler">_remove_handler() (unipress.core.base_game.BaseGame method)</a>, <a href="api/index.html#unipress.core.base_game.BaseGame._remove_handler">[1]</a>
@@ -2592,6 +2602,14 @@
       </ul></li>
       <li><a href="api/index.html#unipress.games.jumper.game.JumperGame.update_background">update_background() (unipress.games.jumper.game.JumperGame method)</a>
 </li>
+      <li><a href="api/base_game.html#unipress.core.base_game.BaseGame.update_cursor_positioning">update_cursor_positioning() (unipress.core.base_game.BaseGame method)</a>, <a href="api/index.html#unipress.core.base_game.BaseGame.update_cursor_positioning">[1]</a>
+
+      <ul>
+        <li><a href="api/index.html#unipress.games.demo_jump.game.DemoJumpGame.update_cursor_positioning">(unipress.games.demo_jump.game.DemoJumpGame method)</a>
+</li>
+        <li><a href="api/index.html#unipress.games.jumper.game.JumperGame.update_cursor_positioning">(unipress.games.jumper.game.JumperGame method)</a>
+</li>
+      </ul></li>
       <li><a href="api/index.html#unipress.core.high_scores.update_high_score">update_high_score() (in module unipress.core.high_scores)</a>
 </li>
       <li><a href="api/base_game.html#unipress.core.base_game.BaseGame.update_life_lost_effects">update_life_lost_effects() (unipress.core.base_game.BaseGame method)</a>, <a href="api/index.html#unipress.core.base_game.BaseGame.update_life_lost_effects">[1]</a>
