@@ -125,7 +125,15 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
         self.blink_duration = get_setting(self.settings, "ui.blink_duration", 1.0)
         self.show_player = True
 
+        # Cursor positioning settings
+        self.cursor_reposition_interval = get_setting(self.settings, "ui.cursor_reposition_interval", 3.0)
+        self.cursor_timer = 0.0
+
         arcade.set_background_color(arcade.color.BLACK)
+
+        # Position cursor to bottom-right corner with 2% shift toward center after fullscreen initialization
+        if final_fullscreen:
+            self._position_cursor_bottom_right()
 
         # Log game initialization
         log_game_event(
@@ -136,6 +144,21 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
             fullscreen=final_fullscreen,
             language=final_language,
         )
+
+    def _position_cursor_bottom_right(self) -> None:
+        """Position cursor to bottom-right corner with 2% shift toward center."""
+        try:
+            # Calculate position: bottom-right minus 2% of screen dimensions  
+            cursor_x = int(self.width * 0.98)
+            cursor_y = int(self.height * 0.02)  # 2% from bottom (arcade uses bottom-left origin)
+            
+            # Use arcade's built-in method to position cursor
+            self.set_mouse_position(cursor_x, cursor_y)
+            log_game_event("cursor_positioned", x=cursor_x, y=cursor_y)
+            
+        except Exception as e:
+            # Don't fail the game if cursor positioning fails
+            log_error(e, "Failed to position cursor")
 
     def get_difficulty_settings(self) -> dict[str, Any]:
         """
@@ -242,6 +265,13 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
         """Complete the life lost continuation sequence."""
         # Visual reset already done, just ensure game can continue
         pass
+
+    def update_cursor_positioning(self, delta_time: float) -> None:
+        """Update periodic cursor positioning timer."""
+        self.cursor_timer += delta_time
+        if self.cursor_timer >= self.cursor_reposition_interval:
+            self._position_cursor_bottom_right()
+            self.cursor_timer = 0.0
 
     def update_life_lost_effects(self, delta_time: float) -> None:
         """Update visual effects during life lost pause."""

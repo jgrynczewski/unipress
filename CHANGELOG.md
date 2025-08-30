@@ -15,6 +15,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Branch protection rules for master branch
 - Squash merging as default merge strategy
 - Git Flow setup guide with configuration instructions
+- Periodic cursor positioning system to prevent cursor drift in fullscreen games
+  - Automatic cursor repositioning every 3 seconds (configurable)
+  - Positions cursor at bottom-right corner with 2% margin from edges
+  - Cross-platform compatibility using arcade's set_mouse_position() method
+  - Graceful error handling to prevent game crashes
+  - Integrated into BaseGame class and active in both jumper and demo_jump games
 
 ## [0.2.0] - 2025-08-17
 
