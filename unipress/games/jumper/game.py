@@ -480,6 +480,9 @@ class JumperGame(BaseGame):
                 self.update_life_lost_effects(delta_time)
             return
 
+        # Update periodic cursor positioning
+        self.update_cursor_positioning(delta_time)
+
         self.update_player(delta_time)
         self.update_obstacles(delta_time)
         self.update_background(delta_time)

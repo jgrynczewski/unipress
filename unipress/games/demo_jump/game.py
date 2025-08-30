@@ -168,6 +168,9 @@ class DemoJumpGame(BaseGame):  # type: ignore[misc]
         if self.is_game_paused():
             return
 
+        # Update periodic cursor positioning
+        self.update_cursor_positioning(delta_time)
+
         self.time_elapsed += delta_time
 
         # Update player physics
