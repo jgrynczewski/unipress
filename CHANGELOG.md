@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2025-08-30
+
 ### Added
 - Git Flow branching strategy with GitHub Flow variant
 - ADR-024: Git Flow Branching Strategy documentation
@@ -21,6 +23,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Cross-platform compatibility using arcade's set_mouse_position() method
   - Graceful error handling to prevent game crashes
   - Integrated into BaseGame class and active in both jumper and demo_jump games
+
+### Enhanced
+- Professional game experience with automatic cursor management in fullscreen mode
+- Improved user experience by preventing cursor drift during gameplay
+- Enhanced BaseGame architecture with configurable UI behavior
 
 ## [0.2.0] - 2025-08-17
 
