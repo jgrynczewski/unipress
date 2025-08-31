@@ -12,7 +12,7 @@ from typing import Any, Dict, Optional
 
 from flask import Flask, jsonify, request
 
-from unipress.core.logger import get_logger, log_error, log_game_event
+from unipress.core.logger import get_logger, init_logger, log_error, log_game_event
 
 app = Flask(__name__)
 logger = get_logger("game_server")
@@ -147,6 +147,9 @@ def list_games() -> Dict[str, Any]:
 
 def main() -> None:
     """Start the game server."""
+    # Initialize logger first
+    init_logger("game_server")
+    
     logger.info("Starting Unipress Game Server")
     
     # Run Flask app
