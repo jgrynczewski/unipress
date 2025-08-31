@@ -77,6 +77,9 @@ COPY unipress ./unipress
 COPY main.py README.md pyproject.toml uv.lock ./
 COPY high_scores.json ./high_scores.json
 
+# Create logs directory with proper permissions
+RUN mkdir -p logs && chown 1000:1000 logs
+
 # Note: No user creation - container will run as UID 1000:1000 from docker-compose
 
 ENV PATH="/app/.venv/bin:${PATH}" \

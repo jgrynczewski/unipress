@@ -20,6 +20,7 @@ services:
     network_mode: host
     volumes:
       - ./high_scores.json:/app/high_scores.json
+      - ./logs:/app/logs
       - /tmp/.X11-unix:/tmp/.X11-unix:ro
       # Audio volumes for PipeWire/PulseAudio
       - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse

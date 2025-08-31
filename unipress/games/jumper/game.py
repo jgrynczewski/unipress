@@ -562,6 +562,10 @@ class JumperGame(BaseGame):
 # Test runner for development
 if __name__ == "__main__":
     import sys
+    from unipress.core.logger import init_logger
+    
+    # Initialize logging for the game process
+    init_logger("jumper")
     
     difficulty = 5
     if len(sys.argv) > 1:
