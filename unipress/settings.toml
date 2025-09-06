@@ -39,7 +39,9 @@ language = "pl_PL"
 level = "INFO"
 
 # Enable console output (for development)
-console_enabled = true
+# WARNING: Setting to true can cause game freezing when running in containers
+# Recommended: false for container environments, true for direct execution only
+console_enabled = false
 
 # Enable file logging
 file_enabled = true

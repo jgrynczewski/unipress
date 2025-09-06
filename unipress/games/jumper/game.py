@@ -33,6 +33,8 @@ class BackgroundLayer:
         self.scroll_speed = scroll_speed
         self.z_order = z_order
         self.x_offset = 0.0
+        # Create reusable sprite list to prevent memory leaks
+        self.sprite_list = arcade.SpriteList()
 
     def update(self, delta_time: float, base_speed: float) -> None:
         """Update layer scrolling position."""
@@ -60,6 +62,9 @@ class BackgroundLayer:
         # Recalculate tiles needed based on scaled width
         tiles_needed = int((window_width / scaled_width)) + 2
         
+        # Clear existing sprites and reuse sprite list
+        self.sprite_list.clear()
+        
         # Draw tiles from left to right
         for i in range(tiles_needed):
             x = i * scaled_width + (self.x_offset * scale_y)
@@ -71,9 +76,10 @@ class BackgroundLayer:
             sprite.center_y = window_height // 2  # Center vertically
             sprite.scale = scale_y  # Scale to fit window height
             
-            sprite_list = arcade.SpriteList()
-            sprite_list.append(sprite)
-            sprite_list.draw()
+            self.sprite_list.append(sprite)
+        
+        # Draw all sprites at once
+        self.sprite_list.draw()
 
 
 class AnimatedSprite:
@@ -93,6 +99,8 @@ class AnimatedSprite:
         self.game_name = game_name
         self.current_animation: Optional[Animation] = None
         self.animation_queue: List[str] = []
+        # Create reusable sprite list to prevent memory leaks
+        self.sprite_list = arcade.SpriteList()
 
     def set_animation(self, animation_name: str, force: bool = False) -> bool:
         """
@@ -126,8 +134,11 @@ class AnimatedSprite:
     def draw(self) -> None:
         """Draw the sprite at current animation frame."""
         if self.current_animation:
+            # Clear existing sprites and reuse sprite list
+            self.sprite_list.clear()
+            
             texture = self.current_animation.get_current_texture()
-            # Create temporary sprite and draw using SpriteList
+            # Create sprite and add to reusable sprite list
             sprite = arcade.Sprite()
             sprite.texture = texture
             sprite.center_x = self.x
@@ -135,9 +146,8 @@ class AnimatedSprite:
             # Scale up the sprite (2.5x larger)
             sprite.scale = 2.5
             
-            sprite_list = arcade.SpriteList()
-            sprite_list.append(sprite)
-            sprite_list.draw()
+            self.sprite_list.append(sprite)
+            self.sprite_list.draw()
         else:
             # Fallback: draw colored rectangle when no animation loaded
             arcade.draw_lbwh_rectangle_filled(self.x - 32, self.y - 32, 64, 64, arcade.color.BLUE)
@@ -167,22 +177,8 @@ class Obstacle:
         
     def draw(self) -> None:
         """Draw the obstacle."""
-        if self.sprite.current_animation:
-            # Draw actual fire sprite animation
-            texture = self.sprite.current_animation.get_current_texture()
-            sprite = arcade.Sprite()
-            sprite.texture = texture
-            sprite.center_x = self.sprite.x
-            sprite.center_y = self.sprite.y
-            # Scale fire sprites larger for better visibility
-            sprite.scale = 2.5
-            
-            sprite_list = arcade.SpriteList()
-            sprite_list.append(sprite)
-            sprite_list.draw()
-        else:
-            # Fallback: draw red rectangle for fire obstacle
-            arcade.draw_lbwh_rectangle_filled(self.sprite.x - 32, self.sprite.y - 32, 64, 64, arcade.color.RED)
+        # Use the sprite's draw method which now handles sprite list reuse
+        self.sprite.draw()
 
     def update(self, delta_time: float) -> None:
         """Update obstacle position and animation."""
@@ -427,13 +423,13 @@ class JumperGame(BaseGame):
         if self.obstacle_timer >= self.obstacle_spawn_interval:
             self.spawn_obstacle()
             self.obstacle_timer = 0.0
-            
+
             # Calculate new random spawn interval with safe minimum distance
             # Base interval ensures minimum time for double jumps
             jump_duration = 2 * (2 * (64 + 100 + (11 - self.difficulty) * 20) / self.gravity) ** 0.5
             min_safe_interval = jump_duration * 1.44  # 44% safety margin (20% increase)
             base_interval = max(min_safe_interval, 2.5)  # At least 2.5s base
-            
+
             # Add randomness: 0.8x to 2.5x variation
             self.obstacle_spawn_interval = base_interval * random.uniform(0.8, 2.5)
 
