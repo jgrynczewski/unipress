@@ -42,6 +42,13 @@
   - [ ] JavaScript/Node.js examples
 
 ### Performance & Monitoring
+- [ ] **Fix container console logging freezing issue** (currently disabled as workaround)
+  - [ ] Investigate root cause of console output causing container freezes
+  - [ ] Implement async/non-blocking console logging for containers
+  - [ ] Add buffered console output to prevent I/O blocking
+  - [ ] Test console logging performance in different container environments
+  - [ ] Re-enable console logging with proper container compatibility
+  - **Note**: Console logging is currently disabled (`console_enabled = false`) to prevent game freezing in containers. This allows games to work but removes valuable debug output for container environments.
 - [ ] **Add performance benchmarks**
   - [ ] Game startup time measurements
   - [ ] Asset loading performance tests
