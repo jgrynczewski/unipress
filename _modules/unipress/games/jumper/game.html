@@ -753,7 +753,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">texture</span> <span class="o">=</span> <span class="n">texture</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">scroll_speed</span> <span class="o">=</span> <span class="n">scroll_speed</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">z_order</span> <span class="o">=</span> <span class="n">z_order</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">x_offset</span> <span class="o">=</span> <span class="mf">0.0</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x_offset</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="c1"># Create reusable sprite list to prevent memory leaks</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sprite_list</span> <span class="o">=</span> <span class="n">arcade</span><span class="o">.</span><span class="n">SpriteList</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="BackgroundLayer.update">
@@ -787,6 +789,9 @@
         <span class="c1"># Recalculate tiles needed based on scaled width</span>
         <span class="n">tiles_needed</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">window_width</span> <span class="o">/</span> <span class="n">scaled_width</span><span class="p">))</span> <span class="o">+</span> <span class="mi">2</span>
         
+        <span class="c1"># Clear existing sprites and reuse sprite list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sprite_list</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        
         <span class="c1"># Draw tiles from left to right</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">tiles_needed</span><span class="p">):</span>
             <span class="n">x</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">scaled_width</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_offset</span> <span class="o">*</span> <span class="n">scale_y</span><span class="p">)</span>
@@ -798,9 +803,10 @@
             <span class="n">sprite</span><span class="o">.</span><span class="n">center_y</span> <span class="o">=</span> <span class="n">window_height</span> <span class="o">//</span> <span class="mi">2</span>  <span class="c1"># Center vertically</span>
             <span class="n">sprite</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">scale_y</span>  <span class="c1"># Scale to fit window height</span>
             
-            <span class="n">sprite_list</span> <span class="o">=</span> <span class="n">arcade</span><span class="o">.</span><span class="n">SpriteList</span><span class="p">()</span>
-            <span class="n">sprite_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sprite</span><span class="p">)</span>
-            <span class="n">sprite_list</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sprite_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sprite</span><span class="p">)</span>
+        
+        <span class="c1"># Draw all sprites at once</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sprite_list</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span></div>
 </div>
 
 
@@ -825,7 +831,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">game_name</span> <span class="o">=</span> <span class="n">game_name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_animation</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Animation</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">animation_queue</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">animation_queue</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># Create reusable sprite list to prevent memory leaks</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sprite_list</span> <span class="o">=</span> <span class="n">arcade</span><span class="o">.</span><span class="n">SpriteList</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="AnimatedSprite.set_animation">
@@ -868,8 +876,11 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Draw the sprite at current animation frame.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_animation</span><span class="p">:</span>
+            <span class="c1"># Clear existing sprites and reuse sprite list</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sprite_list</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+            
             <span class="n">texture</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_animation</span><span class="o">.</span><span class="n">get_current_texture</span><span class="p">()</span>
-            <span class="c1"># Create temporary sprite and draw using SpriteList</span>
+            <span class="c1"># Create sprite and add to reusable sprite list</span>
             <span class="n">sprite</span> <span class="o">=</span> <span class="n">arcade</span><span class="o">.</span><span class="n">Sprite</span><span class="p">()</span>
             <span class="n">sprite</span><span class="o">.</span><span class="n">texture</span> <span class="o">=</span> <span class="n">texture</span>
             <span class="n">sprite</span><span class="o">.</span><span class="n">center_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
@@ -877,9 +888,8 @@
             <span class="c1"># Scale up the sprite (2.5x larger)</span>
             <span class="n">sprite</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="mf">2.5</span>
             
-            <span class="n">sprite_list</span> <span class="o">=</span> <span class="n">arcade</span><span class="o">.</span><span class="n">SpriteList</span><span class="p">()</span>
-            <span class="n">sprite_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sprite</span><span class="p">)</span>
-            <span class="n">sprite_list</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sprite_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sprite</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sprite_list</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># Fallback: draw colored rectangle when no animation loaded</span>
             <span class="n">arcade</span><span class="o">.</span><span class="n">draw_lbwh_rectangle_filled</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="mi">32</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="n">arcade</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">BLUE</span><span class="p">)</span></div>
@@ -921,22 +931,8 @@
 <a class="viewcode-back" href="../../../../api/index.html#unipress.games.jumper.game.Obstacle.draw">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Draw the obstacle.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">current_animation</span><span class="p">:</span>
-            <span class="c1"># Draw actual fire sprite animation</span>
-            <span class="n">texture</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">current_animation</span><span class="o">.</span><span class="n">get_current_texture</span><span class="p">()</span>
-            <span class="n">sprite</span> <span class="o">=</span> <span class="n">arcade</span><span class="o">.</span><span class="n">Sprite</span><span class="p">()</span>
-            <span class="n">sprite</span><span class="o">.</span><span class="n">texture</span> <span class="o">=</span> <span class="n">texture</span>
-            <span class="n">sprite</span><span class="o">.</span><span class="n">center_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">x</span>
-            <span class="n">sprite</span><span class="o">.</span><span class="n">center_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">y</span>
-            <span class="c1"># Scale fire sprites larger for better visibility</span>
-            <span class="n">sprite</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="mf">2.5</span>
-            
-            <span class="n">sprite_list</span> <span class="o">=</span> <span class="n">arcade</span><span class="o">.</span><span class="n">SpriteList</span><span class="p">()</span>
-            <span class="n">sprite_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sprite</span><span class="p">)</span>
-            <span class="n">sprite_list</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># Fallback: draw red rectangle for fire obstacle</span>
-            <span class="n">arcade</span><span class="o">.</span><span class="n">draw_lbwh_rectangle_filled</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="mi">32</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="n">arcade</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">RED</span><span class="p">)</span></div>
+        <span class="c1"># Use the sprite&#39;s draw method which now handles sprite list reuse</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="Obstacle.update">
@@ -1220,13 +1216,13 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">obstacle_timer</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obstacle_spawn_interval</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">spawn_obstacle</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">obstacle_timer</span> <span class="o">=</span> <span class="mf">0.0</span>
-            
+
             <span class="c1"># Calculate new random spawn interval with safe minimum distance</span>
             <span class="c1"># Base interval ensures minimum time for double jumps</span>
             <span class="n">jump_duration</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">64</span> <span class="o">+</span> <span class="mi">100</span> <span class="o">+</span> <span class="p">(</span><span class="mi">11</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">difficulty</span><span class="p">)</span> <span class="o">*</span> <span class="mi">20</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">gravity</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span>
             <span class="n">min_safe_interval</span> <span class="o">=</span> <span class="n">jump_duration</span> <span class="o">*</span> <span class="mf">1.44</span>  <span class="c1"># 44% safety margin (20% increase)</span>
             <span class="n">base_interval</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">min_safe_interval</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">)</span>  <span class="c1"># At least 2.5s base</span>
-            
+
             <span class="c1"># Add randomness: 0.8x to 2.5x variation</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">obstacle_spawn_interval</span> <span class="o">=</span> <span class="n">base_interval</span> <span class="o">*</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">)</span></div>
 

@@ -768,15 +768,24 @@
     <span class="n">log_level</span> <span class="o">=</span> <span class="n">get_setting</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s2">&quot;logging.level&quot;</span><span class="p">,</span> <span class="s2">&quot;INFO&quot;</span><span class="p">)</span>
     <span class="n">console_enabled</span> <span class="o">=</span> <span class="n">get_setting</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s2">&quot;logging.console_enabled&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
     <span class="n">file_enabled</span> <span class="o">=</span> <span class="n">get_setting</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s2">&quot;logging.file_enabled&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-    <span class="n">file_path</span> <span class="o">=</span> <span class="n">get_setting</span><span class="p">(</span>
+    <span class="c1"># Use process-specific log files to avoid multi-process I/O conflicts</span>
+    <span class="n">base_file_path</span> <span class="o">=</span> <span class="n">get_setting</span><span class="p">(</span>
         <span class="n">settings</span><span class="p">,</span> <span class="s2">&quot;logging.file_path&quot;</span><span class="p">,</span> <span class="s2">&quot;logs/unipress-{time:YYYY-MM-DD}.log&quot;</span>
     <span class="p">)</span>
+    
+    <span class="c1"># Add process name to log file path</span>
+    <span class="k">if</span> <span class="n">game_name</span><span class="p">:</span>
+        <span class="c1"># Replace the file extension with process name + extension</span>
+        <span class="n">file_path</span> <span class="o">=</span> <span class="n">base_file_path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.log&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;-</span><span class="si">{</span><span class="n">game_name</span><span class="si">}</span><span class="s2">.log&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">file_path</span> <span class="o">=</span> <span class="n">base_file_path</span>
     <span class="n">rotation</span> <span class="o">=</span> <span class="n">get_setting</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s2">&quot;logging.rotation&quot;</span><span class="p">,</span> <span class="s2">&quot;10 MB&quot;</span><span class="p">)</span>
     <span class="n">retention</span> <span class="o">=</span> <span class="n">get_setting</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s2">&quot;logging.retention&quot;</span><span class="p">,</span> <span class="s2">&quot;30 days&quot;</span><span class="p">)</span>
     <span class="n">compression</span> <span class="o">=</span> <span class="n">get_setting</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s2">&quot;logging.compression&quot;</span><span class="p">,</span> <span class="s2">&quot;gz&quot;</span><span class="p">)</span>
     <span class="n">log_format</span> <span class="o">=</span> <span class="n">get_setting</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s2">&quot;logging.format&quot;</span><span class="p">,</span> <span class="s2">&quot;json&quot;</span><span class="p">)</span>
 
     <span class="c1"># Console handler (human-readable for development)</span>
+    <span class="c1"># WARNING: If True can cause container freezing when high-frequency logging</span>
     <span class="k">if</span> <span class="n">console_enabled</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">log_format</span> <span class="o">==</span> <span class="s2">&quot;human&quot;</span><span class="p">:</span>
             <span class="n">console_format</span> <span class="o">=</span> <span class="p">(</span>
