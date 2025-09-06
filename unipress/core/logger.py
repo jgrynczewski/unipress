@@ -49,15 +49,24 @@ def init_logger(game_name: str = None, **overrides) -> None:
     log_level = get_setting(settings, "logging.level", "INFO")
     console_enabled = get_setting(settings, "logging.console_enabled", True)
     file_enabled = get_setting(settings, "logging.file_enabled", True)
-    file_path = get_setting(
+    # Use process-specific log files to avoid multi-process I/O conflicts
+    base_file_path = get_setting(
         settings, "logging.file_path", "logs/unipress-{time:YYYY-MM-DD}.log"
     )
+    
+    # Add process name to log file path
+    if game_name:
+        # Replace the file extension with process name + extension
+        file_path = base_file_path.replace(".log", f"-{game_name}.log")
+    else:
+        file_path = base_file_path
     rotation = get_setting(settings, "logging.rotation", "10 MB")
     retention = get_setting(settings, "logging.retention", "30 days")
     compression = get_setting(settings, "logging.compression", "gz")
     log_format = get_setting(settings, "logging.format", "json")
 
     # Console handler (human-readable for development)
+    # WARNING: If True can cause container freezing when high-frequency logging
     if console_enabled:
         if log_format == "human":
             console_format = (

@@ -150,6 +150,32 @@ uv run python unipress_cli.py stop
 - `POST /games/stop` - Stop current game
 - `GET /games/status` - Game status
 
+### Direct API Usage (curl)
+
+```bash
+# Health check
+curl http://localhost:5000/health
+
+# List available games
+curl http://localhost:5000/games/list
+
+# Run jumper game with difficulty 5
+curl -X POST http://localhost:5000/games/run \
+  -H "Content-Type: application/json" \
+  -d '{"game": "unipress.games.jumper.game", "difficulty": 5}'
+
+# Run demo_jump game with difficulty 7
+curl -X POST http://localhost:5000/games/run \
+  -H "Content-Type: application/json" \
+  -d '{"game": "unipress.games.demo_jump.game", "difficulty": 7}'
+
+# Stop current game
+curl -X POST http://localhost:5000/games/stop
+
+# Check game status
+curl http://localhost:5000/games/status
+```
+
 ### Python Client
 
 ```python

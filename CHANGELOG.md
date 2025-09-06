@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Container freezing bug caused by high-frequency console logging
+  - Disabled console logging by default for container environments
+  - Added process-specific log files to prevent multi-process I/O conflicts
+  - Added warning comments about console logging risks in containers
+  - Optimized sprite rendering to prevent memory leaks with reusable sprite lists
+
 ## [0.3.0] - 2025-08-30
 
 ### Added
