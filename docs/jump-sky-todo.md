@@ -158,6 +158,7 @@
 2. **Pull Requests**: Create MR/PR for every completed significant task for review
 3. **Commit Messages**: Follow conventional format: `feat: 🎸 add basic JumpSkyGame class`
 4. **Atomic Changes**: One logical change per commit, never bundle unrelated fixes
+5. **Clean Commit Messages**: NEVER include "Generated with Claude Code" or "Co-Authored-By: Claude" lines in commit messages
 
 ### Manual Testing Requirements
 After completing each significant task, the developer must:

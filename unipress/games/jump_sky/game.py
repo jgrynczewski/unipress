@@ -21,6 +21,42 @@ from unipress.core.logger import log_game_event, log_player_action
 from unipress.core.settings import get_setting
 
 
+class Fruit:
+    """Collectible fruit with type-specific properties and fallback visuals."""
+    
+    def __init__(self, x: float, y: float, fruit_type: str, velocity: float, points: int):
+        """Initialize fruit with position and type-specific properties."""
+        self.x = x
+        self.y = y
+        self.fruit_type = fruit_type  # "apple", "banana", "pineapple", "orange"
+        self.velocity = velocity      # Movement speed (pixels per second)
+        self.points = points          # Score value when collected
+        self.size = 16               # Visual size for fallback shapes
+        self.collected = False       # Flag to mark for removal
+        
+    def update(self, delta_time: float) -> None:
+        """Update fruit position (moves left)."""
+        self.x -= self.velocity * delta_time
+        
+    def is_off_screen(self) -> bool:
+        """Check if fruit has moved off the left side of screen."""
+        return self.x < -self.size * 2  # Extra margin for cleanup
+        
+    def get_collision_rect(self) -> dict:
+        """Get collision rectangle for collision detection."""
+        return {
+            "x": self.x - self.size,
+            "y": self.y - self.size,
+            "width": self.size * 2,
+            "height": self.size * 2
+        }
+        
+    def draw(self, draw_fallback_fruit_func) -> None:
+        """Draw fruit using fallback system."""
+        if not self.collected:
+            draw_fallback_fruit_func(self.x, self.y, self.fruit_type, self.size)
+
+
 class JumpSkyGame(BaseGame):
     """
     Jump Sky game with fruit collection and bird avoidance mechanics.
@@ -57,20 +93,44 @@ class JumpSkyGame(BaseGame):
         self.is_jumping = False
         
         # Game objects
-        self.game_objects: List = []
+        self.fruits: List[Fruit] = []
+        
+        # Load fruit configuration from settings
+        self.fruit_points = get_setting(self.settings, "jump_sky.fruit_points", {
+            "apple": 10, "banana": 15, "pineapple": 20, "orange": 25
+        })
+        self.fruit_velocity_multipliers = get_setting(self.settings, "jump_sky.fruit_velocity_multiplier", {
+            "apple": 1.0, "banana": 1.3, "pineapple": 1.6, "orange": 2.0
+        })
+        self.base_object_speed = get_setting(self.settings, "jump_sky.object_speed_base", 200)
         
         # Animation timing for fallback birds and player
         self.bird_animation_timer = 0.0
         self.player_animation_timer = 0.0
+        
+        # Test spawning timer (temporary)
+        self.test_spawn_timer = 0.0
+        self.test_spawn_interval = 2.0  # Spawn every 2 seconds for testing
         
         log_game_event("jump_sky_game_initialized", 
                       difficulty=self.difficulty,
                       jump_velocity=self.jump_velocity,
                       desired_jump_height=desired_jump_height)
 
+    def create_fruit(self, fruit_type: str, x: float, y: float) -> Fruit:
+        """Create a fruit with type-specific properties."""
+        points = self.fruit_points.get(fruit_type, 10)
+        velocity_multiplier = self.fruit_velocity_multipliers.get(fruit_type, 1.0)
+        
+        # Scale base speed with difficulty and fruit type
+        difficulty_speed_multiplier = 1.0 + (self.difficulty - 1) * 0.1  # 1.0x to 1.9x
+        final_velocity = self.base_object_speed * velocity_multiplier * difficulty_speed_multiplier
+        
+        return Fruit(x, y, fruit_type, final_velocity, points)
+        
     def reset_game(self) -> None:
         """Reset game to initial state."""
-        self.game_objects.clear()
+        self.fruits.clear()
         self.player_x = 150
         self.player_y = self.ground_y
         self.player_y_velocity = 0
@@ -283,10 +343,43 @@ class JumpSkyGame(BaseGame):
         
         # Update game physics and objects
         self.update_player(delta_time)
+        self.update_fruits(delta_time)
         
         # Update animation timers
         self.bird_animation_timer += delta_time
         self.player_animation_timer += delta_time
+        
+        # Test spawning (temporary)
+        self.test_spawn_timer += delta_time
+        if self.test_spawn_timer >= self.test_spawn_interval:
+            self.spawn_test_fruit()
+            self.test_spawn_timer = 0.0
+
+    def update_fruits(self, delta_time: float) -> None:
+        """Update all fruits (movement and cleanup)."""
+        for fruit in self.fruits[:]:  # Copy list to avoid modification during iteration
+            fruit.update(delta_time)
+            
+            # Remove off-screen fruits
+            if fruit.is_off_screen() or fruit.collected:
+                self.fruits.remove(fruit)
+
+    def spawn_test_fruit(self) -> None:
+        """Spawn a random test fruit for testing (temporary)."""
+        if len(self.fruits) < 3:  # Keep max 3 fruits for testing
+            fruit_types = ["apple", "banana", "pineapple", "orange"]
+            fruit_type = random.choice(fruit_types)
+            
+            # Spawn at right edge, random height in jump range
+            height_min = get_setting(self.settings, "jump_sky.height_min", 60)
+            height_max = get_setting(self.settings, "jump_sky.height_max", 150)
+            spawn_y = self.ground_y + random.uniform(height_min, height_max)
+            
+            fruit = self.create_fruit(fruit_type, self.width + 50, spawn_y)
+            self.fruits.append(fruit)
+            
+            log_game_event("test_fruit_spawned", fruit_type=fruit_type, 
+                          velocity=fruit.velocity, points=fruit.points)
 
     def on_draw(self) -> None:
         """Draw the game."""
@@ -304,6 +397,10 @@ class JumpSkyGame(BaseGame):
                 self.is_jumping, 
                 self.player_animation_timer
             )
+        
+        # Draw active fruits
+        for fruit in self.fruits:
+            fruit.draw(self.draw_fallback_fruit)
         
         # Draw fallback fruit examples for testing (when game is started)
         if self.game_started:
