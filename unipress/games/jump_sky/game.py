@@ -57,6 +57,48 @@ class Fruit:
             draw_fallback_fruit_func(self.x, self.y, self.fruit_type, self.size)
 
 
+class Bird:
+    """Dangerous bird with type-specific properties and fallback visuals."""
+    
+    def __init__(self, x: float, y: float, bird_type: str, velocity: float):
+        """Initialize bird with position and type-specific properties."""
+        self.x = x
+        self.y = y
+        self.bird_type = bird_type    # "bird1", "bird2", "bird3"
+        self.velocity = velocity      # Movement speed (pixels per second)
+        self.size = 20               # Visual size for fallback shapes
+        self.animation_frame = 0.0   # Animation timer for wing flapping
+        self.removed = False         # Flag to mark for removal
+        
+    def update(self, delta_time: float) -> None:
+        """Update bird position and animation (moves left with wing flap)."""
+        self.x -= self.velocity * delta_time
+        self.animation_frame += delta_time * 4  # 4 Hz animation speed
+        
+    def is_off_screen(self) -> bool:
+        """Check if bird has moved off the left side of screen."""
+        return self.x < -self.size * 2  # Extra margin for cleanup
+        
+    def get_collision_rect(self) -> dict:
+        """Get collision rectangle for collision detection."""
+        return {
+            "x": self.x - self.size,
+            "y": self.y - self.size,
+            "width": self.size * 2,
+            "height": self.size * 2
+        }
+        
+    def get_animation_frame(self) -> float:
+        """Get normalized animation frame for wing flapping (sine wave)."""
+        return math.sin(self.animation_frame)
+        
+    def draw(self, draw_fallback_bird_func) -> None:
+        """Draw bird using fallback system with animation."""
+        if not self.removed:
+            animation_frame = self.get_animation_frame()
+            draw_fallback_bird_func(self.x, self.y, self.bird_type, animation_frame, self.size)
+
+
 class JumpSkyGame(BaseGame):
     """
     Jump Sky game with fruit collection and bird avoidance mechanics.
@@ -94,6 +136,7 @@ class JumpSkyGame(BaseGame):
         
         # Game objects
         self.fruits: List[Fruit] = []
+        self.birds: List[Bird] = []
         
         # Load fruit configuration from settings
         self.fruit_points = get_setting(self.settings, "jump_sky.fruit_points", {
@@ -103,6 +146,10 @@ class JumpSkyGame(BaseGame):
             "apple": 1.0, "banana": 1.3, "pineapple": 1.6, "orange": 2.0
         })
         self.base_object_speed = get_setting(self.settings, "jump_sky.object_speed_base", 200)
+        
+        # Load bird configuration from settings
+        self.bird_types = get_setting(self.settings, "jump_sky.bird_types", ["bird1", "bird2", "bird3"])
+        self.bird_velocity_range = get_setting(self.settings, "jump_sky.bird_velocity_random_range", [0.8, 1.8])
         
         # Animation timing for fallback birds and player
         self.bird_animation_timer = 0.0
@@ -128,9 +175,21 @@ class JumpSkyGame(BaseGame):
         
         return Fruit(x, y, fruit_type, final_velocity, points)
         
+    def create_bird(self, bird_type: str, x: float, y: float) -> Bird:
+        """Create a bird with randomized velocity."""
+        # Random velocity multiplier between 0.8x and 1.8x
+        velocity_multiplier = random.uniform(self.bird_velocity_range[0], self.bird_velocity_range[1])
+        
+        # Scale base speed with difficulty and random multiplier
+        difficulty_speed_multiplier = 1.0 + (self.difficulty - 1) * 0.1  # 1.0x to 1.9x
+        final_velocity = self.base_object_speed * velocity_multiplier * difficulty_speed_multiplier
+        
+        return Bird(x, y, bird_type, final_velocity)
+        
     def reset_game(self) -> None:
         """Reset game to initial state."""
         self.fruits.clear()
+        self.birds.clear()
         self.player_x = 150
         self.player_y = self.ground_y
         self.player_y_velocity = 0
@@ -344,6 +403,7 @@ class JumpSkyGame(BaseGame):
         # Update game physics and objects
         self.update_player(delta_time)
         self.update_fruits(delta_time)
+        self.update_birds(delta_time)
         
         # Update animation timers
         self.bird_animation_timer += delta_time
@@ -352,7 +412,7 @@ class JumpSkyGame(BaseGame):
         # Test spawning (temporary)
         self.test_spawn_timer += delta_time
         if self.test_spawn_timer >= self.test_spawn_interval:
-            self.spawn_test_fruit()
+            self.spawn_test_objects()
             self.test_spawn_timer = 0.0
 
     def update_fruits(self, delta_time: float) -> None:
@@ -364,22 +424,43 @@ class JumpSkyGame(BaseGame):
             if fruit.is_off_screen() or fruit.collected:
                 self.fruits.remove(fruit)
 
-    def spawn_test_fruit(self) -> None:
-        """Spawn a random test fruit for testing (temporary)."""
-        if len(self.fruits) < 3:  # Keep max 3 fruits for testing
-            fruit_types = ["apple", "banana", "pineapple", "orange"]
-            fruit_type = random.choice(fruit_types)
+    def update_birds(self, delta_time: float) -> None:
+        """Update all birds (movement, animation, and cleanup)."""
+        for bird in self.birds[:]:  # Copy list to avoid modification during iteration
+            bird.update(delta_time)
             
-            # Spawn at right edge, random height in jump range
+            # Remove off-screen birds
+            if bird.is_off_screen() or bird.removed:
+                self.birds.remove(bird)
+
+    def spawn_test_objects(self) -> None:
+        """Spawn random test objects (fruits and birds) for testing (temporary)."""
+        total_objects = len(self.fruits) + len(self.birds)
+        
+        if total_objects < 3:  # Keep max 3 objects for testing
+            # 75% chance for fruit, 25% chance for bird (approximate 1:4 ratio)
+            spawn_fruit = random.random() < 0.75
+            
+            # Height range for all objects
             height_min = get_setting(self.settings, "jump_sky.height_min", 60)
             height_max = get_setting(self.settings, "jump_sky.height_max", 150)
             spawn_y = self.ground_y + random.uniform(height_min, height_max)
             
-            fruit = self.create_fruit(fruit_type, self.width + 50, spawn_y)
-            self.fruits.append(fruit)
-            
-            log_game_event("test_fruit_spawned", fruit_type=fruit_type, 
-                          velocity=fruit.velocity, points=fruit.points)
+            if spawn_fruit:
+                fruit_types = ["apple", "banana", "pineapple", "orange"]
+                fruit_type = random.choice(fruit_types)
+                fruit = self.create_fruit(fruit_type, self.width + 50, spawn_y)
+                self.fruits.append(fruit)
+                
+                log_game_event("test_fruit_spawned", fruit_type=fruit_type, 
+                              velocity=fruit.velocity, points=fruit.points)
+            else:
+                bird_type = random.choice(self.bird_types)
+                bird = self.create_bird(bird_type, self.width + 50, spawn_y)
+                self.birds.append(bird)
+                
+                log_game_event("test_bird_spawned", bird_type=bird_type, 
+                              velocity=bird.velocity)
 
     def on_draw(self) -> None:
         """Draw the game."""
@@ -401,6 +482,10 @@ class JumpSkyGame(BaseGame):
         # Draw active fruits
         for fruit in self.fruits:
             fruit.draw(self.draw_fallback_fruit)
+            
+        # Draw active birds (higher Z-order than fruits)
+        for bird in self.birds:
+            bird.draw(self.draw_fallback_bird)
         
         # Draw fallback fruit examples for testing (when game is started)
         if self.game_started:
