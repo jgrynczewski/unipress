@@ -265,6 +265,7 @@ class JumpSkyGame(BaseGame):
                 right_leg_x, right_leg_y, leg_width, leg_height, arcade.color.DARK_BLUE, 1
             )
 
+
     def on_update(self, delta_time: float) -> None:
         """Update game state."""
         if self.show_end_screen and self.end_game_screen:
@@ -291,7 +292,7 @@ class JumpSkyGame(BaseGame):
         """Draw the game."""
         self.clear()
         
-        # Draw background
+        # Draw simple background (adequate for emergency fallback)
         arcade.draw_lbwh_rectangle_filled(0, 0, self.width, self.height, arcade.color.SKY_BLUE)
         arcade.draw_lbwh_rectangle_filled(0, 0, self.width, self.ground_y, arcade.color.FOREST_GREEN)
         
