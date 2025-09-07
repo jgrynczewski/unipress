@@ -1,0 +1,20 @@
+{
+  "ui": {
+    "instructions": "Click to collect fruits and avoid birds!",
+    "game_over": "Game Over",
+    "click_to_start": "Click to start Jump Sky",
+    "apple": "apple",
+    "banana": "banana",
+    "pineapple": "pineapple", 
+    "orange": "orange",
+    "bird": "bird",
+    "fruits_collected": "Fruits collected: {count}",
+    "birds_avoided": "Birds avoided: {count}"
+  },
+  "gameplay": {
+    "fruit_collected": "Collected {fruit_type}!",
+    "bird_collision": "Bird hit!",
+    "jump": "Jump!",
+    "new_high_score": "New high score!"
+  }
+}

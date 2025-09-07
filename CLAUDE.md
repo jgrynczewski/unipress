@@ -357,6 +357,31 @@ uv run ruff check && uv run ruff format && uv run mypy unipress && uv run pytest
 
 **Example**: If fixing 2 unrelated bugs, create 2 separate commits and push both immediately.
 
+### Pull Request Requirements (NEW)
+**MANDATORY for Every Significant Task**:
+1. **Separate PRs**: Create MR/PR for every completed significant task requiring review
+2. **Task-based PRs**: Each major feature, system, or component gets its own PR
+3. **PR Description**: Include testing instructions and expected behavior
+4. **Review Required**: All significant changes must go through pull request review
+5. **Examples of Significant Tasks**: 
+   - New game classes or major components
+   - Core system implementations (collision, spawning, scoring)
+   - Visual systems and fallback implementations
+   - Audio system integration
+   - Settings and configuration systems
+
+### Manual Testing Requirements (NEW)
+**MANDATORY User Verification**:
+1. **Testing Instructions**: Provide step-by-step instructions for every significant task
+2. **Commands**: Include exact commands to test functionality (e.g., `uv run python -m unipress.games.jump_sky.game 5`)
+3. **Expected Behavior**: Clearly describe what should happen during testing
+4. **Success Criteria**: Define clear pass/fail criteria for user verification
+5. **User Approval Required**: Wait for user confirmation before proceeding to next task
+6. **Examples**: Directory structure verification, game functionality testing, collision detection, visual systems
+
+### Workflow Integration
+- Complete task → Commit with git-cz format → Create PR (if significant) → Provide testing instructions → Wait for user verification → Proceed to next task
+
 ## Development Planning Standards
 **Professional planning process for major initiatives** (ADR-025):
 

@@ -1,0 +1,20 @@
+{
+  "ui": {
+    "instructions": "Kliknij, aby zbierać owoce i unikać ptaków!",
+    "game_over": "Koniec gry",
+    "click_to_start": "Kliknij, aby rozpocząć Jump Sky",
+    "apple": "jabłko",
+    "banana": "banan", 
+    "pineapple": "ananas",
+    "orange": "pomarańcza",
+    "bird": "ptak",
+    "fruits_collected": "Zebrano owoców: {count}",
+    "birds_avoided": "Unikniętych ptaków: {count}"
+  },
+  "gameplay": {
+    "fruit_collected": "Zebrano {fruit_type}!",
+    "bird_collision": "Uderzenie w ptaka!",
+    "jump": "Skok!",
+    "new_high_score": "Nowy rekord!"
+  }
+}

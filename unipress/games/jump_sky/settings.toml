@@ -1,0 +1,34 @@
+[jump_sky]
+# Physics settings
+gravity = 800
+jump_height = 150
+object_speed_base = 200
+
+# Spawn system settings
+fruit_spawn_interval = 3.0
+bird_to_fruit_ratio = 0.25     # 1 bird per 4 fruits
+max_objects = 4
+
+# Height ranges (both birds and fruits use same range)
+height_min = 60               # 1.5x player sprite height
+height_max = 150              # Full jump height
+
+# Velocity system - fruit velocity multipliers based on point values
+[jump_sky.fruit_velocity_multiplier]
+apple = 1.0
+banana = 1.3
+pineapple = 1.6
+orange = 2.0
+
+# Bird velocity randomization range
+bird_velocity_random_range = [0.8, 1.8]
+
+# Available bird types (randomly selected per spawn)
+bird_types = ["bird1", "bird2", "bird3"]
+
+# Scoring system
+[jump_sky.fruit_points]
+apple = 10
+banana = 15
+pineapple = 20
+orange = 25
