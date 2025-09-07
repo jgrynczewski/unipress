@@ -155,9 +155,15 @@ class JumpSkyGame(BaseGame):
         self.bird_animation_timer = 0.0
         self.player_animation_timer = 0.0
         
-        # Test spawning timer (temporary)
-        self.test_spawn_timer = 0.0
-        self.test_spawn_interval = 2.0  # Spawn every 2 seconds for testing
+        # Spawn system
+        self.spawn_timer = 0.0
+        self.spawn_interval = get_setting(self.settings, "jump_sky.fruit_spawn_interval", 3.0)
+        self.bird_to_fruit_ratio = get_setting(self.settings, "jump_sky.bird_to_fruit_ratio", 0.25)
+        self.max_objects = get_setting(self.settings, "jump_sky.max_objects", 4)
+        
+        # Spawn tracking for ratio maintenance
+        self.fruits_spawned = 0
+        self.birds_spawned = 0
         
         log_game_event("jump_sky_game_initialized", 
                       difficulty=self.difficulty,
@@ -194,6 +200,12 @@ class JumpSkyGame(BaseGame):
         self.player_y = self.ground_y
         self.player_y_velocity = 0
         self.is_jumping = False
+        
+        # Reset spawn tracking
+        self.fruits_spawned = 0
+        self.birds_spawned = 0
+        self.spawn_timer = 0.0
+        
         log_game_event("jump_sky_game_reset")
 
     def on_action_press(self) -> None:
@@ -405,15 +417,18 @@ class JumpSkyGame(BaseGame):
         self.update_fruits(delta_time)
         self.update_birds(delta_time)
         
+        # Handle collisions
+        self.handle_collisions()
+        
         # Update animation timers
         self.bird_animation_timer += delta_time
         self.player_animation_timer += delta_time
         
-        # Test spawning (temporary)
-        self.test_spawn_timer += delta_time
-        if self.test_spawn_timer >= self.test_spawn_interval:
-            self.spawn_test_objects()
-            self.test_spawn_timer = 0.0
+        # Object spawning system
+        self.spawn_timer += delta_time
+        if self.spawn_timer >= self.spawn_interval:
+            self.spawn_object()
+            self.spawn_timer = 0.0
 
     def update_fruits(self, delta_time: float) -> None:
         """Update all fruits (movement and cleanup)."""
@@ -433,34 +448,120 @@ class JumpSkyGame(BaseGame):
             if bird.is_off_screen() or bird.removed:
                 self.birds.remove(bird)
 
-    def spawn_test_objects(self) -> None:
-        """Spawn random test objects (fruits and birds) for testing (temporary)."""
+    def spawn_object(self) -> None:
+        """Spawn object (fruit or bird) based on configured ratio and constraints."""
         total_objects = len(self.fruits) + len(self.birds)
         
-        if total_objects < 3:  # Keep max 3 objects for testing
-            # 75% chance for fruit, 25% chance for bird (approximate 1:4 ratio)
-            spawn_fruit = random.random() < 0.75
+        # Check maximum objects constraint
+        if total_objects >= self.max_objects:
+            return
+        
+        # Determine if we should spawn a bird based on ratio
+        # Target: bird_to_fruit_ratio birds per fruit (e.g., 0.25 = 1 bird per 4 fruits)
+        target_birds = self.fruits_spawned * self.bird_to_fruit_ratio
+        should_spawn_bird = self.birds_spawned < target_birds
+        
+        # Height randomization for all objects (spawn-002 implemented here)
+        height_min = get_setting(self.settings, "jump_sky.height_min", 60)
+        height_max = get_setting(self.settings, "jump_sky.height_max", 150)
+        spawn_y = self.ground_y + random.uniform(height_min, height_max)
+        spawn_x = self.width + 50
+        
+        if should_spawn_bird and self.birds_spawned == 0:
+            # Force first bird spawn if we haven't spawned any yet and should have one
+            spawn_bird = True
+        elif should_spawn_bird:
+            # 80% chance to spawn bird when we're behind on ratio
+            spawn_bird = random.random() < 0.8
+        else:
+            # 10% chance to spawn bird when ratio is satisfied
+            spawn_bird = random.random() < 0.1
             
-            # Height range for all objects
-            height_min = get_setting(self.settings, "jump_sky.height_min", 60)
-            height_max = get_setting(self.settings, "jump_sky.height_max", 150)
-            spawn_y = self.ground_y + random.uniform(height_min, height_max)
+        if spawn_bird:
+            # Spawn bird with random type selection (spawn-005 implemented here)
+            bird_type = random.choice(self.bird_types)
+            bird = self.create_bird(bird_type, spawn_x, spawn_y)
+            self.birds.append(bird)
+            self.birds_spawned += 1
             
-            if spawn_fruit:
-                fruit_types = ["apple", "banana", "pineapple", "orange"]
-                fruit_type = random.choice(fruit_types)
-                fruit = self.create_fruit(fruit_type, self.width + 50, spawn_y)
-                self.fruits.append(fruit)
-                
-                log_game_event("test_fruit_spawned", fruit_type=fruit_type, 
-                              velocity=fruit.velocity, points=fruit.points)
-            else:
-                bird_type = random.choice(self.bird_types)
-                bird = self.create_bird(bird_type, self.width + 50, spawn_y)
-                self.birds.append(bird)
-                
-                log_game_event("test_bird_spawned", bird_type=bird_type, 
-                              velocity=bird.velocity)
+            log_game_event("bird_spawned", bird_type=bird_type, 
+                          velocity=bird.velocity, spawn_ratio=self.birds_spawned/max(1, self.fruits_spawned))
+        else:
+            # Spawn fruit
+            fruit_types = ["apple", "banana", "pineapple", "orange"]
+            fruit_type = random.choice(fruit_types)
+            fruit = self.create_fruit(fruit_type, spawn_x, spawn_y)
+            self.fruits.append(fruit)
+            self.fruits_spawned += 1
+            
+            log_game_event("fruit_spawned", fruit_type=fruit_type, 
+                          velocity=fruit.velocity, points=fruit.points, spawn_ratio=self.birds_spawned/max(1, self.fruits_spawned))
+
+    def get_player_collision_rect(self) -> dict:
+        """Get player collision rectangle."""
+        # Player collision box slightly smaller than visual for fair gameplay
+        size_reduction = 4
+        return {
+            "x": self.player_x - 16 + size_reduction,
+            "y": self.player_y - 16 + size_reduction, 
+            "width": 32 - (size_reduction * 2),
+            "height": 32 - (size_reduction * 2)
+        }
+
+    def rectangles_overlap(self, rect1: dict, rect2: dict) -> bool:
+        """Check if two rectangles overlap."""
+        return (rect1["x"] < rect2["x"] + rect2["width"] and
+                rect1["x"] + rect1["width"] > rect2["x"] and
+                rect1["y"] < rect2["y"] + rect2["height"] and
+                rect1["y"] + rect1["height"] > rect2["y"])
+
+    def handle_collisions(self) -> None:
+        """Handle all collision detection and responses."""
+        if not self.game_started:
+            return
+            
+        player_rect = self.get_player_collision_rect()
+        
+        # Bird collision detection (collision-002) - Higher priority, only when jumping
+        if self.is_jumping:
+            for bird in self.birds[:]:
+                if not bird.removed:
+                    bird_rect = bird.get_collision_rect()
+                    if self.rectangles_overlap(player_rect, bird_rect):
+                        # Bird collision - lose life (collision-003: bird overrides fruit)
+                        bird.removed = True
+                        self.lose_life()
+                        
+                        # Play failure sound
+                        self.play_sound_event("failure")
+                        
+                        log_player_action("bird_collision", 
+                                        bird_type=bird.bird_type,
+                                        lives_remaining=self.lives,
+                                        player_y=self.player_y,
+                                        is_jumping=self.is_jumping)
+                        return  # Bird collision overrides fruit collection
+        
+        # Fruit collision detection (collision-001) - Only if no bird collision
+        for fruit in self.fruits[:]:
+            if not fruit.collected:
+                fruit_rect = fruit.get_collision_rect()
+                if self.rectangles_overlap(player_rect, fruit_rect):
+                    # Collect fruit
+                    fruit.collected = True
+                    self.score += fruit.points
+                    self.check_and_play_high_score_sound(self.score)
+                    
+                    # Play success sound
+                    self.play_sound_event("success")
+                    
+                    log_player_action("fruit_collected", 
+                                    fruit_type=fruit.fruit_type,
+                                    points=fruit.points,
+                                    total_score=self.score,
+                                    player_y=self.player_y,
+                                    is_jumping=self.is_jumping)
+                    break  # Only collect one fruit per frame
 
     def on_draw(self) -> None:
         """Draw the game."""
