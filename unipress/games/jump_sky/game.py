@@ -632,47 +632,42 @@ class JumpSkyGame(BaseGame):
         for bird in self.birds:
             bird.draw(self.draw_fallback_bird)
         
-        # Draw fallback fruit examples for testing (when game is started)
-        if self.game_started:
-            test_y = self.ground_y + 80
-            spacing = 100
-            start_x = 300
+        # Draw gameplay instructions and tips (when game is started)
+        if self.game_started and not self.is_game_paused():
+            # Draw controls reminder
+            controls_text = "Click to jump and collect fruits!"
+            arcade.draw_text(
+                controls_text,
+                self.width // 2,
+                50,
+                arcade.color.WHITE,
+                16,
+                anchor_x="center"
+            )
             
-            fruits = ["apple", "banana", "pineapple", "orange"]
-            for i, fruit in enumerate(fruits):
-                x = start_x + (i * spacing)
-                self.draw_fallback_fruit(x, test_y, fruit, 16)
-                
-                # Draw fruit name labels
-                arcade.draw_text(
-                    fruit.capitalize(),
-                    x,
-                    test_y - 30,
-                    arcade.color.BLACK,
-                    12,
-                    anchor_x="center"
-                )
+            # Draw difficulty indicator
+            difficulty_text = f"Difficulty: {self.difficulty}/10"
+            arcade.draw_text(
+                difficulty_text,
+                10,
+                50,
+                arcade.color.WHITE,
+                14
+            )
             
-            # Draw fallback bird examples for testing (above fruits)
-            bird_test_y = test_y + 60
-            bird_types = ["bird1", "bird2", "bird3"]
-            
-            # Calculate animation frame (sine wave for smooth flapping)
-            animation_frame = math.sin(self.bird_animation_timer * 4)  # 4 Hz flapping
-            
-            for i, bird_type in enumerate(bird_types):
-                x = start_x + (i * spacing) + 50  # Offset from fruits
-                self.draw_fallback_bird(x, bird_test_y, bird_type, animation_frame, 20)
-                
-                # Draw bird type labels
-                arcade.draw_text(
-                    bird_type.capitalize(),
-                    x,
-                    bird_test_y - 35,
-                    arcade.color.BLACK,
-                    12,
-                    anchor_x="center"
-                )
+            # Draw next safe zone countdown (if not in safe zone)
+            if not self.safe_zone_active:
+                next_safe_zone = self.safe_zone_cooldown - self.time_since_last_safe_zone
+                if next_safe_zone > 0:
+                    safe_zone_countdown = f"Next Safe Zone: {next_safe_zone:.1f}s"
+                    arcade.draw_text(
+                        safe_zone_countdown,
+                        self.width - 10,
+                        50,
+                        arcade.color.LIGHT_GRAY,
+                        12,
+                        anchor_x="right"
+                    )
             
         # Draw safe zone indicator
         if self.game_started and self.safe_zone_active:
