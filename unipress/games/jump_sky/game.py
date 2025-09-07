@@ -165,6 +165,13 @@ class JumpSkyGame(BaseGame):
         self.fruits_spawned = 0
         self.birds_spawned = 0
         
+        # Safe zone system - periods with only fruits, no birds
+        self.safe_zone_active = False
+        self.safe_zone_timer = 0.0
+        self.safe_zone_duration = 15.0  # 15 seconds of safe zone
+        self.safe_zone_cooldown = 30.0  # 30 seconds between safe zones
+        self.time_since_last_safe_zone = 0.0
+        
         log_game_event("jump_sky_game_initialized", 
                       difficulty=self.difficulty,
                       jump_velocity=self.jump_velocity,
@@ -205,6 +212,11 @@ class JumpSkyGame(BaseGame):
         self.fruits_spawned = 0
         self.birds_spawned = 0
         self.spawn_timer = 0.0
+        
+        # Reset safe zone system
+        self.safe_zone_active = False
+        self.safe_zone_timer = 0.0
+        self.time_since_last_safe_zone = 0.0
         
         log_game_event("jump_sky_game_reset")
 
@@ -424,6 +436,9 @@ class JumpSkyGame(BaseGame):
         self.bird_animation_timer += delta_time
         self.player_animation_timer += delta_time
         
+        # Safe zone system update
+        self.update_safe_zones(delta_time)
+        
         # Object spawning system
         self.spawn_timer += delta_time
         if self.spawn_timer >= self.spawn_interval:
@@ -448,6 +463,31 @@ class JumpSkyGame(BaseGame):
             if bird.is_off_screen() or bird.removed:
                 self.birds.remove(bird)
 
+    def update_safe_zones(self, delta_time: float) -> None:
+        """Update safe zone system - periods with only fruits, no birds."""
+        if self.safe_zone_active:
+            # Currently in safe zone
+            self.safe_zone_timer += delta_time
+            if self.safe_zone_timer >= self.safe_zone_duration:
+                # End safe zone
+                self.safe_zone_active = False
+                self.safe_zone_timer = 0.0
+                self.time_since_last_safe_zone = 0.0
+                
+                log_game_event("safe_zone_ended", duration=self.safe_zone_duration)
+        else:
+            # Not in safe zone - check if we should start one
+            self.time_since_last_safe_zone += delta_time
+            
+            # Start safe zone after cooldown (or immediately at game start)
+            if (self.time_since_last_safe_zone >= self.safe_zone_cooldown or 
+                (self.fruits_spawned + self.birds_spawned == 0 and self.time_since_last_safe_zone > 5.0)):
+                self.safe_zone_active = True
+                self.safe_zone_timer = 0.0
+                
+                log_game_event("safe_zone_started", duration=self.safe_zone_duration, 
+                              fruits_spawned=self.fruits_spawned, birds_spawned=self.birds_spawned)
+
     def spawn_object(self) -> None:
         """Spawn object (fruit or bird) based on configured ratio and constraints."""
         total_objects = len(self.fruits) + len(self.birds)
@@ -456,26 +496,30 @@ class JumpSkyGame(BaseGame):
         if total_objects >= self.max_objects:
             return
         
-        # Determine if we should spawn a bird based on ratio
-        # Target: bird_to_fruit_ratio birds per fruit (e.g., 0.25 = 1 bird per 4 fruits)
-        target_birds = self.fruits_spawned * self.bird_to_fruit_ratio
-        should_spawn_bird = self.birds_spawned < target_birds
+        # Safe zone check - no birds during safe zones
+        if self.safe_zone_active:
+            spawn_bird = False
+        else:
+            # Determine if we should spawn a bird based on ratio
+            # Target: bird_to_fruit_ratio birds per fruit (e.g., 0.25 = 1 bird per 4 fruits)
+            target_birds = self.fruits_spawned * self.bird_to_fruit_ratio
+            should_spawn_bird = self.birds_spawned < target_birds
+            
+            if should_spawn_bird and self.birds_spawned == 0:
+                # Force first bird spawn if we haven't spawned any yet and should have one
+                spawn_bird = True
+            elif should_spawn_bird:
+                # 80% chance to spawn bird when we're behind on ratio
+                spawn_bird = random.random() < 0.8
+            else:
+                # 10% chance to spawn bird when ratio is satisfied
+                spawn_bird = random.random() < 0.1
         
         # Height randomization for all objects (spawn-002 implemented here)
         height_min = get_setting(self.settings, "jump_sky.height_min", 60)
         height_max = get_setting(self.settings, "jump_sky.height_max", 150)
         spawn_y = self.ground_y + random.uniform(height_min, height_max)
         spawn_x = self.width + 50
-        
-        if should_spawn_bird and self.birds_spawned == 0:
-            # Force first bird spawn if we haven't spawned any yet and should have one
-            spawn_bird = True
-        elif should_spawn_bird:
-            # 80% chance to spawn bird when we're behind on ratio
-            spawn_bird = random.random() < 0.8
-        else:
-            # 10% chance to spawn bird when ratio is satisfied
-            spawn_bird = random.random() < 0.1
             
         if spawn_bird:
             # Spawn bird with random type selection (spawn-005 implemented here)
@@ -630,6 +674,26 @@ class JumpSkyGame(BaseGame):
                     anchor_x="center"
                 )
             
+        # Draw safe zone indicator
+        if self.game_started and self.safe_zone_active:
+            # Safe zone visual indicator - subtle green tint at top of screen
+            arcade.draw_lbwh_rectangle_filled(
+                0, self.height - 30, self.width, 30,
+                (144, 238, 144, 100)  # Light green with transparency
+            )
+            
+            # Safe zone text indicator
+            remaining_time = self.safe_zone_duration - self.safe_zone_timer
+            safe_zone_text = f"Safe Zone: {remaining_time:.1f}s"
+            arcade.draw_text(
+                safe_zone_text,
+                self.width - 10,
+                self.height - 20,
+                arcade.color.DARK_GREEN,
+                14,
+                anchor_x="right"
+            )
+        
         # Draw instruction text
         if not self.game_started:
             instruction_text = self.get_message("ui.instructions")
