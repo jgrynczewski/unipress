@@ -59,8 +59,9 @@ class JumpSkyGame(BaseGame):
         # Game objects
         self.game_objects: List = []
         
-        # Animation timing for fallback birds
+        # Animation timing for fallback birds and player
         self.bird_animation_timer = 0.0
+        self.player_animation_timer = 0.0
         
         log_game_event("jump_sky_game_initialized", 
                       difficulty=self.difficulty,
@@ -203,6 +204,67 @@ class JumpSkyGame(BaseGame):
             arcade.draw_polygon_filled(base_points, color)
             arcade.draw_polygon_outline(base_points, arcade.color.BLACK, 2)
 
+    def draw_fallback_player(self, x: float, y: float, is_jumping: bool = False, animation_timer: float = 0.0) -> None:
+        """Draw fallback player with simple leg animation when assets are missing."""
+        body_width = 32
+        body_height = 32
+        leg_height = 8
+        leg_width = 6
+        
+        # Draw main body (blue rectangle)
+        arcade.draw_lbwh_rectangle_filled(
+            x - body_width//2, 
+            y - body_height//2, 
+            body_width, 
+            body_height, 
+            arcade.color.BLUE
+        )
+        
+        # Draw body outline
+        arcade.draw_lbwh_rectangle_outline(
+            x - body_width//2, 
+            y - body_height//2, 
+            body_width, 
+            body_height, 
+            arcade.color.DARK_BLUE,
+            2
+        )
+        
+        if is_jumping:
+            # Jumping: legs together (static)
+            leg_x = x - leg_width//2
+            leg_y = y - body_height//2 - leg_height
+            
+            arcade.draw_lbwh_rectangle_filled(
+                leg_x, leg_y, leg_width, leg_height, arcade.color.WHITE
+            )
+            arcade.draw_lbwh_rectangle_outline(
+                leg_x, leg_y, leg_width, leg_height, arcade.color.DARK_BLUE, 1
+            )
+        else:
+            # Running: alternating legs animation
+            leg_offset = math.sin(animation_timer * 8) * 4  # 8 Hz leg movement, 4px amplitude
+            
+            # Left leg
+            left_leg_x = x - leg_width - 2
+            left_leg_y = y - body_height//2 - leg_height + leg_offset
+            arcade.draw_lbwh_rectangle_filled(
+                left_leg_x, left_leg_y, leg_width, leg_height, arcade.color.WHITE
+            )
+            arcade.draw_lbwh_rectangle_outline(
+                left_leg_x, left_leg_y, leg_width, leg_height, arcade.color.DARK_BLUE, 1
+            )
+            
+            # Right leg (opposite phase)
+            right_leg_x = x + 2
+            right_leg_y = y - body_height//2 - leg_height - leg_offset
+            arcade.draw_lbwh_rectangle_filled(
+                right_leg_x, right_leg_y, leg_width, leg_height, arcade.color.WHITE
+            )
+            arcade.draw_lbwh_rectangle_outline(
+                right_leg_x, right_leg_y, leg_width, leg_height, arcade.color.DARK_BLUE, 1
+            )
+
     def on_update(self, delta_time: float) -> None:
         """Update game state."""
         if self.show_end_screen and self.end_game_screen:
@@ -221,8 +283,9 @@ class JumpSkyGame(BaseGame):
         # Update game physics and objects
         self.update_player(delta_time)
         
-        # Update bird animation timer
+        # Update animation timers
         self.bird_animation_timer += delta_time
+        self.player_animation_timer += delta_time
 
     def on_draw(self) -> None:
         """Draw the game."""
@@ -232,14 +295,13 @@ class JumpSkyGame(BaseGame):
         arcade.draw_lbwh_rectangle_filled(0, 0, self.width, self.height, arcade.color.SKY_BLUE)
         arcade.draw_lbwh_rectangle_filled(0, 0, self.width, self.ground_y, arcade.color.FOREST_GREEN)
         
-        # Draw player (blue rectangle) with physics-based positioning
+        # Draw player with fallback animation
         if self.should_draw_player():
-            arcade.draw_lbwh_rectangle_filled(
-                self.player_x - 16, 
-                self.player_y - 16, 
-                32, 
-                32, 
-                arcade.color.BLUE
+            self.draw_fallback_player(
+                self.player_x, 
+                self.player_y, 
+                self.is_jumping, 
+                self.player_animation_timer
             )
         
         # Draw fallback fruit examples for testing (when game is started)
