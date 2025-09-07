@@ -1,0 +1,51 @@
+{
+  "name": "player_running",
+  "frames": [
+    {
+      "file": "running/player_running_001.png",
+      "duration": 0.12,
+      "hitbox": {"x": 16, "y": 16, "width": 32, "height": 48}
+    },
+    {
+      "file": "running/player_running_002.png",
+      "duration": 0.12,
+      "hitbox": {"x": 16, "y": 16, "width": 32, "height": 48}
+    },
+    {
+      "file": "running/player_running_003.png",
+      "duration": 0.12,
+      "hitbox": {"x": 16, "y": 16, "width": 32, "height": 48}
+    },
+    {
+      "file": "running/player_running_004.png",
+      "duration": 0.12,
+      "hitbox": {"x": 16, "y": 16, "width": 32, "height": 48}
+    },
+    {
+      "file": "running/player_running_005.png",
+      "duration": 0.12,
+      "hitbox": {"x": 16, "y": 16, "width": 32, "height": 48}
+    },
+    {
+      "file": "running/player_running_006.png",
+      "duration": 0.12,
+      "hitbox": {"x": 16, "y": 16, "width": 32, "height": 48}
+    },
+    {
+      "file": "running/player_running_007.png",
+      "duration": 0.12,
+      "hitbox": {"x": 16, "y": 16, "width": 32, "height": 48}
+    },
+    {
+      "file": "running/player_running_008.png",
+      "duration": 0.12,
+      "hitbox": {"x": 16, "y": 16, "width": 32, "height": 48}
+    }
+  ],
+  "loop": true,
+  "next_animation": null,
+  "sound_triggers": {
+    "frame_0": "player/footstep_01.ogg",
+    "frame_4": "player/footstep_02.ogg"
+  }
+}
