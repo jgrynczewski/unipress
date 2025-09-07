@@ -11,6 +11,7 @@ Features:
 """
 
 from typing import List, Optional
+import math
 import random
 
 import arcade
@@ -155,8 +156,9 @@ class JumpSkyGame(BaseGame):
             # Add texture lines
             for i in range(6):
                 angle = i * 60  # 60 degrees apart
-                end_x = x + (size - 4) * arcade.math.cos(arcade.math.radians(angle))
-                end_y = y + (size - 4) * arcade.math.sin(arcade.math.radians(angle))
+                angle_rad = math.radians(angle)
+                end_x = x + (size - 4) * math.cos(angle_rad)
+                end_y = y + (size - 4) * math.sin(angle_rad)
                 arcade.draw_line(x, y, end_x, end_y, arcade.color.DARK_ORANGE, 2)
 
     def draw_fallback_bird(self, x: float, y: float, bird_type: str, animation_frame: float = 0.0, size: float = 20) -> None:
@@ -183,8 +185,8 @@ class JumpSkyGame(BaseGame):
         # Apply rotation for wing flap animation
         if rotation_angle != 0:
             # Rotate points around center (x, y)
-            cos_angle = arcade.math.cos(arcade.math.radians(rotation_angle))
-            sin_angle = arcade.math.sin(arcade.math.radians(rotation_angle))
+            cos_angle = math.cos(math.radians(rotation_angle))
+            sin_angle = math.sin(math.radians(rotation_angle))
             
             rotated_points = []
             for px, py in base_points:
@@ -266,7 +268,7 @@ class JumpSkyGame(BaseGame):
             bird_types = ["bird1", "bird2", "bird3"]
             
             # Calculate animation frame (sine wave for smooth flapping)
-            animation_frame = arcade.math.sin(self.bird_animation_timer * 4)  # 4 Hz flapping
+            animation_frame = math.sin(self.bird_animation_timer * 4)  # 4 Hz flapping
             
             for i, bird_type in enumerate(bird_types):
                 x = start_x + (i * spacing) + 50  # Offset from fruits
