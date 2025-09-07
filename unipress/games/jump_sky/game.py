@@ -17,6 +17,7 @@ import arcade
 
 from unipress.core.base_game import BaseGame
 from unipress.core.logger import log_game_event, log_player_action
+from unipress.core.settings import get_setting
 
 
 class JumpSkyGame(BaseGame):
@@ -35,24 +36,44 @@ class JumpSkyGame(BaseGame):
             difficulty=difficulty
         )
 
-        # Temporary placeholder implementations
-        self.game_objects: List = []
+        # Physics settings - adapted from jumper game
+        self.gravity = get_setting(self.settings, "jump_sky.gravity", 800)
+        
+        # Calculate jump height to guarantee fruit/bird clearance
+        object_height = 32  # Default object height
+        base_jump_height = get_setting(self.settings, "jump_sky.height_max", 150) + 20  # 20px safety margin above max objects
+        difficulty_bonus = (11 - self.difficulty) * 10  # Easier difficulties get higher jumps
+        desired_jump_height = base_jump_height + difficulty_bonus
+        
+        # Convert jump height to initial velocity using physics formula (like jumper game)
+        self.jump_velocity = (2 * self.gravity * desired_jump_height) ** 0.5
+        
+        # Player positioning and physics
+        self.ground_y = int(self.height * 0.25)  # Ground at 25% of screen height
         self.player_x = 150
-        self.player_y = 100
+        self.player_y = self.ground_y
+        self.player_y_velocity = 0
         self.is_jumping = False
         
-        log_game_event("jump_sky_game_initialized", difficulty=self.difficulty)
+        # Game objects
+        self.game_objects: List = []
+        
+        log_game_event("jump_sky_game_initialized", 
+                      difficulty=self.difficulty,
+                      jump_velocity=self.jump_velocity,
+                      desired_jump_height=desired_jump_height)
 
     def reset_game(self) -> None:
         """Reset game to initial state."""
         self.game_objects.clear()
         self.player_x = 150
-        self.player_y = 100  
+        self.player_y = self.ground_y
+        self.player_y_velocity = 0
         self.is_jumping = False
         log_game_event("jump_sky_game_reset")
 
     def on_action_press(self) -> None:
-        """Handle jump action (placeholder)."""
+        """Handle jump action."""
         if self.is_game_paused():
             if self.handle_life_lost_continue():
                 return
@@ -63,13 +84,49 @@ class JumpSkyGame(BaseGame):
                 self.start_game()
             return
 
-        # Placeholder jump logic
+        # Jump if on ground (adapted from jumper game)
         if not self.is_jumping:
             self.is_jumping = True
-            log_player_action("jump", x=self.player_x, y=self.player_y)
+            self.player_y_velocity = self.jump_velocity
+            
+            # Play jump sound
+            self.play_sound_event("jump")
+                
+            log_player_action("jump", 
+                            x=self.player_x, 
+                            y=self.player_y, 
+                            y_velocity=self.player_y_velocity)
+
+    def update_player(self, delta_time: float) -> None:
+        """Update player physics and movement (adapted from jumper game)."""
+        if self.is_jumping:
+            # Apply gravity
+            self.player_y_velocity -= self.gravity * delta_time
+            self.player_y += self.player_y_velocity * delta_time
+
+            # Check for landing
+            if self.player_y <= self.ground_y:
+                self.player_y = self.ground_y
+                self.is_jumping = False
+                self.player_y_velocity = 0
+
+    def on_resize(self, width: int, height: int) -> None:
+        """Handle window resize to maintain proper ground positioning."""
+        super().on_resize(width, height)
+        
+        # Update ground position relative to new window height
+        old_ground_y = self.ground_y
+        self.ground_y = int(height * 0.25)
+        
+        # Update player position if not jumping
+        if not self.is_jumping:
+            self.player_y = self.ground_y
+        
+        log_game_event("window_resize", width=width, height=height, 
+                      old_ground_y=old_ground_y, new_ground_y=self.ground_y)
 
     def on_update(self, delta_time: float) -> None:
-        """Update game state (placeholder)."""
+        """Update game state."""
         if self.show_end_screen and self.end_game_screen:
             self.end_game_screen.update(delta_time)
             return
@@ -83,25 +140,32 @@ class JumpSkyGame(BaseGame):
         # Update periodic cursor positioning
         self.update_cursor_positioning(delta_time)
         
-        # Placeholder game logic
-        pass
+        # Update game physics and objects
+        self.update_player(delta_time)
 
     def on_draw(self) -> None:
-        """Draw the game (placeholder)."""
+        """Draw the game."""
         self.clear()
         
-        # Placeholder background
+        # Draw background
         arcade.draw_lbwh_rectangle_filled(0, 0, self.width, self.height, arcade.color.SKY_BLUE)
-        arcade.draw_lbwh_rectangle_filled(0, 0, self.width, 100, arcade.color.FOREST_GREEN)
+        arcade.draw_lbwh_rectangle_filled(0, 0, self.width, self.ground_y, arcade.color.FOREST_GREEN)
         
-        # Placeholder player (blue rectangle)
+        # Draw player (blue rectangle) with physics-based positioning
         if self.should_draw_player():
-            arcade.draw_lbwh_rectangle_filled(self.player_x - 16, self.player_y - 16, 32, 32, arcade.color.BLUE)
+            arcade.draw_lbwh_rectangle_filled(
+                self.player_x - 16, 
+                self.player_y - 16, 
+                32, 
+                32, 
+                arcade.color.BLUE
+            )
             
-        # Placeholder instruction text
+        # Draw instruction text
         if not self.game_started:
+            instruction_text = self.get_message("ui.instructions")
             arcade.draw_text(
-                "Jump Sky - Click to collect fruits, avoid birds!",
+                instruction_text,
                 self.width // 2,
                 self.height // 2 + 50,
                 arcade.color.BLACK,
