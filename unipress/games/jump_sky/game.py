@@ -58,6 +58,9 @@ class JumpSkyGame(BaseGame):
         # Game objects
         self.game_objects: List = []
         
+        # Animation timing for fallback birds
+        self.bird_animation_timer = 0.0
+        
         log_game_event("jump_sky_game_initialized", 
                       difficulty=self.difficulty,
                       jump_velocity=self.jump_velocity,
@@ -125,6 +128,79 @@ class JumpSkyGame(BaseGame):
         log_game_event("window_resize", width=width, height=height, 
                       old_ground_y=old_ground_y, new_ground_y=self.ground_y)
 
+    def draw_fallback_fruit(self, x: float, y: float, fruit_type: str, size: float = 16) -> None:
+        """Draw fallback fruit shapes when assets are missing."""
+        if fruit_type == "apple":
+            # Green circle with red border
+            arcade.draw_circle_filled(x, y, size, arcade.color.GREEN)
+            arcade.draw_circle_outline(x, y, size, arcade.color.RED, 3)
+        elif fruit_type == "banana":
+            # Yellow crescent shape
+            # Draw as overlapping circles to create crescent
+            arcade.draw_circle_filled(x - 4, y, size - 2, arcade.color.YELLOW)
+            arcade.draw_circle_filled(x + 6, y, size - 4, arcade.color.SKY_BLUE)  # "Cut out" part
+        elif fruit_type == "pineapple":
+            # Orange diamond/rhombus shape
+            points = [
+                (x, y + size),      # top
+                (x + size, y),      # right
+                (x, y - size),      # bottom
+                (x - size, y)       # left
+            ]
+            arcade.draw_polygon_filled(points, arcade.color.ORANGE)
+            arcade.draw_polygon_outline(points, arcade.color.DARK_ORANGE, 2)
+        elif fruit_type == "orange":
+            # Orange circle with texture lines
+            arcade.draw_circle_filled(x, y, size, arcade.color.ORANGE)
+            # Add texture lines
+            for i in range(6):
+                angle = i * 60  # 60 degrees apart
+                end_x = x + (size - 4) * arcade.math.cos(arcade.math.radians(angle))
+                end_y = y + (size - 4) * arcade.math.sin(arcade.math.radians(angle))
+                arcade.draw_line(x, y, end_x, end_y, arcade.color.DARK_ORANGE, 2)
+
+    def draw_fallback_bird(self, x: float, y: float, bird_type: str, animation_frame: float = 0.0, size: float = 20) -> None:
+        """Draw fallback bird shapes with rotation animation when assets are missing."""
+        # Calculate rotation angle based on animation frame (simple wing flap)
+        rotation_angle = animation_frame * 30  # 30 degrees max rotation
+        
+        # Bird colors by type
+        colors = {
+            "bird1": arcade.color.RED,
+            "bird2": arcade.color.BLUE,
+            "bird3": arcade.color.PURPLE
+        }
+        color = colors.get(bird_type, arcade.color.GRAY)
+        
+        # Draw triangle pointing right (bird flying right to left)
+        # Triangle points: right (nose), top-left (wing), bottom-left (tail)
+        base_points = [
+            (x + size, y),          # nose (right point)
+            (x - size//2, y + size//2),  # top wing
+            (x - size//2, y - size//2)   # bottom wing/tail
+        ]
+        
+        # Apply rotation for wing flap animation
+        if rotation_angle != 0:
+            # Rotate points around center (x, y)
+            cos_angle = arcade.math.cos(arcade.math.radians(rotation_angle))
+            sin_angle = arcade.math.sin(arcade.math.radians(rotation_angle))
+            
+            rotated_points = []
+            for px, py in base_points:
+                # Translate to origin, rotate, translate back
+                dx = px - x
+                dy = py - y
+                new_dx = dx * cos_angle - dy * sin_angle
+                new_dy = dx * sin_angle + dy * cos_angle
+                rotated_points.append((x + new_dx, y + new_dy))
+            
+            arcade.draw_polygon_filled(rotated_points, color)
+            arcade.draw_polygon_outline(rotated_points, arcade.color.BLACK, 2)
+        else:
+            arcade.draw_polygon_filled(base_points, color)
+            arcade.draw_polygon_outline(base_points, arcade.color.BLACK, 2)
+
     def on_update(self, delta_time: float) -> None:
         """Update game state."""
         if self.show_end_screen and self.end_game_screen:
@@ -142,6 +218,9 @@ class JumpSkyGame(BaseGame):
         
         # Update game physics and objects
         self.update_player(delta_time)
+        
+        # Update bird animation timer
+        self.bird_animation_timer += delta_time
 
     def on_draw(self) -> None:
         """Draw the game."""
@@ -160,6 +239,48 @@ class JumpSkyGame(BaseGame):
                 32, 
                 arcade.color.BLUE
             )
+        
+        # Draw fallback fruit examples for testing (when game is started)
+        if self.game_started:
+            test_y = self.ground_y + 80
+            spacing = 100
+            start_x = 300
+            
+            fruits = ["apple", "banana", "pineapple", "orange"]
+            for i, fruit in enumerate(fruits):
+                x = start_x + (i * spacing)
+                self.draw_fallback_fruit(x, test_y, fruit, 16)
+                
+                # Draw fruit name labels
+                arcade.draw_text(
+                    fruit.capitalize(),
+                    x,
+                    test_y - 30,
+                    arcade.color.BLACK,
+                    12,
+                    anchor_x="center"
+                )
+            
+            # Draw fallback bird examples for testing (above fruits)
+            bird_test_y = test_y + 60
+            bird_types = ["bird1", "bird2", "bird3"]
+            
+            # Calculate animation frame (sine wave for smooth flapping)
+            animation_frame = arcade.math.sin(self.bird_animation_timer * 4)  # 4 Hz flapping
+            
+            for i, bird_type in enumerate(bird_types):
+                x = start_x + (i * spacing) + 50  # Offset from fruits
+                self.draw_fallback_bird(x, bird_test_y, bird_type, animation_frame, 20)
+                
+                # Draw bird type labels
+                arcade.draw_text(
+                    bird_type.capitalize(),
+                    x,
+                    bird_test_y - 35,
+                    arcade.color.BLACK,
+                    12,
+                    anchor_x="center"
+                )
             
         # Draw instruction text
         if not self.game_started:
