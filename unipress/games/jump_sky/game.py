@@ -12,6 +12,7 @@ Features:
 
 from typing import List, Optional
 import math
+import os
 import random
 
 import arcade
@@ -19,20 +20,43 @@ import arcade
 from unipress.core.base_game import BaseGame
 from unipress.core.logger import log_game_event, log_player_action
 from unipress.core.settings import get_setting
+from unipress.core.assets import get_asset_manager, Animation
 
 
 class Fruit:
-    """Collectible fruit with type-specific properties and fallback visuals."""
+    """Collectible fruit with type-specific properties and sprite visuals."""
     
     def __init__(self, x: float, y: float, fruit_type: str, velocity: float, points: int):
         """Initialize fruit with position and type-specific properties."""
         self.x = x
         self.y = y
-        self.fruit_type = fruit_type  # "apple", "banana", "pineapple", "orange"
+        self.fruit_type = fruit_type  # "apple", "banana", "cherry", "orange"
         self.velocity = velocity      # Movement speed (pixels per second)
         self.points = points          # Score value when collected
         self.size = 16               # Visual size for fallback shapes
         self.collected = False       # Flag to mark for removal
+        
+        # Sprite system for fruit images
+        self.texture: Optional[arcade.Texture] = None
+        self.sprite_scale = 0.5  # Scale down to 32 pixels (64x64 → 32x32 pixels)
+        self._load_texture()
+        
+    def _load_texture(self) -> None:
+        """Load fruit texture if available, fallback to geometric shapes."""
+        try:
+            asset_manager = get_asset_manager()
+            texture_path = f"fruits/{self.fruit_type}.png"
+            self.texture = asset_manager.get_texture(texture_path, "jump_sky")
+            
+            if self.texture:
+                log_game_event("fruit_sprite_loaded", fruit_type=self.fruit_type, 
+                             texture_size=f"{self.texture.width}x{self.texture.height}")
+            else:
+                log_game_event("fruit_sprite_fallback", fruit_type=self.fruit_type, reason="texture_not_found")
+                
+        except Exception as e:
+            log_game_event("fruit_sprite_error", fruit_type=self.fruit_type, error=str(e))
+            self.texture = None
         
     def update(self, delta_time: float) -> None:
         """Update fruit position (moves left)."""
@@ -52,13 +76,25 @@ class Fruit:
         }
         
     def draw(self, draw_fallback_fruit_func) -> None:
-        """Draw fruit using fallback system."""
+        """Draw fruit using sprite texture or fallback system."""
         if not self.collected:
-            draw_fallback_fruit_func(self.x, self.y, self.fruit_type, self.size)
+            if self.texture:
+                # Draw sprite texture with proper scaling
+                scaled_width = self.texture.width * self.sprite_scale
+                scaled_height = self.texture.height * self.sprite_scale
+                
+                # Create rect with center position (XYWH uses center anchor by default)
+                rect = arcade.types.rect.XYWH(self.x, self.y, scaled_width, scaled_height)
+                
+                # Draw the texture using correct arcade method
+                arcade.draw_texture_rect(self.texture, rect, alpha=255)
+            else:
+                # Use fallback system for missing sprites
+                draw_fallback_fruit_func(self.x, self.y, self.fruit_type, self.size)
 
 
 class Bird:
-    """Dangerous bird with type-specific properties and fallback visuals."""
+    """Dangerous bird with type-specific properties and sprite animations."""
     
     def __init__(self, x: float, y: float, bird_type: str, velocity: float):
         """Initialize bird with position and type-specific properties."""
@@ -70,10 +106,19 @@ class Bird:
         self.animation_frame = 0.0   # Animation timer for wing flapping
         self.removed = False         # Flag to mark for removal
         
+        # Sprite animation system
+        self.animation: Optional[Animation] = None
+        self.sprite_scale = 2.0      # 2x scaling like other game sprites
+        self._load_animation()
+        
     def update(self, delta_time: float) -> None:
         """Update bird position and animation (moves left with wing flap)."""
         self.x -= self.velocity * delta_time
-        self.animation_frame += delta_time * 4  # 4 Hz animation speed
+        self.animation_frame += delta_time * 4  # 4 Hz animation speed for fallback
+        
+        # Update sprite animation if available
+        if self.animation:
+            self.animation.update(delta_time)
         
     def is_off_screen(self) -> bool:
         """Check if bird has moved off the left side of screen."""
@@ -92,11 +137,46 @@ class Bird:
         """Get normalized animation frame for wing flapping (sine wave)."""
         return math.sin(self.animation_frame)
         
+    def _load_animation(self) -> None:
+        """Load bird animation if available, fallback to geometric shapes."""
+        if self.bird_type in ["bird1", "bird2", "bird3"]:
+            # Try to load sprite animation for all bird types
+            try:
+                asset_manager = get_asset_manager()
+                self.animation = asset_manager.load_animation(self.bird_type, "jump_sky")
+                
+                if self.animation:
+                    log_game_event("bird_sprite_loaded", bird_type=self.bird_type, 
+                                 frames=len(self.animation.frames))
+                    print(f"DEBUG: Successfully loaded {self.bird_type} animation with {len(self.animation.frames)} frames")
+                else:
+                    log_game_event("bird_sprite_fallback", bird_type=self.bird_type, reason="animation_none")
+                    print(f"DEBUG: Failed to load {self.bird_type} animation - returned None")
+            except Exception as e:
+                log_game_event("bird_sprite_error", bird_type=self.bird_type, error=str(e))
+                print(f"DEBUG: Exception loading {self.bird_type} animation: {e}")
+                self.animation = None
+    
     def draw(self, draw_fallback_bird_func) -> None:
-        """Draw bird using fallback system with animation."""
+        """Draw bird using sprite animation or fallback system."""
         if not self.removed:
-            animation_frame = self.get_animation_frame()
-            draw_fallback_bird_func(self.x, self.y, self.bird_type, animation_frame, self.size)
+            if self.animation and self.bird_type in ["bird1", "bird2", "bird3"]:
+                # Draw sprite animation for all bird types using arcade's draw_texture_rect
+                texture = self.animation.get_current_texture()
+                
+                # Calculate scaled dimensions
+                scaled_width = texture.width * self.sprite_scale
+                scaled_height = texture.height * self.sprite_scale
+                
+                # Create rect with center position (XYWH uses center anchor by default)
+                rect = arcade.types.rect.XYWH(self.x, self.y, scaled_width, scaled_height)
+                
+                # Draw the texture using correct arcade method
+                arcade.draw_texture_rect(texture, rect, alpha=255)
+            else:
+                # Use fallback system for missing sprites
+                animation_frame = self.get_animation_frame()
+                draw_fallback_bird_func(self.x, self.y, self.bird_type, animation_frame, self.size)
 
 
 class JumpSkyGame(BaseGame):
@@ -140,10 +220,10 @@ class JumpSkyGame(BaseGame):
         
         # Load fruit configuration from settings
         self.fruit_points = get_setting(self.settings, "jump_sky.fruit_points", {
-            "apple": 10, "banana": 15, "pineapple": 20, "orange": 25
+            "apple": 10, "banana": 15, "cherry": 20, "orange": 25
         })
         self.fruit_velocity_multipliers = get_setting(self.settings, "jump_sky.fruit_velocity_multiplier", {
-            "apple": 1.0, "banana": 1.3, "pineapple": 1.6, "orange": 2.0
+            "apple": 1.0, "banana": 1.3, "cherry": 1.6, "orange": 2.0
         })
         self.base_object_speed = get_setting(self.settings, "jump_sky.object_speed_base", 200)
         
@@ -284,16 +364,13 @@ class JumpSkyGame(BaseGame):
             # Draw as overlapping circles to create crescent
             arcade.draw_circle_filled(x - 4, y, size - 2, arcade.color.YELLOW)
             arcade.draw_circle_filled(x + 6, y, size - 4, arcade.color.SKY_BLUE)  # "Cut out" part
-        elif fruit_type == "pineapple":
-            # Orange diamond/rhombus shape
-            points = [
-                (x, y + size),      # top
-                (x + size, y),      # right
-                (x, y - size),      # bottom
-                (x - size, y)       # left
-            ]
-            arcade.draw_polygon_filled(points, arcade.color.ORANGE)
-            arcade.draw_polygon_outline(points, arcade.color.DARK_ORANGE, 2)
+        elif fruit_type == "cherry":
+            # Red circle pair (cherry shape)
+            arcade.draw_circle_filled(x - 4, y + 4, size // 2, arcade.color.RED)
+            arcade.draw_circle_filled(x + 4, y - 4, size // 2, arcade.color.RED)
+            # Add stems
+            arcade.draw_line(x - 4, y + 4 + size // 2, x - 2, y + size, arcade.color.DARK_GREEN, 2)
+            arcade.draw_line(x + 4, y - 4 + size // 2, x + 2, y + size, arcade.color.DARK_GREEN, 2)
         elif fruit_type == "orange":
             # Orange circle with texture lines
             arcade.draw_circle_filled(x, y, size, arcade.color.ORANGE)
@@ -532,7 +609,7 @@ class JumpSkyGame(BaseGame):
                           velocity=bird.velocity, spawn_ratio=self.birds_spawned/max(1, self.fruits_spawned))
         else:
             # Spawn fruit
-            fruit_types = ["apple", "banana", "pineapple", "orange"]
+            fruit_types = ["apple", "banana", "cherry", "orange"]
             fruit_type = random.choice(fruit_types)
             fruit = self.create_fruit(fruit_type, spawn_x, spawn_y)
             self.fruits.append(fruit)
