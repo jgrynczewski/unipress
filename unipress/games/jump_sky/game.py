@@ -214,6 +214,13 @@ class JumpSkyGame(BaseGame):
         self.player_y_velocity = 0
         self.is_jumping = False
         
+        # UI feedback system
+        self.score_display_timer = 0.0
+        self.last_score_change = 0
+        self.score_popup_text = ""
+        self.score_popup_timer = 0.0
+        self.jump_indicator_timer = 0.0
+        
         # Game objects
         self.fruits: List[Fruit] = []
         self.birds: List[Bird] = []
@@ -235,27 +242,50 @@ class JumpSkyGame(BaseGame):
         self.bird_animation_timer = 0.0
         self.player_animation_timer = 0.0
         
-        # Spawn system
+        # Spawn system with difficulty scaling
         self.spawn_timer = 0.0
-        self.spawn_interval = get_setting(self.settings, "jump_sky.fruit_spawn_interval", 3.0)
-        self.bird_to_fruit_ratio = get_setting(self.settings, "jump_sky.bird_to_fruit_ratio", 0.25)
-        self.max_objects = get_setting(self.settings, "jump_sky.max_objects", 4)
+        base_spawn_interval = get_setting(self.settings, "jump_sky.fruit_spawn_interval", 3.0)
+        # Scale spawn rate with difficulty: easier = longer intervals (slower), harder = shorter intervals (faster)
+        difficulty_spawn_multiplier = 1.2 - (self.difficulty - 1) * 0.02  # 1.2x (easy) to 1.02x (hard)
+        self.spawn_interval = base_spawn_interval * difficulty_spawn_multiplier
+        
+        # Bird-to-fruit ratio scales with difficulty: easier = fewer birds, harder = more birds  
+        base_bird_ratio = get_setting(self.settings, "jump_sky.bird_to_fruit_ratio", 0.25)
+        difficulty_bird_multiplier = 0.5 + (self.difficulty - 1) * 0.06  # 0.5x (easy) to 1.04x (hard)
+        self.bird_to_fruit_ratio = base_bird_ratio * difficulty_bird_multiplier
+        
+        # Max objects increases with difficulty for more challenge
+        base_max_objects = get_setting(self.settings, "jump_sky.max_objects", 4)
+        difficulty_objects_bonus = (self.difficulty - 1) // 3  # +1 every 3 difficulty levels
+        self.max_objects = base_max_objects + difficulty_objects_bonus
         
         # Spawn tracking for ratio maintenance
         self.fruits_spawned = 0
         self.birds_spawned = 0
         
-        # Safe zone system - periods with only fruits, no birds
+        # Safe zone system with difficulty scaling
         self.safe_zone_active = False
         self.safe_zone_timer = 0.0
-        self.safe_zone_duration = 15.0  # 15 seconds of safe zone
-        self.safe_zone_cooldown = 30.0  # 30 seconds between safe zones
+        # Easier difficulties get longer safe zones, harder get shorter
+        base_safe_duration = 15.0
+        difficulty_safe_multiplier = 1.5 - (self.difficulty - 1) * 0.05  # 1.5x (easy) to 1.05x (hard)
+        self.safe_zone_duration = base_safe_duration * difficulty_safe_multiplier
+        
+        # Safe zone cooldown: easier = more frequent, harder = less frequent
+        base_safe_cooldown = 30.0
+        difficulty_cooldown_multiplier = 0.8 + (self.difficulty - 1) * 0.04  # 0.8x (easy) to 1.16x (hard)
+        self.safe_zone_cooldown = base_safe_cooldown * difficulty_cooldown_multiplier
         self.time_since_last_safe_zone = 0.0
         
         log_game_event("jump_sky_game_initialized", 
                       difficulty=self.difficulty,
                       jump_velocity=self.jump_velocity,
-                      desired_jump_height=desired_jump_height)
+                      desired_jump_height=desired_jump_height,
+                      spawn_interval=self.spawn_interval,
+                      bird_ratio=self.bird_to_fruit_ratio,
+                      max_objects=self.max_objects,
+                      safe_zone_duration=self.safe_zone_duration,
+                      safe_zone_cooldown=self.safe_zone_cooldown)
 
     def create_fruit(self, fruit_type: str, x: float, y: float) -> Fruit:
         """Create a fruit with type-specific properties."""
@@ -298,6 +328,13 @@ class JumpSkyGame(BaseGame):
         self.safe_zone_timer = 0.0
         self.time_since_last_safe_zone = 0.0
         
+        # Reset UI feedback system
+        self.score_display_timer = 0.0
+        self.last_score_change = 0
+        self.score_popup_text = ""
+        self.score_popup_timer = 0.0
+        self.jump_indicator_timer = 0.0
+        
         log_game_event("jump_sky_game_reset")
 
     def on_action_press(self) -> None:
@@ -316,6 +353,9 @@ class JumpSkyGame(BaseGame):
         if not self.is_jumping:
             self.is_jumping = True
             self.player_y_velocity = self.jump_velocity
+            
+            # UI feedback for jump action
+            self.jump_indicator_timer = 0.5  # Show jump indicator for 0.5 seconds
             
             # Play jump sound
             self.play_sound_event("jump")
@@ -485,6 +525,130 @@ class JumpSkyGame(BaseGame):
                 right_leg_x, right_leg_y, leg_width, leg_height, arcade.color.DARK_BLUE, 1
             )
 
+    def trigger_score_popup(self, text: str, fruit_type: str) -> None:
+        """Trigger a score popup with fruit-specific styling."""
+        self.score_popup_text = text
+        self.score_popup_timer = 2.0  # Show for 2 seconds
+        self.last_score_change = self.score
+        
+        log_game_event("score_popup_triggered", text=text, fruit_type=fruit_type)
+
+    def update_ui_feedback(self, delta_time: float) -> None:
+        """Update UI feedback timers and effects."""
+        # Update score popup timer
+        if self.score_popup_timer > 0:
+            self.score_popup_timer -= delta_time
+            
+        # Update jump indicator timer
+        if self.jump_indicator_timer > 0:
+            self.jump_indicator_timer -= delta_time
+            
+        # Update score display animation
+        self.score_display_timer += delta_time
+
+    def draw_ui_enhancements(self) -> None:
+        """Draw enhanced UI elements with professional styling."""
+        if not self.game_started:
+            return
+            
+        # Draw score popup when active
+        if self.score_popup_timer > 0 and self.score_popup_text:
+            # Fade effect based on remaining time
+            alpha = min(255, int(255 * (self.score_popup_timer / 2.0)))
+            
+            # Position above player
+            popup_x = self.player_x
+            popup_y = self.player_y + 80
+            
+            # Draw popup background
+            popup_bg_color = (*arcade.color.BLACK[:3], alpha // 2)
+            arcade.draw_circle_filled(popup_x, popup_y, 25, popup_bg_color)
+            
+            # Draw popup text with color based on score value
+            text_color = (*arcade.color.YELLOW[:3], alpha)
+            if "+" in self.score_popup_text:
+                points = int(self.score_popup_text[1:])  # Remove "+" prefix
+                if points >= 20:
+                    text_color = (*arcade.color.ORANGE[:3], alpha)
+                elif points >= 15:
+                    text_color = (*arcade.color.GOLD[:3], alpha)
+                else:
+                    text_color = (*arcade.color.GREEN[:3], alpha)
+                    
+            arcade.draw_text(
+                self.score_popup_text,
+                popup_x,
+                popup_y,
+                text_color,
+                18,
+                anchor_x="center",
+                anchor_y="center",
+                font_name="Arial"
+            )
+            
+        # Draw jump indicator when active
+        if self.jump_indicator_timer > 0:
+            # Flash effect for jump feedback
+            flash_intensity = math.sin(self.jump_indicator_timer * 15) * 0.5 + 0.5
+            indicator_alpha = int(255 * flash_intensity)
+            
+            # Draw jump arc indicator
+            arc_color = (*arcade.color.WHITE[:3], indicator_alpha)
+            
+            # Draw small arc above player
+            for i in range(5):
+                angle = -45 + (i * 22.5)  # -45 to +45 degrees
+                arc_radius = 40
+                arc_x = self.player_x + arc_radius * math.cos(math.radians(angle))
+                arc_y = self.player_y + 20 + arc_radius * math.sin(math.radians(angle))
+                
+                arcade.draw_circle_filled(arc_x, arc_y, 2, arc_color)
+
+    def draw_enhanced_safe_zone_indicator(self) -> None:
+        """Draw enhanced safe zone visual indicator."""
+        if not self.game_started or not self.safe_zone_active:
+            return
+            
+        # Animated safe zone border
+        border_pulse = math.sin(self.safe_zone_timer * 3) * 0.3 + 0.7  # 0.4 to 1.0
+        border_alpha = int(150 * border_pulse)
+        
+        # Draw animated border around entire screen
+        border_color = (*arcade.color.GREEN[:3], border_alpha)
+        border_width = 8
+        
+        # Top border
+        arcade.draw_lbwh_rectangle_filled(
+            0, self.height - border_width, self.width, border_width, border_color
+        )
+        # Bottom border  
+        arcade.draw_lbwh_rectangle_filled(
+            0, 0, self.width, border_width, border_color
+        )
+        # Left border
+        arcade.draw_lbwh_rectangle_filled(
+            0, 0, border_width, self.height, border_color
+        )
+        # Right border
+        arcade.draw_lbwh_rectangle_filled(
+            self.width - border_width, 0, border_width, self.height, border_color
+        )
+        
+        # Enhanced safe zone text using localization - upper center (original upper right level)
+        remaining_time = self.safe_zone_duration - self.safe_zone_timer
+        safe_zone_text = self.get_message("ui.safe_zone", time=f"{remaining_time:.1f}")
+        
+        # Draw enhanced safe zone text
+        arcade.draw_text(
+            safe_zone_text,
+            self.width // 2,
+            self.height - 32,
+            arcade.color.BLACK,
+            18,
+            anchor_x="center",
+            anchor_y="center",
+            font_name="Arial"
+        )
 
     def on_update(self, delta_time: float) -> None:
         """Update game state."""
@@ -512,6 +676,9 @@ class JumpSkyGame(BaseGame):
         # Update animation timers
         self.bird_animation_timer += delta_time
         self.player_animation_timer += delta_time
+        
+        # Update UI feedback timers
+        self.update_ui_feedback(delta_time)
         
         # Safe zone system update
         self.update_safe_zones(delta_time)
@@ -673,6 +840,9 @@ class JumpSkyGame(BaseGame):
                     self.score += fruit.points
                     self.check_and_play_high_score_sound(self.score)
                     
+                    # UI feedback for score gain
+                    self.trigger_score_popup(f"+{fruit.points}", fruit.fruit_type)
+                    
                     # Play success sound
                     self.play_sound_event("success")
                     
@@ -709,74 +879,32 @@ class JumpSkyGame(BaseGame):
         for bird in self.birds:
             bird.draw(self.draw_fallback_bird)
         
-        # Draw gameplay instructions and tips (when game is started)
+        # Draw enhanced gameplay instructions and tips (when game is started)
         if self.game_started and not self.is_game_paused():
-            # Draw controls reminder
-            controls_text = "Click to jump and collect fruits!"
-            arcade.draw_text(
-                controls_text,
-                self.width // 2,
-                50,
-                arcade.color.WHITE,
-                16,
-                anchor_x="center"
-            )
             
-            # Draw difficulty indicator
-            difficulty_text = f"Difficulty: {self.difficulty}/10"
-            arcade.draw_text(
-                difficulty_text,
-                10,
-                50,
-                arcade.color.WHITE,
-                14
-            )
-            
-            # Draw next safe zone countdown (if not in safe zone)
+            # Enhanced next safe zone countdown (if not in safe zone) - lower center (original lower right level)
             if not self.safe_zone_active:
                 next_safe_zone = self.safe_zone_cooldown - self.time_since_last_safe_zone
                 if next_safe_zone > 0:
-                    safe_zone_countdown = f"Next Safe Zone: {next_safe_zone:.1f}s"
+                    countdown_text = self.get_message("ui.next_safe_zone", time=f"{next_safe_zone:.1f}")
+                    
                     arcade.draw_text(
-                        safe_zone_countdown,
-                        self.width - 10,
+                        countdown_text,
+                        self.width // 2,
                         50,
-                        arcade.color.LIGHT_GRAY,
-                        12,
-                        anchor_x="right"
+                        arcade.color.LIGHT_BLUE,
+                        16,
+                        anchor_x="center",
+                        anchor_y="center",
+                        font_name="Arial"
                     )
             
-        # Draw safe zone indicator
-        if self.game_started and self.safe_zone_active:
-            # Safe zone visual indicator - subtle green tint at top of screen
-            arcade.draw_lbwh_rectangle_filled(
-                0, self.height - 30, self.width, 30,
-                (144, 238, 144, 100)  # Light green with transparency
-            )
-            
-            # Safe zone text indicator
-            remaining_time = self.safe_zone_duration - self.safe_zone_timer
-            safe_zone_text = f"Safe Zone: {remaining_time:.1f}s"
-            arcade.draw_text(
-                safe_zone_text,
-                self.width - 10,
-                self.height - 20,
-                arcade.color.DARK_GREEN,
-                14,
-                anchor_x="right"
-            )
+        # Draw enhanced safe zone indicator
+        self.draw_enhanced_safe_zone_indicator()
         
-        # Draw instruction text
-        if not self.game_started:
-            instruction_text = self.get_message("ui.instructions")
-            arcade.draw_text(
-                instruction_text,
-                self.width // 2,
-                self.height // 2 + 50,
-                arcade.color.BLACK,
-                20,
-                anchor_x="center"
-            )
+        # Draw UI enhancements (score popups, jump indicators, etc.)
+        self.draw_ui_enhancements()
+        
         
         self.draw_ui()
 
@@ -798,8 +926,6 @@ if __name__ == "__main__":
             print("Invalid difficulty. Using default (5).")
     
     print(f"Starting Jump Sky Game (Difficulty: {difficulty})")
-    print("Controls: Left click to jump and collect fruits!")
-    print("Features: Fruit collection, bird avoidance, fallback visuals")
     
     game = JumpSkyGame(difficulty=difficulty)
     game.run()
