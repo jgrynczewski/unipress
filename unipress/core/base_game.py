@@ -523,7 +523,7 @@ class BaseGame(arcade.Window, ABC, metaclass=GameMeta):  # type: ignore[misc]
             difficulty_text,
             diff_x,
             diff_y,
-            arcade.color.BLACK,  # Simple black text for good contrast
+            arcade.color.LIGHT_BLUE,  # Light blue for consistency
             16,
             font_name="Kenney Pixel Square"
         )

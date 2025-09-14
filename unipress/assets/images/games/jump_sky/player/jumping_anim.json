@@ -1,0 +1,40 @@
+{
+  "name": "player_jumping",
+  "frames": [
+    {
+      "file": "jumping/player_jumping_001.png",
+      "duration": 0.3,
+      "hitbox": {"x": 16, "y": 8, "width": 32, "height": 56}
+    },
+    {
+      "file": "jumping/player_jumping_002.png",
+      "duration": 0.3,
+      "hitbox": {"x": 16, "y": 8, "width": 32, "height": 56}
+    },
+    {
+      "file": "jumping/player_jumping_003.png",
+      "duration": 0.3,
+      "hitbox": {"x": 16, "y": 8, "width": 32, "height": 56}
+    },
+    {
+      "file": "jumping/player_jumping_004.png",
+      "duration": 0.3,
+      "hitbox": {"x": 16, "y": 8, "width": 32, "height": 56}
+    },
+    {
+      "file": "jumping/player_jumping_005.png",
+      "duration": 0.3,
+      "hitbox": {"x": 16, "y": 8, "width": 32, "height": 56}
+    },
+    {
+      "file": "jumping/player_jumping_006.png",
+      "duration": 0.3,
+      "hitbox": {"x": 16, "y": 8, "width": 32, "height": 56}
+    }
+  ],
+  "loop": false,
+  "next_animation": "player/running",
+  "sound_triggers": {
+    "frame_0": "player/jump_01.ogg"
+  }
+}

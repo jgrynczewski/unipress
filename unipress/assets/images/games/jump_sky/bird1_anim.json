@@ -1,0 +1,66 @@
+{
+  "name": "bird1_flying",
+  "loop": true,
+  "frames": [
+    {
+      "file": "birds/bird1/frame-0.png",
+      "duration": 0.15,
+      "hitbox": {
+        "x": 0,
+        "y": 0,
+        "width": 32,
+        "height": 50
+      }
+    },
+    {
+      "file": "birds/bird1/frame-1.png", 
+      "duration": 0.15,
+      "hitbox": {
+        "x": 0,
+        "y": 0,
+        "width": 32,
+        "height": 50
+      }
+    },
+    {
+      "file": "birds/bird1/frame-2.png",
+      "duration": 0.15,
+      "hitbox": {
+        "x": 0,
+        "y": 0,
+        "width": 32,
+        "height": 50
+      }
+    },
+    {
+      "file": "birds/bird1/frame-3.png",
+      "duration": 0.15,
+      "hitbox": {
+        "x": 0,
+        "y": 0,
+        "width": 32,
+        "height": 50
+      }
+    },
+    {
+      "file": "birds/bird1/frame-4.png",
+      "duration": 0.15,
+      "hitbox": {
+        "x": 0,
+        "y": 0,
+        "width": 32,
+        "height": 50
+      }
+    },
+    {
+      "file": "birds/bird1/frame-5.png",
+      "duration": 0.15,
+      "hitbox": {
+        "x": 0,
+        "y": 0,
+        "width": 32,
+        "height": 50
+      }
+    }
+  ]
+}
