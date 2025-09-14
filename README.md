@@ -62,6 +62,31 @@ Enhanced sprite-based jumping game with animated characters and fire obstacles.
 - **Assets**: Professional sprite-based graphics with animation metadata + OGG audio files
 - **Run**: `uv run python -m unipress.games.jumper.game [difficulty]`
 
+### Jump Sky Game
+Strategic fruit collection game where you jump to collect fruits while avoiding dangerous birds.
+- **Controls**: Left mouse click to jump and collect fruits
+- **Difficulty**: 1-10 scale (affects spawn rates, speeds, and bird-to-fruit ratios)
+- **Lives**: 3 lives system - birds only damage you when jumping, fruits can always be collected
+- **Mechanics**:
+  - **Fruit Collection**: 4 fruit types with different point values and speeds
+    - Apple (10 pts, 1.0x speed), Banana (15 pts, 1.3x speed), Cherry (20 pts, 1.6x speed), Orange (25 pts, 2.0x speed)
+  - **Bird Avoidance**: 3 bird types with random velocities - collision only when jumping
+  - **Safe Zones**: Periods with only fruits (no birds) for strategic recovery
+  - **Height Variation**: Objects spawn at random heights (60-150px above ground)
+  - **Smart Spawning**: Maximum 4 simultaneous objects, 1 bird per 4 fruits ratio
+- **Features**:
+  - Animated player character with running/jumping animations
+  - Animated bird sprites with wing-flapping motion  
+  - Professional fruit sprites with size balancing
+  - 5-layer parallax scrolling background system
+  - Advanced collision detection including player legs
+  - Professional sound system with 7+ audio events
+  - Difficulty-scaled spawn rates and safe zone timing
+  - Score popups with fruit-specific colors
+  - Visual safe zone indicators with animated borders
+- **Assets**: Professional sprite-based graphics, animations, and OGG audio files
+- **Run**: `uv run python -m unipress.games.jump_sky.game [difficulty]`
+
 ## 🖱️ Game Controls
 
 - **Left Mouse Click**: Primary action (jump, start game, restart, continue after life loss)
@@ -76,14 +101,15 @@ Enhanced sprite-based jumping game with animated characters and fire obstacles.
   - Positions at 98% width, 2% height with 2% margin from edges
 - **Settings**: Configurable via TOML files (global and per-game)
 
-## 🚀 Quick Start
+## 🚀 Running Games - Three Methods
 
-### Prerequisites
+### Method 1: Local Installation (Direct)
+
+**Prerequisites:**
 - Python 3.12+
 - [uv](https://docs.astral.sh/uv/) package manager
 
-### Installation & Running
-
+**Setup & Run:**
 ```bash
 # Clone the repository
 git clone https://github.com/jgrynczewski/unipress.git
@@ -99,14 +125,118 @@ uv run python main.py
 uv run python main.py 1   # Easy: 2.0s reaction time
 uv run python main.py 10  # Hard: 0.2s reaction time
 
-# Run specific games directly (recommended simplest form)
-uv run python -m unipress.games.jumper.game 5
-uv run python -m unipress.games.demo_jump.game 5
+# Run specific games directly (recommended)
+uv run python -m unipress.games.jumper.game 5      # Fire jumping game
+uv run python -m unipress.games.jump_sky.game 5    # Fruit collection game
+uv run python -m unipress.games.demo_jump.game 5   # Basic demo game
 ```
 
-## 🐳 Game Server Architecture
+### Method 2: Direct Container Execution
 
-The project supports a server-based architecture for faster game launching:
+**Prerequisites:**
+- Docker and Docker Compose
+- Linux desktop with X11 (Wayland works via XWayland)
+
+**Setup & Run:**
+```bash
+# Allow X11 access (once per session)
+xhost +si:localuser:$(whoami)
+
+# Build container
+docker build --target runtime -t unipress:latest .
+
+# Run games directly in container
+# Jumper game (fire obstacles)
+docker run --rm -it \
+  -e DISPLAY=$DISPLAY \
+  -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
+  --device /dev/snd --device /dev/dri \
+  --group-add audio \
+  --group-add $(getent group video | cut -d: -f3) \
+  --group-add $(getent group render | cut -d: -f3) \
+  unipress:latest \
+  uv run python -m unipress.games.jumper.game 5
+
+# Jump Sky game (fruit collection)
+docker run --rm -it \
+  -e DISPLAY=$DISPLAY \
+  -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
+  --device /dev/snd --device /dev/dri \
+  --group-add audio \
+  --group-add $(getent group video | cut -d: -f3) \
+  --group-add $(getent group render | cut -d: -f3) \
+  unipress:latest \
+  uv run python -m unipress.games.jump_sky.game 7
+
+# Or use Docker Compose (legacy method)
+docker compose run --rm run 5  # Default demo game
+```
+
+### Method 3: Game Server API (Recommended)
+
+**Prerequisites:**
+- Docker and Docker Compose
+- Linux desktop with X11
+
+**Setup:**
+```bash
+# Allow X11 access (once per session)
+xhost +si:localuser:$(whoami)
+
+# Build container
+docker build --target runtime -t unipress:latest .
+
+# Start game server
+docker compose up game-server -d
+
+# Verify server health
+curl http://localhost:5000/health
+# Expected: {"status": "healthy"}
+```
+
+**Run Games via HTTP API:**
+```bash
+# List available games
+curl http://localhost:5000/games/list
+
+# Run Jumper game (fire obstacles) - difficulty 5
+curl -X POST http://localhost:5000/games/run \
+  -H "Content-Type: application/json" \
+  -d '{"game": "unipress.games.jumper.game", "difficulty": 5}'
+
+# Run Jump Sky game (fruit collection) - difficulty 7
+curl -X POST http://localhost:5000/games/run \
+  -H "Content-Type: application/json" \
+  -d '{"game": "unipress.games.jump_sky.game", "difficulty": 7}'
+
+# Run Demo Jump game - difficulty 3
+curl -X POST http://localhost:5000/games/run \
+  -H "Content-Type: application/json" \
+  -d '{"game": "unipress.games.demo_jump.game", "difficulty": 3}'
+
+# Check current game status
+curl http://localhost:5000/games/status
+
+# Stop current game
+curl -X POST http://localhost:5000/games/stop
+```
+
+**Run Games via Python CLI:**
+```bash
+# List games
+uv run python unipress_cli.py list
+
+# Run games with CLI
+uv run python unipress_cli.py run jumper --difficulty 5
+uv run python unipress_cli.py run jump_sky --difficulty 7
+uv run python unipress_cli.py run demo_jump --difficulty 3
+
+# Check status and control
+uv run python unipress_cli.py status
+uv run python unipress_cli.py stop
+```
+
+## 📊 Game Server Architecture
 
 ### Architecture Overview
 
@@ -119,62 +249,18 @@ The project supports a server-based architecture for faster game launching:
                                            ▼
                                     ┌──────────────────┐
                                     │   Arcade Games   │
-                                    │  (jumper, demo)  │
+                                    │ jumper, jump_sky │
+                                    │    demo_jump     │
                                     └──────────────────┘
-```
-
-### Quick Server Setup
-
-```bash
-# 1. Build the container
-docker build --target runtime -t unipress:latest .
-
-# 2. Start the server
-docker compose up game-server -d
-
-# 3. Check server health
-curl http://localhost:5000/health
-
-# 4. Run games via CLI
-uv run python unipress_cli.py list
-uv run python unipress_cli.py run jumper --difficulty 7
-uv run python unipress_cli.py status
-uv run python unipress_cli.py stop
 ```
 
 ### API Endpoints
 
 - `GET /health` - Server health check
-- `GET /games/list` - List available games
+- `GET /games/list` - List available games  
 - `POST /games/run` - Start a game
 - `POST /games/stop` - Stop current game
 - `GET /games/status` - Game status
-
-### Direct API Usage (curl)
-
-```bash
-# Health check
-curl http://localhost:5000/health
-
-# List available games
-curl http://localhost:5000/games/list
-
-# Run jumper game with difficulty 5
-curl -X POST http://localhost:5000/games/run \
-  -H "Content-Type: application/json" \
-  -d '{"game": "unipress.games.jumper.game", "difficulty": 5}'
-
-# Run demo_jump game with difficulty 7
-curl -X POST http://localhost:5000/games/run \
-  -H "Content-Type: application/json" \
-  -d '{"game": "unipress.games.demo_jump.game", "difficulty": 7}'
-
-# Stop current game
-curl -X POST http://localhost:5000/games/stop
-
-# Check game status
-curl http://localhost:5000/games/status
-```
 
 ### Python Client
 
@@ -182,7 +268,7 @@ curl http://localhost:5000/games/status
 from unipress.client import UnipressClient
 
 client = UnipressClient("http://localhost:5000")
-result = client.run_game("jumper", difficulty=8)
+result = client.run_game("jump_sky", difficulty=8)
 completed = client.wait_for_game_completion(timeout=300)
 ```
 

@@ -114,7 +114,8 @@ class Fruit:
         
         # Sprite system for fruit images
         self.texture: Optional[arcade.Texture] = None
-        self.sprite_scale = 0.5  # Scale down to 32 pixels (64x64 → 32x32 pixels)
+        # Scale: cherry is bigger to match other fruits, others scaled down to 32 pixels (64x64 → 32x32)
+        self.sprite_scale = 0.7 if fruit_type == "cherry" else 0.5  
         self._load_texture()
         
     def _load_texture(self) -> None:
@@ -782,7 +783,7 @@ class JumpSkyGame(BaseGame):
             safe_zone_text,
             self.width // 2,
             self.height - 32,
-            arcade.color.BLACK,
+            arcade.color.LIGHT_BLUE,
             18,
             anchor_x="center",
             anchor_y="center",
@@ -933,13 +934,13 @@ class JumpSkyGame(BaseGame):
         if self.player_sprite.current_animation:
             return self.player_sprite.get_hitbox()
         else:
-            # Fallback: use traditional collision box with size reduction for fair gameplay
+            # Fallback: use traditional collision box including legs with size reduction for fair gameplay
             size_reduction = 4
             return {
                 "x": self.player_x - 16 + size_reduction,
-                "y": self.player_y - 16 + size_reduction, 
+                "y": self.player_y - 28 + size_reduction,  # Lower to include legs 
                 "width": 32 - (size_reduction * 2),
-                "height": 32 - (size_reduction * 2)
+                "height": 56 - (size_reduction * 2)  # Taller to match sprite hitbox
             }
 
     def rectangles_overlap(self, rect1: dict, rect2: dict) -> bool:
@@ -1049,11 +1050,10 @@ class JumpSkyGame(BaseGame):
                     arcade.draw_text(
                         countdown_text,
                         self.width // 2,
-                        50,
+                        20,
                         arcade.color.LIGHT_BLUE,
                         16,
                         anchor_x="center",
-                        anchor_y="center",
                         font_name="Arial"
                     )
             
