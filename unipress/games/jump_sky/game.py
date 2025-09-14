@@ -20,7 +20,83 @@ import arcade
 from unipress.core.base_game import BaseGame
 from unipress.core.logger import log_game_event, log_player_action
 from unipress.core.settings import get_setting
-from unipress.core.assets import get_asset_manager, Animation
+from unipress.core.assets import get_asset_manager, Animation, load_animation
+
+
+class AnimatedSprite:
+    """Sprite with animation support - reused from jumper game."""
+
+    def __init__(self, x: float, y: float, game_name: str):
+        """Initialize animated sprite."""
+        self.x = x
+        self.y = y
+        self.game_name = game_name
+        self.current_animation: Optional[Animation] = None
+        self.animation_queue: List[str] = []
+        # Create reusable sprite list to prevent memory leaks
+        self.sprite_list = arcade.SpriteList()
+
+    def set_animation(self, animation_name: str, force: bool = False) -> bool:
+        """
+        Set current animation.
+
+        Args:
+            animation_name: Name of animation to play
+            force: Force change even if same animation is playing
+
+        Returns:
+            True if animation was changed
+        """
+        if not force and self.current_animation and self.current_animation.name == animation_name:
+            return False
+
+        animation = load_animation(animation_name, self.game_name)
+        if animation:
+            self.current_animation = animation
+            return True
+        return False
+
+    def update(self, delta_time: float) -> None:
+        """Update sprite animation."""
+        if self.current_animation:
+            frame_changed = self.current_animation.update(delta_time)
+            
+            # Check for animation completion and queue
+            if self.current_animation.is_finished and self.current_animation.next_animation:
+                self.set_animation(self.current_animation.next_animation)
+
+    def draw(self) -> None:
+        """Draw the sprite at current animation frame."""
+        if self.current_animation:
+            # Clear existing sprites and reuse sprite list
+            self.sprite_list.clear()
+            
+            texture = self.current_animation.get_current_texture()
+            # Create sprite and add to reusable sprite list
+            sprite = arcade.Sprite()
+            sprite.texture = texture
+            sprite.center_x = self.x
+            sprite.center_y = self.y
+            # Scale up the sprite (1.5x for jump_sky - smaller than jumper game)
+            sprite.scale = 1.5
+            
+            self.sprite_list.append(sprite)
+            self.sprite_list.draw()
+        else:
+            # Fallback: draw colored rectangle when no animation loaded
+            arcade.draw_lbwh_rectangle_filled(self.x - 32, self.y - 32, 64, 64, arcade.color.BLUE)
+
+    def get_hitbox(self) -> dict:
+        """Get current hitbox for collision detection."""
+        if self.current_animation:
+            hitbox = self.current_animation.get_current_hitbox()
+            return {
+                "x": self.x - hitbox["width"] // 2 + hitbox["x"],
+                "y": self.y - hitbox["height"] // 2 + hitbox["y"],
+                "width": hitbox["width"],
+                "height": hitbox["height"]
+            }
+        return {"x": self.x, "y": self.y, "width": 64, "height": 64}
 
 
 class Fruit:
@@ -208,7 +284,7 @@ class JumpSkyGame(BaseGame):
         self.jump_velocity = (2 * self.gravity * desired_jump_height) ** 0.5
         
         # Player positioning and physics
-        self.ground_y = int(self.height * 0.25)  # Ground at 25% of screen height
+        self.ground_y = int(self.height * 0.25) - 30  # Ground lowered by ~30px (half player sprite height)
         self.player_x = 150
         self.player_y = self.ground_y
         self.player_y_velocity = 0
@@ -224,6 +300,15 @@ class JumpSkyGame(BaseGame):
         # Game objects
         self.fruits: List[Fruit] = []
         self.birds: List[Bird] = []
+        self.background_layers: List = []
+        
+        # Player sprite system (reused from jumper game)
+        self.player_sprite = AnimatedSprite(self.player_x, self.player_y, "jump_sky")
+        self.player_sprite.set_animation("player/running")  # Set initial animation
+        
+        # Background system with scroll speed
+        self.background_speed = get_setting(self.settings, "jump_sky.background_scroll_speed", 50)
+        self.load_background_layers()
         
         # Load fruit configuration from settings
         self.fruit_points = get_setting(self.settings, "jump_sky.fruit_points", {
@@ -287,6 +372,41 @@ class JumpSkyGame(BaseGame):
                       safe_zone_duration=self.safe_zone_duration,
                       safe_zone_cooldown=self.safe_zone_cooldown)
 
+    def load_background_layers(self) -> None:
+        """Load background layers using provided assets."""
+        # Define background layers configuration for jump_sky
+        layer_configs = [
+            {"file": "sky_layer.png", "scroll_speed": 0.1, "z_order": 1},
+            {"file": "mountains_far.png", "scroll_speed": 0.3, "z_order": 2},
+            {"file": "trees_far.png", "scroll_speed": 0.5, "z_order": 3},
+            {"file": "trees_near.png", "scroll_speed": 0.8, "z_order": 4},
+            {"file": "ground_layer.png", "scroll_speed": 1.0, "z_order": 5}
+        ]
+        
+        # Import BackgroundLayer class from jumper game module
+        try:
+            from unipress.games.jumper.game import BackgroundLayer
+            
+            for layer_config in layer_configs:
+                texture_path = os.path.join("unipress", "assets", "images", "games", "jump_sky", "backgrounds", "layers", layer_config["file"])
+                
+                if os.path.exists(texture_path):
+                    texture = arcade.load_texture(texture_path)
+                    layer = BackgroundLayer(
+                        texture=texture,
+                        scroll_speed=layer_config["scroll_speed"],
+                        z_order=layer_config["z_order"]
+                    )
+                    self.background_layers.append(layer)
+                    log_game_event("background_layer_loaded", file=layer_config["file"])
+                else:
+                    log_game_event("background_layer_not_found", file=texture_path)
+                    
+        except Exception as e:
+            from unipress.core.logger import log_error
+            log_error(e, "Failed to load background layers - using fallback")
+            self.background_layers = []
+
     def create_fruit(self, fruit_type: str, x: float, y: float) -> Fruit:
         """Create a fruit with type-specific properties."""
         points = self.fruit_points.get(fruit_type, 10)
@@ -335,7 +455,17 @@ class JumpSkyGame(BaseGame):
         self.score_popup_timer = 0.0
         self.jump_indicator_timer = 0.0
         
+        # Reset player sprite animation
+        self.player_sprite.x = self.player_x
+        self.player_sprite.y = self.player_y
+        self.player_sprite.set_animation("player/running")
+        
         log_game_event("jump_sky_game_reset")
+        
+    def reset_animations(self) -> None:
+        """Reset all animations to prevent accumulated time during startup sound."""
+        # Reset player animation by setting it fresh
+        self.player_sprite.set_animation("player/running", force=True)
 
     def on_action_press(self) -> None:
         """Handle jump action."""
@@ -353,6 +483,8 @@ class JumpSkyGame(BaseGame):
         if not self.is_jumping:
             self.is_jumping = True
             self.player_y_velocity = self.jump_velocity
+            # Set jumping animation
+            self.player_sprite.set_animation("player/jumping")
             
             # UI feedback for jump action
             self.jump_indicator_timer = 0.5  # Show jump indicator for 0.5 seconds
@@ -377,6 +509,13 @@ class JumpSkyGame(BaseGame):
                 self.player_y = self.ground_y
                 self.is_jumping = False
                 self.player_y_velocity = 0
+                # Set running animation when landing
+                self.player_sprite.set_animation("player/running")
+        
+        # Update player sprite position and animation
+        self.player_sprite.x = self.player_x
+        self.player_sprite.y = self.player_y
+        self.player_sprite.update(delta_time)
 
     def on_resize(self, width: int, height: int) -> None:
         """Handle window resize to maintain proper ground positioning."""
@@ -384,7 +523,7 @@ class JumpSkyGame(BaseGame):
         
         # Update ground position relative to new window height
         old_ground_y = self.ground_y
-        self.ground_y = int(height * 0.25)
+        self.ground_y = int(height * 0.25) - 30  # Ground lowered by ~30px (half player sprite height)
         
         # Update player position if not jumping
         if not self.is_jumping:
@@ -680,6 +819,9 @@ class JumpSkyGame(BaseGame):
         # Update UI feedback timers
         self.update_ui_feedback(delta_time)
         
+        # Update background scrolling
+        self.update_background(delta_time)
+        
         # Safe zone system update
         self.update_safe_zones(delta_time)
         
@@ -786,15 +928,19 @@ class JumpSkyGame(BaseGame):
                           velocity=fruit.velocity, points=fruit.points, spawn_ratio=self.birds_spawned/max(1, self.fruits_spawned))
 
     def get_player_collision_rect(self) -> dict:
-        """Get player collision rectangle."""
-        # Player collision box slightly smaller than visual for fair gameplay
-        size_reduction = 4
-        return {
-            "x": self.player_x - 16 + size_reduction,
-            "y": self.player_y - 16 + size_reduction, 
-            "width": 32 - (size_reduction * 2),
-            "height": 32 - (size_reduction * 2)
-        }
+        """Get player collision rectangle using AnimatedSprite hitbox or fallback."""
+        # Try to use AnimatedSprite's accurate hitbox first
+        if self.player_sprite.current_animation:
+            return self.player_sprite.get_hitbox()
+        else:
+            # Fallback: use traditional collision box with size reduction for fair gameplay
+            size_reduction = 4
+            return {
+                "x": self.player_x - 16 + size_reduction,
+                "y": self.player_y - 16 + size_reduction, 
+                "width": 32 - (size_reduction * 2),
+                "height": 32 - (size_reduction * 2)
+            }
 
     def rectangles_overlap(self, rect1: dict, rect2: dict) -> bool:
         """Check if two rectangles overlap."""
@@ -854,22 +1000,34 @@ class JumpSkyGame(BaseGame):
                                     is_jumping=self.is_jumping)
                     break  # Only collect one fruit per frame
 
+    def update_background(self, delta_time: float) -> None:
+        """Update parallax background layers."""
+        for layer in self.background_layers:
+            layer.update(delta_time, self.background_speed)
+
+    def draw_background(self) -> None:
+        """Draw background layers with fallback system."""
+        if self.background_layers:
+            # Sort by z_order and draw back to front
+            sorted_layers = sorted(self.background_layers, key=lambda l: l.z_order)
+            for layer in sorted_layers:
+                layer.draw(self.width, self.height)
+        else:
+            # Fallback: simple gradient background when no layers loaded
+            arcade.draw_lbwh_rectangle_filled(0, 0, self.width, self.height, arcade.color.SKY_BLUE)
+            arcade.draw_lbwh_rectangle_filled(0, 0, self.width, self.ground_y, arcade.color.FOREST_GREEN)
+
     def on_draw(self) -> None:
         """Draw the game."""
         self.clear()
         
-        # Draw simple background (adequate for emergency fallback)
-        arcade.draw_lbwh_rectangle_filled(0, 0, self.width, self.height, arcade.color.SKY_BLUE)
-        arcade.draw_lbwh_rectangle_filled(0, 0, self.width, self.ground_y, arcade.color.FOREST_GREEN)
+        # Draw background layers with fallback system
+        self.draw_background()
         
-        # Draw player with fallback animation
+        # Draw player using AnimatedSprite system with fallback
         if self.should_draw_player():
-            self.draw_fallback_player(
-                self.player_x, 
-                self.player_y, 
-                self.is_jumping, 
-                self.player_animation_timer
-            )
+            self.player_sprite.draw()
+            # If AnimatedSprite has no animation, it draws the blue rectangle fallback automatically
         
         # Draw active fruits
         for fruit in self.fruits:
